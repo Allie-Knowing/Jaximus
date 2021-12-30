@@ -1,17 +1,17 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './user.entity';
-import { Video } from './video.entity';
+import { UserTypeOrmEntity } from './user.entity';
+import { VideoTypeOrmEntity } from './video.entity';
 
-@Entity()
-export class Like {
+@Entity('like')
+export class LikeTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.likes)
+  @ManyToOne(() => UserTypeOrmEntity, (user) => user.likes)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserTypeOrmEntity;
 
-  @ManyToOne(() => Video, (video) => video.likes)
+  @ManyToOne(() => VideoTypeOrmEntity, (video) => video.likes)
   @JoinColumn({ name: 'video_id' })
-  video: Video;
+  video: VideoTypeOrmEntity;
 }

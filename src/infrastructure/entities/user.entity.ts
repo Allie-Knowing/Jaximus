@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Like } from './like.entity';
+import { LikeTypeOrmEntity } from './like.entity';
 
-@Entity()
-export class User {
+@Entity('user')
+export class UserTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,6 +18,6 @@ export class User {
   @Column({ length: 30 })
   name: string;
 
-  @OneToMany(() => Like, (like) => like.user)
-  likes: Like[];
+  @OneToMany(() => LikeTypeOrmEntity, (like) => like.user)
+  likes: LikeTypeOrmEntity[];
 }

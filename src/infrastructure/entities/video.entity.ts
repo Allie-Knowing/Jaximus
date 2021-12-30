@@ -6,12 +6,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Comment } from './comment.entity';
-import { HashTag } from './hash-tag.entity';
-import { Like } from './like.entity';
+import { CommentTypeOrmEntity } from './comment.entity';
+import { HashTagTypeOrmEntity } from './hash-tag.entity';
+import { LikeTypeOrmEntity } from './like.entity';
 
-@Entity()
-export class Video {
+@Entity('video')
+export class VideoTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,19 +24,19 @@ export class Video {
   @Column({ length: 2000 })
   video_url: string;
 
-  @OneToMany(() => Like, (like) => like.video)
-  likes: Like[];
+  @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
+  likes: LikeTypeOrmEntity[];
 
-  @OneToMany(() => Video, (video) => video.question)
-  answers: Video[];
+  @OneToMany(() => VideoTypeOrmEntity, (video) => video.question)
+  answers: VideoTypeOrmEntity[];
 
-  @OneToMany(() => HashTag, (hashTag) => hashTag.question)
-  hashTags: HashTag[];
+  @OneToMany(() => HashTagTypeOrmEntity, (hashTag) => hashTag.question)
+  hashTags: HashTagTypeOrmEntity[];
 
-  @OneToMany(() => Comment, (comment) => comment.video)
-  comments: Comment[];
+  @OneToMany(() => CommentTypeOrmEntity, (comment) => comment.video)
+  comments: CommentTypeOrmEntity[];
 
-  @ManyToOne(() => Video, (video) => video.answers)
+  @ManyToOne(() => VideoTypeOrmEntity, (video) => video.answers)
   @JoinColumn({ name: 'question_id' })
-  question: Video;
+  question: VideoTypeOrmEntity;
 }

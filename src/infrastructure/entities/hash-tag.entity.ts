@@ -5,17 +5,17 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Video } from './video.entity';
+import { VideoTypeOrmEntity } from './video.entity';
 
-@Entity()
-export class HashTag {
+@Entity('hash_tag')
+export class HashTagTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 20 })
   title: string;
 
-  @ManyToOne(() => Video, (video) => video.hashTags)
+  @ManyToOne(() => VideoTypeOrmEntity, (video) => video.hashTags)
   @JoinColumn({ name: 'question_id' })
-  question: Video;
+  question: VideoTypeOrmEntity;
 }

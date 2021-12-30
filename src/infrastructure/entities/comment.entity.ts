@@ -6,24 +6,24 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Video } from './video.entity';
+import { VideoTypeOrmEntity } from './video.entity';
 
-@Entity()
-export class Comment {
+@Entity('comment')
+export class CommentTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 200 })
   content: string;
 
-  @OneToMany(() => Comment, (comment) => comment.parentComment)
-  childComments: Comment[];
+  @OneToMany(() => CommentTypeOrmEntity, (comment) => comment.parentComment)
+  childComments: CommentTypeOrmEntity[];
 
-  @ManyToOne(() => Video, (video) => video.comments)
+  @ManyToOne(() => VideoTypeOrmEntity, (video) => video.comments)
   @JoinColumn({ name: 'video_id' })
-  video: Video;
+  video: VideoTypeOrmEntity;
 
-  @ManyToOne(() => Comment, (comment) => comment.childComments)
+  @ManyToOne(() => CommentTypeOrmEntity, (comment) => comment.childComments)
   @JoinColumn({ name: 'parent_id' })
-  parentComment: Comment;
+  parentComment: CommentTypeOrmEntity;
 }
