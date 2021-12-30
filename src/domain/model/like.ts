@@ -1,8 +1,8 @@
-import { UserM } from './user';
-import { VideoM } from './video';
+import { User } from './user';
+import { Video } from './video';
 
-export class LikeM {
+export class Like {
   id: number;
-  user: UserM;
-  video: VideoM;
+  user: User;
+  video: Video;
 }

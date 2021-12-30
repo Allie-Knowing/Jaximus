@@ -1,15 +1,15 @@
-import { CommentM } from './comment';
-import { HashTagM } from './hash-tag';
-import { LikeM } from './like';
+import { Comment } from './comment';
+import { HashTag } from './hash-tag';
+import { Like } from './like';
 
-export class VideoM {
+export class Video {
   id: number;
   description: string;
   title: string;
   video_url: string;
-  likes: LikeM[];
-  answers: VideoM[];
-  hashTags: HashTagM[];
-  comments: CommentM[];
-  question: VideoM;
+  likes: Like[];
+  answers: Video[];
+  hashTags: HashTag[];
+  comments: Comment[];
+  question: Video;
 }

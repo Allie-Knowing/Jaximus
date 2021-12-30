@@ -1,10 +1,10 @@
-import { LikeM } from './like';
+import { Like } from './like';
 
-export class UserM {
+export class User {
   id: number;
   provider: string;
   email: string;
   profile: string;
   name: string;
-  like: LikeM[];
+  like: Like[];
 }

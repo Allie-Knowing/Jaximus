@@ -1,7 +1,7 @@
-import { VideoM } from './video';
+import { Video } from './video';
 
-export class HashTagM {
+export class HashTag {
   id: number;
   title: string;
-  question: VideoM;
+  question: Video;
 }

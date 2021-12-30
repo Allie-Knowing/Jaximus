@@ -1,9 +1,9 @@
-import { VideoM } from './video';
+import { Video } from './video';
 
-export class CommentM {
+export class Comment {
   id: number;
   content: string;
-  childComments: CommentM[];
-  video: VideoM;
-  parentComment: CommentM;
+  childComments: Comment[];
+  video: Video;
+  parentComment: Comment;
 }
