@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { LikeTypeOrmEntity } from './like.entity';
 
-@Entity()
-export class User {
+@Entity('user')
+export class UserTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,4 +17,7 @@ export class User {
 
   @Column({ length: 30 })
   name: string;
+
+  @OneToMany(() => LikeTypeOrmEntity, (like) => like.user)
+  likes: LikeTypeOrmEntity[];
 }
