@@ -23,7 +23,7 @@ export class VideoTypeOrmEntity {
   title: string;
 
   @Column({ length: 2000 })
-  video_url: string;
+  videoUrl: string;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
