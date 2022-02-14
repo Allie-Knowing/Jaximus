@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { LikeTypeOrmEntity } from './like.entity';
+import { VideoTypeOrmEntity } from './video.entity';
 
 @Entity('user')
 export class UserTypeOrmEntity {
@@ -20,4 +21,7 @@ export class UserTypeOrmEntity {
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.user)
   likes: LikeTypeOrmEntity[];
+
+  @OneToMany(() => VideoTypeOrmEntity, (video) => video.user) 
+  videos: VideoTypeOrmEntity[]
 }
