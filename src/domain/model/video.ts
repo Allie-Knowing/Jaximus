@@ -9,7 +9,7 @@ export class Video {
   videoUrl: string;
   likes: Like[];
   answers: Video[];
-  hashTags: HashTag[];
+  hashTags: string[];
   comments: Comment[];
   question: Video;
   userId: number;
