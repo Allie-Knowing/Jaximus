@@ -1,5 +1,4 @@
 import { Comment } from './comment';
-import { HashTag } from './hash-tag';
 import { Like } from './like';
 
 export class Video {
