@@ -4,6 +4,8 @@ import { ExceptionsModule } from './infrastructure/exceptions/exceptions.module'
 import { RepositoriesModule } from './infrastructure/repositories/repositories.module';
 import { UsecasesProxyDynamicModule } from './infrastructure/usecases-proxy/usecases-proxy.module';
 import { VideoController } from './presentation/video.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -11,9 +13,9 @@ import { VideoController } from './presentation/video.controller';
     ExceptionsModule,
     RepositoriesModule,
     UsecasesProxyDynamicModule.register(),
+    JwtModule.register({}),
   ],
-  controllers: [
-    VideoController,
-  ]
+  providers: [JwtStrategy],
+  controllers: [VideoController],
 })
 export class AppModule {}

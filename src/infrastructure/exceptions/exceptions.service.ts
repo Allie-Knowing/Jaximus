@@ -24,4 +24,7 @@ export class ExceptionsService implements IException {
   unauthorizedException(data?: IFormatExceptionMessage): void {
     throw new UnauthorizedException(data);
   }
+  expiredTokenException(): void {
+    throw new UnauthorizedException('Token expired exception');
+  }
 }
