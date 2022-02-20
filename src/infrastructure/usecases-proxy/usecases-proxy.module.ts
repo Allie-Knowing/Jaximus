@@ -9,7 +9,6 @@ import { DatabaseVideoRepository } from '../repositories/video.repository';
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
 })
 export class UsecasesProxyDynamicModule {
-
   static register(): DynamicModule {
     return {
       module: UsecasesProxyDynamicModule,
@@ -17,8 +16,9 @@ export class UsecasesProxyDynamicModule {
         {
           inject: [DatabaseVideoRepository],
           provide: CreateVideoUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoUsecase(databaseVideoRepository),
-        }
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) =>
+            new CreateVideoUsecase(databaseVideoRepository),
+        },
       ],
       exports: [CreateVideoUsecase],
     };

@@ -1,5 +1,5 @@
-import { Video } from "../model/video";
+import { Video } from '../model/video';
 
 export interface VideoRepository {
-    save(video: Video): Promise<void>;
+  save(video: Video): Promise<void>;
 }

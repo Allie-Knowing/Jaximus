@@ -21,15 +21,22 @@ export class DatabaseVideoRepository implements VideoRepository {
   ) {}
 
   async save(video: Video): Promise<void> {
-      const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(video.userId);
+    const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(
+      video.userId,
+    );
 
-      const videoEntity: VideoTypeOrmEntity = await this.videoEntityRepository.save({
+    const videoEntity: VideoTypeOrmEntity =
+      await this.videoEntityRepository.save({
         description: video.description,
         title: video.title,
         videoUrl: video.videoUrl,
-        user
+        user,
       });
 
-      await Promise.all(video.hashTags.map(title => this.hashTagEntityRepository.save({ title, question: videoEntity })));
-    }
+    await Promise.all(
+      video.hashTags.map((title) =>
+        this.hashTagEntityRepository.save({ title, question: videoEntity }),
+      ),
+    );
+  }
 }
