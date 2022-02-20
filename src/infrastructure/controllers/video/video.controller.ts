@@ -11,7 +11,7 @@ import { Request } from 'express';
 import { Video } from 'src/domain/model/video';
 import { UseCaseProxy } from 'src/infrastructure/usecases-proxy/usecases-proxy';
 import { UsecasesProxyDynamicModule } from 'src/infrastructure/usecases-proxy/usecases-proxy.module';
-import { CreateVideoUsecase } from 'src/usecase/video/create-video';
+import { CreateVideoQuestionUsecase } from 'src/usecase/video/create-video-question.usecase';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment.usecase';
 
 @Injectable({ scope: Scope.REQUEST })
@@ -19,7 +19,7 @@ import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-commen
 export class VideoController {
   constructor(
     @Inject(UsecasesProxyDynamicModule.POST_VIDEO_QUESTION_USECASE_PROXY)
-    private readonly postVideoQuestionUsecaseProxy: UseCaseProxy<CreateVideoUsecase>,
+    private readonly postVideoQuestionUsecaseProxy: UseCaseProxy<CreateVideoQuestionUsecase>,
     @Inject(UsecasesProxyDynamicModule.POST_VIDEO_COMMENT_USECASES_PROXY)
     private readonly postVideoCommentUsecaseProxy: UseCaseProxy<CreateVideoCommentUsecase>,
     @Inject(REQUEST) private readonly request: Request,
