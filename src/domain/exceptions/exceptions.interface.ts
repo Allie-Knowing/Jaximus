@@ -5,8 +5,9 @@ export interface IFormatExceptionMessage {
 
 export interface IException {
   badRequestException(data: IFormatExceptionMessage): void;
-  internalServerErrorException(data?: IFormatExceptionMessage): void;
-  forbiddenException(data?: IFormatExceptionMessage): void;
+  questionNotFoundException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
   expiredTokenException(): void;
+  forbiddenException(data?: IFormatExceptionMessage): void;
+  internalServerErrorException(data?: IFormatExceptionMessage): void;
 }

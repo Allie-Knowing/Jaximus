@@ -6,12 +6,14 @@ import { UsecasesProxyDynamicModule } from './infrastructure/usecases-proxy/usec
 import { VideoController } from './presentation/video.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
+import { ControllersModule } from './infrastructure/controllers/controllers.module';
 
 @Module({
   imports: [
     LoggerModule,
     ExceptionsModule,
     RepositoriesModule,
+    ControllersModule,
     UsecasesProxyDynamicModule.register(),
     JwtModule.register({}),
   ],
