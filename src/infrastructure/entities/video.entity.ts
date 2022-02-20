@@ -9,6 +9,7 @@ import {
 import { CommentTypeOrmEntity } from './comment.entity';
 import { HashTagTypeOrmEntity } from './hash-tag.entity';
 import { LikeTypeOrmEntity } from './like.entity';
+import { UserTypeOrmEntity } from './user.entity';
 
 @Entity('video')
 export class VideoTypeOrmEntity {
@@ -22,7 +23,7 @@ export class VideoTypeOrmEntity {
   title: string;
 
   @Column({ length: 2000 })
-  video_url: string;
+  videoUrl: string;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
@@ -39,4 +40,7 @@ export class VideoTypeOrmEntity {
   @ManyToOne(() => VideoTypeOrmEntity, (video) => video.answers)
   @JoinColumn({ name: 'question_id' })
   question: VideoTypeOrmEntity;
+
+  @ManyToOne(() => UserTypeOrmEntity, (user) => user.videos)
+  user: UserTypeOrmEntity;
 }

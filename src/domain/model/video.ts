@@ -6,10 +6,11 @@ export class Video {
   id: number;
   description: string;
   title: string;
-  video_url: string;
+  videoUrl: string;
   likes: Like[];
   answers: Video[];
-  hashTags: HashTag[];
+  hashTags: string[];
   comments: Comment[];
   question: Video;
+  userId: number;
 }
