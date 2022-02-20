@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -23,7 +24,10 @@ export class VideoTypeOrmEntity {
   title: string;
 
   @Column({ length: 2000 })
-  videoUrl: string;
+  video_url: string;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
@@ -42,5 +46,6 @@ export class VideoTypeOrmEntity {
   question: VideoTypeOrmEntity;
 
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.videos)
+  @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmEntity;
 }
