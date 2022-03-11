@@ -7,6 +7,7 @@ import { VideoController } from './infrastructure/controllers/video/video.contro
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
 import { ControllersModule } from './infrastructure/controllers/controllers.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -16,6 +17,9 @@ import { ControllersModule } from './infrastructure/controllers/controllers.modu
     ControllersModule,
     UsecasesProxyDynamicModule.register(),
     JwtModule.register({}),
+    MulterModule.register({
+      dest: './upload',
+    }),
   ],
   providers: [JwtStrategy],
   controllers: [VideoController],
