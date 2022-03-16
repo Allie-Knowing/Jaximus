@@ -17,14 +17,12 @@ export class UsecasesProxyDynamicModule {
         {
           inject: [DatabaseVideoRepository],
           provide: CreateVideoUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) =>
-            new CreateVideoUsecase(databaseVideoRepository),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoUsecase(databaseVideoRepository),
         },
         {
           inject: [DatabaseVideoRepository],
           provide: CreateVideoCommentUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) =>
-            new CreateVideoCommentUsecase(databaseVideoRepository),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoCommentUsecase(databaseVideoRepository),
         },
       ],
       exports: [CreateVideoUsecase, CreateVideoCommentUsecase],

@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { HashTagTypeOrmEntity } from './hash-tag.entity';
 import { LikeTypeOrmEntity } from './like.entity';

@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Inject,
-  Post,
-  Scope,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Post, Scope, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Video } from 'src/domain/model/video';
@@ -34,11 +26,7 @@ export class VideoController {
 
   @Post('/answer')
   @UseInterceptors(FileInterceptor('file'))
-  async createVideoComment(
-    @UploadedFile() file,
-    userId: number,
-    @Body() request: Video,
-  ) {
+  async createVideoComment(@UploadedFile() file, userId: number, @Body() request: Video) {
     await this.createVideoCommentUsecase.execute(userId, request);
     return { status: 201, message: 'success' };
   }

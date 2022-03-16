@@ -3,9 +3,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { EnvironmentConfigModule } from '../environment-config/environment-config.module';
 import { EnvironmentConfigService } from '../environment-config/environment-config.service';
 
-export const getTypeOrmModuleOptions = (
-  config: EnvironmentConfigService,
-): TypeOrmModuleOptions =>
+export const getTypeOrmModuleOptions = (config: EnvironmentConfigService): TypeOrmModuleOptions =>
   ({
     type: 'mysql',
     host: config.getDatabaseHost(),
@@ -14,10 +12,7 @@ export const getTypeOrmModuleOptions = (
     password: config.getDatabasePassword(),
     database: config.getDatabaseName(),
     synchronize: config.getDatabaseSync(),
-    logging:
-      process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'test'
-        ? true
-        : false,
+    logging: process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'test' ? true : false,
     entities: [__dirname + './../../**/*.entity{.ts,.js}'],
   } as TypeOrmModuleOptions);
 
