@@ -7,13 +7,7 @@ import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
 import { ControllersModule } from './infrastructure/controllers/controllers.module';
 
 @Module({
-  imports: [
-    LoggerModule,
-    ExceptionsModule,
-    RepositoriesModule,
-    ControllersModule,
-    JwtModule.register({}),
-  ],
-  providers: [JwtStrategy]
+  imports: [LoggerModule, ExceptionsModule, RepositoriesModule, ControllersModule, JwtModule.register({})],
+  providers: [JwtStrategy],
 })
 export class AppModule {}

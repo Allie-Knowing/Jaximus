@@ -4,6 +4,6 @@ import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.mod
 
 @Module({
   imports: [UsecasesProxyDynamicModule.register()],
-  controllers: [VideoController]
+  controllers: [VideoController],
 })
 export class ControllersModule {}

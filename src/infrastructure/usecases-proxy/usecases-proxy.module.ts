@@ -11,8 +11,6 @@ import { DatabaseVideoRepository } from '../repositories/video.repository';
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
 })
 export class UsecasesProxyDynamicModule {
-  static GET_QUESTION_LIST_USECASES_PROXY = 'getQuestionListUsecasesProxy';
-
   static register(): DynamicModule {
     return {
       module: UsecasesProxyDynamicModule,
@@ -20,26 +18,16 @@ export class UsecasesProxyDynamicModule {
         {
           inject: [DatabaseVideoRepository],
           provide: CreateVideoUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) =>
-            new CreateVideoUsecase(databaseVideoRepository),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoUsecase(databaseVideoRepository),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
           provide: GetQuestionListUseCases,
-          useFactory: (
-            databaseVideoRepository: DatabaseVideoRepository,
-            exceptionsService: ExceptionsService,
-          ) =>
-            new GetQuestionListUseCases(
-              databaseVideoRepository,
-              exceptionsService,
-            ),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new GetQuestionListUseCases(databaseVideoRepository, exceptionsService),
         },
       ],
-      exports: [
-        CreateVideoUsecase,
-        GetQuestionListUseCases
-      ],
+      exports: [CreateVideoUsecase, GetQuestionListUseCases],
     };
   }
 }
