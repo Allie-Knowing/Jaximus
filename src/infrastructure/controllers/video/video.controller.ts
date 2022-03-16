@@ -1,7 +1,7 @@
 import { Controller, Inject, Scope, Get } from '@nestjs/common';
 import { UseCaseProxy } from 'src/infrastructure/usecases-proxy/usecases-proxy';
 import { UsecasesProxyDynamicModule } from 'src/infrastructure/usecases-proxy/usecases-proxy.module';
-import { GetQuestionListUseCases } from 'src/usecase/video/get-question-list.usecases';
+import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetQuestionListPresenter } from './video.presenter';
 
 @Controller({ path: '/video', scope: Scope.REQUEST })
