@@ -5,9 +5,19 @@ import { RepositoriesModule } from './infrastructure/repositories/repositories.m
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
 import { ControllersModule } from './infrastructure/controllers/controllers.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [LoggerModule, ExceptionsModule, RepositoriesModule, ControllersModule, JwtModule.register({})],
+  imports: [
+    LoggerModule,
+    ExceptionsModule,
+    RepositoriesModule,
+    ControllersModule,
+    JwtModule.register({}),
+    MulterModule.register({
+      dest: './upload',
+    }),
+  ],
   providers: [JwtStrategy],
 })
 export class AppModule {}
