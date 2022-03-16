@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Inject,
-  Injectable,
   Post,
   Scope,
   UploadedFile,
@@ -11,9 +10,7 @@ import {
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { Video } from 'src/domain/model/video';
-import { UseCaseProxy } from 'src/infrastructure/usecases-proxy/usecases-proxy';
-import { UsecasesProxyDynamicModule } from 'src/infrastructure/usecases-proxy/usecases-proxy.module';
-import { CreateVideoQuestionUsecase } from 'src/usecase/video/create-video-question';
+import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterConfigService } from 'src/infrastructure/config/multer/multer-config.service';
@@ -21,10 +18,10 @@ import { MulterConfigService } from 'src/infrastructure/config/multer/multer-con
 @Controller({ path: '/video', scope: Scope.REQUEST })
 export class VideoController {
   constructor(
-    @Inject(UsecasesProxyDynamicModule.POST_VIDEO_QUESTION_USECASE_PROXY)
-    private readonly postVideoQuestionUsecaseProxy: UseCaseProxy<CreateVideoQuestionUsecase>,
-    @Inject(UsecasesProxyDynamicModule.POST_VIDEO_COMMENT_USECASES_PROXY)
-    private readonly postVideoCommentUsecaseProxy: UseCaseProxy<CreateVideoCommentUsecase>,
+    @Inject(CreateVideoUsecase)
+    private readonly createVideoUsecase: CreateVideoUsecase,
+    @Inject(CreateVideoCommentUsecase)
+    private readonly createVideoCommentUsecase: CreateVideoCommentUsecase,
     @Inject(REQUEST)
     private readonly request: Request,
     private readonly multerService: MulterConfigService,
@@ -32,9 +29,7 @@ export class VideoController {
 
   @Post('/')
   async create(userId: number, @Body() request: Video) {
-    await this.postVideoQuestionUsecaseProxy
-      .getInstance()
-      .execute(userId, request);
+    await this.createVideoUsecase.execute(userId, request);
   }
 
   @Post('/answer')
@@ -44,9 +39,7 @@ export class VideoController {
     userId: number,
     @Body() request: Video,
   ) {
-    await this.postVideoCommentUsecaseProxy
-      .getInstance()
-      .execute(userId, request);
+    await this.createVideoCommentUsecase.execute(userId, request);
     return { status: 201, message: 'success' };
   }
 }

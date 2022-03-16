@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { LoggerModule } from './infrastructure/logger/logger.module';
 import { ExceptionsModule } from './infrastructure/exceptions/exceptions.module';
 import { RepositoriesModule } from './infrastructure/repositories/repositories.module';
-import { UsecasesProxyDynamicModule } from './infrastructure/usecases-proxy/usecases-proxy.module';
-import { VideoController } from './infrastructure/controllers/video/video.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
 import { ControllersModule } from './infrastructure/controllers/controllers.module';
@@ -16,7 +14,6 @@ import { MulterConfigModule } from './infrastructure/config/multer/multer-config
     ExceptionsModule,
     RepositoriesModule,
     ControllersModule,
-    UsecasesProxyDynamicModule.register(),
     JwtModule.register({}),
     MulterModule.register({
       dest: './upload',
@@ -24,6 +21,5 @@ import { MulterConfigModule } from './infrastructure/config/multer/multer-config
     MulterConfigModule,
   ],
   providers: [JwtStrategy],
-  controllers: [VideoController],
 })
 export class AppModule {}
