@@ -1,4 +1,4 @@
-import { GetQuestionListPresenter } from 'src/infrastructure/controllers/video/video.presenter';
+import { GetQuestionListPresenter } from 'src/presentation/video/video.presenter';
 import { Video } from '../model/video';
 
 export interface VideoRepository {

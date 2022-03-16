@@ -6,7 +6,6 @@ import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';
 import { RepositoriesModule } from '../repositories/repositories.module';
 import { DatabaseVideoRepository } from '../repositories/video.repository';
-import { UseCaseProxy } from './usecases-proxy';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
@@ -26,22 +25,20 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: UsecasesProxyDynamicModule.GET_QUESTION_LIST_USECASES_PROXY,
+          provide: GetQuestionListUseCases,
           useFactory: (
             databaseVideoRepository: DatabaseVideoRepository,
             exceptionsService: ExceptionsService,
           ) =>
-            new UseCaseProxy(
-              new GetQuestionListUseCases(
-                databaseVideoRepository,
-                exceptionsService,
-              ),
+            new GetQuestionListUseCases(
+              databaseVideoRepository,
+              exceptionsService,
             ),
         },
       ],
       exports: [
         CreateVideoUsecase,
-        UsecasesProxyDynamicModule.GET_QUESTION_LIST_USECASES_PROXY,
+        GetQuestionListUseCases
       ],
     };
   }

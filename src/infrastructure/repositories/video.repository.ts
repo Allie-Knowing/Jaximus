@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { Repository } from 'typeorm';
-import { GetQuestionListPresenter } from '../controllers/video/video.presenter';
+import { GetQuestionListPresenter } from '../../presentation/video/video.presenter';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
