@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
+import { VideoController } from 'src/presentation/video/video.controller';
 import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.module';
-import { VideoController } from './video/video.controller';
 
 @Module({
   imports: [UsecasesProxyDynamicModule.register()],

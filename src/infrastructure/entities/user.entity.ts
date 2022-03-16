@@ -22,6 +22,6 @@ export class UserTypeOrmEntity {
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.user)
   likes: LikeTypeOrmEntity[];
 
-  @OneToMany(() => VideoTypeOrmEntity, (video) => video.user) 
-  videos: VideoTypeOrmEntity[]
+  @OneToMany(() => VideoTypeOrmEntity, (video) => video.user)
+  videos: VideoTypeOrmEntity[];
 }

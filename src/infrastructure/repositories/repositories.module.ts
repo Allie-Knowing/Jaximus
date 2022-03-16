@@ -15,13 +15,7 @@ import { DatabaseVideoRepository } from './video.repository';
 @Module({
   imports: [
     TypeOrmConfigModule,
-    TypeOrmModule.forFeature([
-      UserTypeOrmEntity,
-      CommentTypeOrmEntity,
-      HashTagTypeOrmEntity,
-      VideoTypeOrmEntity,
-      LikeTypeOrmEntity,
-    ]),
+    TypeOrmModule.forFeature([UserTypeOrmEntity, CommentTypeOrmEntity, HashTagTypeOrmEntity, VideoTypeOrmEntity, LikeTypeOrmEntity]),
   ],
   providers: [
     DatabaseUserRepository,
@@ -30,12 +24,6 @@ import { DatabaseVideoRepository } from './video.repository';
     DatabaseVideoRepository,
     DatabaseLikeRepository,
   ],
-  exports: [
-    DatabaseUserRepository,
-    DatabaseCommentRepository,
-    DatabaseHashTagRepository,
-    DatabaseVideoRepository,
-    DatabaseLikeRepository,
-  ],
+  exports: [DatabaseUserRepository, DatabaseCommentRepository, DatabaseHashTagRepository, DatabaseVideoRepository, DatabaseLikeRepository],
 })
 export class RepositoriesModule {}
