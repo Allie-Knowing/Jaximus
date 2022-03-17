@@ -5,8 +5,6 @@ import { RepositoriesModule } from './infrastructure/repositories/repositories.m
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './infrastructure/common/strategies/jwt.strategy';
 import { ControllersModule } from './infrastructure/controllers/controllers.module';
-import { MulterModule } from '@nestjs/platform-express';
-import { MulterConfigModule } from './infrastructure/config/multer/multer-config.module';
 
 @Module({
   imports: [
@@ -14,11 +12,7 @@ import { MulterConfigModule } from './infrastructure/config/multer/multer-config
     ExceptionsModule,
     RepositoriesModule,
     ControllersModule,
-    JwtModule.register({}),
-    MulterModule.register({
-      dest: './upload',
-    }),
-    MulterConfigModule,
+    JwtModule.register({})
   ],
   providers: [JwtStrategy],
 })
