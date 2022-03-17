@@ -30,15 +30,15 @@ export class EnvironmentConfigService implements DatabaseConfig, S3Config {
   }
 
   getAccessKey(): string {
-    return this.configService.get<string>("AWS_ACCESS_KEY")
+    return this.configService.get<string>('AWS_ACCESS_KEY');
   }
   getSecretKey(): string {
-    return this.configService.get<string>("AWS_SECRET_ACCESS_KEY")
+    return this.configService.get<string>('AWS_SECRET_ACCESS_KEY');
   }
   getRegion(): string {
-    return this.configService.get<string>("AWS_REGION")
+    return this.configService.get<string>('AWS_REGION');
   }
   getBucketName(): string {
-    return this.configService.get<string>("AWS_S3_BUCKET_NAME")
+    return this.configService.get<string>('AWS_S3_BUCKET_NAME');
   }
 }
