@@ -28,7 +28,7 @@ export class MulterConfigService implements MulterOptionsFactory {
         bucket: this.configService.getBucketName(),
         acl: 'public-read',
         key: (req, file: Express.Multer.File, cb) => {
-          cb(null, `video/${v4()}.${file.originalname.split('.')[file.originalname.split('.').length - 1]}`);
+          cb(null, `video/${req.query.type}/${v4()}.${file.originalname.split('.')[file.originalname.split('.').length - 1]}`);
         },
       }),
       limits: { fieldSize: 50 * 1024 * 1024 },
