@@ -10,9 +10,9 @@ import { EnvironmentConfigService } from '../environment-config/environment-conf
 export class MulterConfigService implements MulterOptionsFactory {
   constructor(
     @Inject(EnvironmentConfigService)
-    private configService: S3Config
+    private configService: S3Config,
   ) {}
-  
+
   createMulterOptions(): MulterModuleOptions {
     AWS.config.update({
       accessKeyId: this.configService.getAccessKey(),
@@ -28,7 +28,7 @@ export class MulterConfigService implements MulterOptionsFactory {
         bucket: this.configService.getBucketName(),
         acl: 'public-read',
         key: (req, file: Express.Multer.File, cb) => {
-          cb(null, `video/${v4()} ${file.originalname}`);
+          cb(null, `video/${v4()}.${file.originalname.split('.')[file.originalname.split('.').length - 1]}`);
         },
       }),
       limits: { fieldSize: 50 * 1024 * 1024 },
