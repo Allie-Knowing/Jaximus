@@ -1,6 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
+import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';
@@ -26,8 +27,14 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
             new GetQuestionListUseCases(databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseVideoRepository, ExceptionsService],
+          provide: GetVideoCommentListUseCases,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new GetVideoCommentListUseCases(databaseVideoRepository, exceptionsService),
+        },
       ],
-      exports: [CreateVideoUsecase, GetQuestionListUseCases],
+      exports: [CreateVideoUsecase, GetQuestionListUseCases, GetVideoCommentListUseCases],
     };
   }
 }
