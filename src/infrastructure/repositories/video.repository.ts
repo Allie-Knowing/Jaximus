@@ -67,7 +67,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'video_id')
       .addSelect('video.video_url', 'video_url')
       .addSelect('video.title', 'title')
-      .addSelect('video.created_at', 'created_at')
+      .addSelect('SUBSTR(video.created_at, 1, 10)', 'created_at')
       .addSelect('COUNT(like.id)', 'like_cnt')
       .addSelect('user.profile', 'profile')
       .addSelect('user.id', 'user_id')
