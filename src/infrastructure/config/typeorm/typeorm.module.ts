@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DatabaseConfig } from 'src/domain/config/database.interface';
 import { EnvironmentConfigModule } from '../environment-config/environment-config.module';
 import { EnvironmentConfigService } from '../environment-config/environment-config.service';
 
-export const getTypeOrmModuleOptions = (config: EnvironmentConfigService): TypeOrmModuleOptions =>
+export const getTypeOrmModuleOptions = (config: DatabaseConfig): TypeOrmModuleOptions =>
   ({
     type: 'mysql',
     host: config.getDatabaseHost(),

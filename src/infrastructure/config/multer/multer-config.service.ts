@@ -1,16 +1,23 @@
 import * as multerS3 from 'multer-s3';
 import * as AWS from 'aws-sdk';
 import { v4 } from 'uuid';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
+import { S3Config } from 'src/domain/config/s3.interface';
+import { EnvironmentConfigService } from '../environment-config/environment-config.service';
 
 @Injectable()
 export class MulterConfigService implements MulterOptionsFactory {
+  constructor(
+    @Inject(EnvironmentConfigService)
+    private configService: S3Config
+  ) {}
+  
   createMulterOptions(): MulterModuleOptions {
     AWS.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
+      accessKeyId: this.configService.getAccessKey(),
+      secretAccessKey: this.configService.getSecretKey(),
+      region: this.configService.getRegion(),
     });
 
     const s3 = new AWS.S3();
@@ -18,7 +25,7 @@ export class MulterConfigService implements MulterOptionsFactory {
     return {
       storage: multerS3({
         s3: s3,
-        bucket: process.env.AWS_S3_BUCKET_NAME,
+        bucket: this.configService.getBucketName(),
         acl: 'public-read',
         key: (req, file: Express.Multer.File, cb) => {
           cb(null, `video/${v4()} ${file.originalname}`);
