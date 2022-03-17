@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { HashTagTypeOrmEntity } from './hash-tag.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -15,8 +15,11 @@ export class VideoTypeOrmEntity {
   @Column({ length: 100 })
   title: string;
 
-  @Column({ length: 2000 })
+  @Column({ length: 2000, name: "video_url" })
   videoUrl: string;
+
+  @CreateDateColumn()
+  created_at: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
@@ -35,5 +38,6 @@ export class VideoTypeOrmEntity {
   question: VideoTypeOrmEntity;
 
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.videos)
+  @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmEntity;
 }
