@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
+import { GetVideoCommentList } from 'src/domain/repositories/dto/video.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { Repository } from 'typeorm';
 import { GetQuestionListPresenter } from '../../presentation/video/video.presenter';
@@ -58,5 +59,22 @@ export class DatabaseVideoRepository implements VideoRepository {
         }),
       ),
     );
+  }
+
+  async getVideoCommentList(video_id: number): Promise<GetVideoCommentList[]> {
+    return this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id', 'video_id')
+      .addSelect('video.video_url', 'video_url')
+      .addSelect('video.title', 'title')
+      .addSelect('video.created_at', 'created_at')
+      .addSelect('COUNT(like.id)', 'like_cnt')
+      .addSelect('user.profile', 'profile')
+      .addSelect('user.id', 'user_id')
+      .where('video.question = :video_id', { video_id: video_id })
+      .leftJoin('video.user', 'user')
+      .leftJoin('video.likes', 'like')
+      .groupBy('video.id')
+      .getRawMany();
   }
 }
