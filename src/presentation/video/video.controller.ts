@@ -4,7 +4,6 @@ import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { GetQuestionListPresenter } from './video.presenter';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { MulterConfigService } from 'src/infrastructure/config/multer/multer-config.service';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 
 @Controller('/video')

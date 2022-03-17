@@ -1,4 +1,4 @@
-export class GetQuestionListPresenter {
+export class QuestionList {
   video_id: number;
   video_url: string;
   title: string;
