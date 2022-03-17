@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express';
 import { VideoController } from 'src/presentation/video/video.controller';
-import { MulterConfigModule } from '../config/multer/multer-config.module';
+import { MulterConfigService } from '../config/multer/multer-config.service';
 import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.module';
 
 @Module({
-  imports: [UsecasesProxyDynamicModule.register(), MulterConfigModule],
+  imports: [
+    UsecasesProxyDynamicModule.register(),
+    MulterModule.registerAsync({
+      useExisting: MulterConfigService,
+    }),
+  ],
   controllers: [VideoController],
 })
 export class ControllersModule {}
