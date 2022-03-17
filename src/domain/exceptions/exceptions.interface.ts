@@ -6,6 +6,7 @@ export interface IFormatExceptionMessage {
 export interface IException {
   badRequestException(data: IFormatExceptionMessage): void;
   questionNotFoundException(): void;
+  videoCommentNotFoundException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
   expiredTokenException(): void;
   forbiddenException(data?: IFormatExceptionMessage): void;

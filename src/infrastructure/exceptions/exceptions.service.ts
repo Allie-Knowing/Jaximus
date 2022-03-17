@@ -13,6 +13,9 @@ export class ExceptionsService implements IException {
   questionNotFoundException(): void {
     throw new NotFoundException('Question not found exception');
   }
+  videoCommentNotFoundException(): void {
+    throw new NotFoundException('Video Comment not found exception');
+  }
   badRequestException(data: IFormatExceptionMessage): void {
     throw new BadRequestException(data);
   }
