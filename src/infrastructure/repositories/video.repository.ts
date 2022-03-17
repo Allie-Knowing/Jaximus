@@ -71,7 +71,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('COUNT(like.id)', 'like_cnt')
       .addSelect('user.profile', 'profile')
       .addSelect('user.id', 'user_id')
-      .where('video.question = :video_id', { video_id: video_id })
+      .where('video.question = :video_id', { video_id })
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
