@@ -59,4 +59,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       ),
     );
   }
+
+  async createVideoComment(video: Video): Promise<void> {}
 }
