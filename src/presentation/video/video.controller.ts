@@ -34,4 +34,10 @@ export class VideoController {
     await this.createVideoCommentUsecase.execute(userId, request);
     return { status: 201, message: 'success' };
   }
+
+  @Post('/file')
+  @UseInterceptors(FileInterceptor('file'))
+  videoFile(@UploadedFile() file) {
+    return { url: file.location };
+  }
 }
