@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
-import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
+import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';

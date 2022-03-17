@@ -18,7 +18,7 @@ import { MulterConfigModule } from './infrastructure/config/multer/multer-config
     MulterModule.register({
       dest: './upload',
     }),
-    MulterConfigModule
+    MulterConfigModule,
   ],
   providers: [JwtStrategy],
 })

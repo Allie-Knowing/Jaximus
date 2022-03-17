@@ -15,7 +15,7 @@ export class VideoTypeOrmEntity {
   @Column({ length: 100 })
   title: string;
 
-  @Column({ length: 2000, name: "video_url" })
+  @Column({ length: 2000, name: 'video_url' })
   videoUrl: string;
 
   @CreateDateColumn()
