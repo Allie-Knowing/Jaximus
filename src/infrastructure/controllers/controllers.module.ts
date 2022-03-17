@@ -3,7 +3,7 @@ import { VideoController } from 'src/presentation/video/video.controller';
 import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.module';
 
 @Module({
-  imports: [UsecasesProxyDynamicModule.register()],
+  imports: [UsecasesProxyDynamicModule.register(), MulterConfigModule],
   controllers: [VideoController],
 })
 export class ControllersModule {}

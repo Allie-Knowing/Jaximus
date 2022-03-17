@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Scope, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetQuestionListPresenter } from './video.presenter';
+import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { MulterConfigService } from 'src/infrastructure/config/multer/multer-config.service';
 
 @Controller('/video')
 export class VideoController {
@@ -11,6 +14,8 @@ export class VideoController {
     private readonly createVideoUsecase: CreateVideoUsecase,
     @Inject(GetQuestionListUseCases)
     private readonly getQuestionListUsecase: GetQuestionListUseCases,
+    @Inject(CreateVideoCommentUsecase)
+    private readonly createVideoCommentUsecase: CreateVideoCommentUsecase,
   ) {}
 
   @Post('/')
@@ -21,5 +26,12 @@ export class VideoController {
   @Get('/')
   async getQuestionList(): Promise<GetQuestionListPresenter[]> {
     return this.getQuestionListUsecase.execute();
+  }
+
+  @Post('/answer')
+  @UseInterceptors(FileInterceptor('file'))
+  async createVideoComment(@UploadedFile() file, userId: number, @Body() request: Video) {
+    await this.createVideoCommentUsecase.execute(userId, request);
+    return { status: 201, message: 'success' };
   }
 }
