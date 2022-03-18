@@ -1,4 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
+import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
@@ -6,6 +7,7 @@ import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';
+import { DatabaseLikeRepository } from '../repositories/like.repository';
 import { RepositoriesModule } from '../repositories/repositories.module';
 import { DatabaseVideoRepository } from '../repositories/video.repository';
 
@@ -39,8 +41,13 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
             new GetVideoCommentListUseCases(databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseLikeRepository],
+          provide: CreateLikeUsecase,
+          useFactory: (databaseLikeRepository: DatabaseLikeRepository) => new CreateLikeUsecase(databaseLikeRepository),
+        },
       ],
-      exports: [CreateVideoUsecase, CreateVideoCommentUsecase, GetQuestionListUseCases, GetVideoCommentListUseCases],
+      exports: [CreateVideoUsecase, CreateVideoCommentUsecase, GetQuestionListUseCases, GetVideoCommentListUseCases, CreateLikeUsecase],
     };
   }
 }
