@@ -7,7 +7,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
 
-
 @Controller('/video')
 export class VideoController {
   constructor(
@@ -31,9 +30,9 @@ export class VideoController {
     return this.getQuestionListUsecase.execute();
   }
 
-  @Get('/answer/:video_id')
-  async getVideoCommentList(@Param('video_id', ParseIntPipe) video_id: number): Promise<GetVideoCommentListPresenter[]> {
-    return this.getVideoCommentListUseCases.execute(video_id);
+  @Get('/answer/:videoId')
+  async getVideoCommentList(@Param('videoId', ParseIntPipe) videoId: number): Promise<GetVideoCommentListPresenter[]> {
+    return this.getVideoCommentListUseCases.execute(videoId);
   }
 
   @Post('/answer')
