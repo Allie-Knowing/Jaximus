@@ -1,9 +1,12 @@
-import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
+import { GetQuestionListPresenter, GetVideoCommentListPresenter } from './video.presenter';
+import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
-import { GetQuestionListPresenter, GetVideoCommentListPresenter } from './video.presenter';
+
 
 @Controller('/video')
 export class VideoController {
@@ -14,6 +17,8 @@ export class VideoController {
     private readonly getQuestionListUsecase: GetQuestionListUseCases,
     @Inject(GetVideoCommentListUseCases)
     private readonly getVideoCommentListUseCases: GetVideoCommentListUseCases,
+    @Inject(CreateVideoCommentUsecase)
+    private readonly createVideoCommentUsecase: CreateVideoCommentUsecase,
   ) {}
 
   @Post('/')
@@ -29,5 +34,18 @@ export class VideoController {
   @Get('/answer/:video_id')
   async getVideoCommentList(@Param('video_id', ParseIntPipe) video_id: number): Promise<GetVideoCommentListPresenter[]> {
     return this.getVideoCommentListUseCases.execute(video_id);
+  }
+
+  @Post('/answer')
+  @UseInterceptors(FileInterceptor('file'))
+  async createVideoComment(@UploadedFile() file, userId: number, @Body() request: Video) {
+    await this.createVideoCommentUsecase.execute(userId, request);
+    return { status: 201, message: 'success' };
+  }
+
+  @Post('/file')
+  @UseInterceptors(FileInterceptor('file'))
+  videoFile(@UploadedFile() file) {
+    return { url: file.location };
   }
 }

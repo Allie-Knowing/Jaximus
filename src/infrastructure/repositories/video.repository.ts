@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { GetVideoCommentList } from 'src/domain/repositories/dto/video.dto';
+import { QuestionList } from 'src/domain/repositories/dto/video.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { Repository } from 'typeorm';
-import { GetQuestionListPresenter } from '../../presentation/video/video.presenter';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
@@ -22,7 +22,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
   ) {}
 
-  getQuestionList(): Promise<GetQuestionListPresenter[]> {
+  getQuestionList(): Promise<QuestionList[]> {
     return this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
@@ -77,4 +77,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawMany();
   }
+  
+  async createVideoComment(video: Video): Promise<void> {}
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseConfig } from 'src/domain/config/database.interface';
+import { S3Config } from 'src/domain/config/s3.interface';
 
 @Injectable()
-export class EnvironmentConfigService implements DatabaseConfig {
+export class EnvironmentConfigService implements DatabaseConfig, S3Config {
   constructor(private configService: ConfigService) {}
 
   getDatabaseHost(): string {
@@ -26,5 +27,18 @@ export class EnvironmentConfigService implements DatabaseConfig {
   }
   getDatabaseLogging(): boolean {
     return this.configService.get<boolean>('DATABASE_LOGGING');
+  }
+
+  getAccessKey(): string {
+    return this.configService.get<string>('AWS_ACCESS_KEY');
+  }
+  getSecretKey(): string {
+    return this.configService.get<string>('AWS_SECRET_ACCESS_KEY');
+  }
+  getRegion(): string {
+    return this.configService.get<string>('AWS_REGION');
+  }
+  getBucketName(): string {
+    return this.configService.get<string>('AWS_S3_BUCKET_NAME');
   }
 }
