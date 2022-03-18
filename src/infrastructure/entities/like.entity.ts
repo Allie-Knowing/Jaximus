@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -6,6 +6,12 @@ import { VideoTypeOrmEntity } from './video.entity';
 export class LikeTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @PrimaryColumn()
+  user_id: number;
+
+  @PrimaryColumn()
+  video_id: number;
 
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.likes)
   @JoinColumn({ name: 'user_id' })
