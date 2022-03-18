@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
@@ -27,7 +27,7 @@ export class VideoController {
   }
 
   @Get('/answer/:video_id')
-  async getVideoCommentList(@Param('video_id') video_id: number): Promise<GetVideoCommentListPresenter[]> {
+  async getVideoCommentList(@Param('video_id', ParseIntPipe) video_id: number): Promise<GetVideoCommentListPresenter[]> {
     return this.getVideoCommentListUseCases.execute(video_id);
   }
 }
