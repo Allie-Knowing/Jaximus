@@ -1,10 +1,14 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
+import { Repository } from 'typeorm';
+import { LikeTypeOrmEntity } from '../entities/like.entity';
+import { UserTypeOrmEntity } from '../entities/user.entity';
+import { VideoTypeOrmEntity } from '../entities/video.entity';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';
@@ -13,7 +17,12 @@ import { RepositoriesModule } from '../repositories/repositories.module';
 import { DatabaseVideoRepository } from '../repositories/video.repository';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
+  imports: [
+    LoggerModule,
+    RepositoriesModule,
+    ExceptionsModule,
+    TypeOrmModule.forFeature([LikeTypeOrmEntity, UserTypeOrmEntity, VideoTypeOrmEntity]),
+  ],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -43,10 +52,22 @@ export class UsecasesProxyDynamicModule {
             new GetVideoCommentListUseCases(databaseVideoRepository, exceptionsService),
         },
         {
-          inject: [DatabaseLikeRepository, ExceptionsService],
+          inject: [DatabaseLikeRepository, ExceptionsService, LikeTypeOrmEntity, UserTypeOrmEntity, VideoTypeOrmEntity],
           provide: CreateLikeUsecase,
-          useFactory: (databaseLikeRepository: DatabaseLikeRepository, exceptionsService: ExceptionsService) =>
-            new CreateLikeUsecase(databaseLikeRepository, exceptionsService),
+          useFactory: (
+            databaseLikeRepository: DatabaseLikeRepository,
+            exceptionsService: ExceptionsService,
+            likeEntityRepository: Repository<LikeTypeOrmEntity>,
+            userEntityRepository: Repository<UserTypeOrmEntity>,
+            videoEntityRepository: Repository<VideoTypeOrmEntity>,
+          ) =>
+            new CreateLikeUsecase(
+              databaseLikeRepository,
+              exceptionsService,
+              likeEntityRepository,
+              userEntityRepository,
+              videoEntityRepository,
+            ),
         },
       ],
       exports: [CreateVideoUsecase, CreateVideoCommentUsecase, GetQuestionListUseCases, GetVideoCommentListUseCases, CreateLikeUsecase],
