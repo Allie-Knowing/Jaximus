@@ -16,6 +16,9 @@ export class ExceptionsService implements IException {
   videoCommentNotFoundException(): void {
     throw new NotFoundException('Video Comment not found exception');
   }
+  likesAlreadyExistException(): void {
+    throw new BadRequestException('Likes already exist exception');
+  }
   badRequestException(data: IFormatExceptionMessage): void {
     throw new BadRequestException(data);
   }
