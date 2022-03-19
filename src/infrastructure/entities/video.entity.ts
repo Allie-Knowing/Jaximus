@@ -18,6 +18,9 @@ export class VideoTypeOrmEntity {
   @Column({ length: 2000, name: 'video_url' })
   videoUrl: string;
 
+  @Column()
+  idAdoption: boolean = false;
+
   @CreateDateColumn()
   created_at: Date;
 
