@@ -1,3 +1,4 @@
 export interface LikeRepository {
-  createLike(videoId: number): Promise<void>;
+  createLike(videoId: number, userId: number): Promise<void>;
+  findOne(videoId: number, userId: number): Promise<boolean>;
 }
