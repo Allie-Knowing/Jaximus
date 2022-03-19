@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
-import { LikeController } from 'src/presentation/likfe/like.controller';
+import { LikeController } from 'src/presentation/like/like.controller';
 import { VideoController } from 'src/presentation/video/video.controller';
 import { EnvironmentConfigModule } from '../config/environment-config/environment-config.module';
 import { EnvironmentConfigService } from '../config/environment-config/environment-config.service';
