@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, Scope } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 
 @Controller('/like')
