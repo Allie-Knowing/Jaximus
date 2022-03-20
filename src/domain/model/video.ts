@@ -6,6 +6,7 @@ export class Video {
   description: string;
   title: string;
   videoUrl: string;
+  idAdoption: boolean;
   likes: Like[];
   answers: Video[];
   hashTags: string[];
