@@ -10,4 +10,8 @@ export class DatabaseUserRepository implements UserRepository {
     @InjectRepository(UserTypeOrmEntity)
     private readonly userEntityRepository: Repository<UserTypeOrmEntity>,
   ) {}
+
+  findOne(userId: number) {
+    return this.userEntityRepository.findOne(userId);
+  }
 }

@@ -1,3 +1,4 @@
+import { Video } from 'src/domain/model/video';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { HashTagTypeOrmEntity } from './hash-tag.entity';
@@ -40,4 +41,8 @@ export class VideoTypeOrmEntity {
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.videos)
   @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmEntity;
+
+  public static of(video: Video): VideoTypeOrmEntity {
+    return { ...video, likes: [], answers: [], hashTags: [], comments: [], question: null, user: null };
+  }
 }
