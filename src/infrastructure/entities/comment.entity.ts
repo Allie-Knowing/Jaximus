@@ -10,7 +10,7 @@ export class CommentTypeOrmEntity {
   content: string;
 
   @Column()
-  idAdoption: boolean;
+  idAdoption: boolean = false;
 
   @ManyToOne(() => VideoTypeOrmEntity, (video) => video.comments)
   @JoinColumn({ name: 'video_id' })

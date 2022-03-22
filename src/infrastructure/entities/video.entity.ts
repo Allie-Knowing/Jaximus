@@ -19,7 +19,7 @@ export class VideoTypeOrmEntity {
   videoUrl: string;
 
   @Column()
-  idAdoption: boolean;
+  idAdoption: boolean = false;
 
   @CreateDateColumn()
   created_at: Date;
