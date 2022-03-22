@@ -9,6 +9,9 @@ export class CommentTypeOrmEntity {
   @Column({ length: 200 })
   content: string;
 
+  @Column({ default: false })
+  idAdoption: boolean;
+
   @ManyToOne(() => VideoTypeOrmEntity, (video) => video.comments)
   @JoinColumn({ name: 'video_id' })
   video: VideoTypeOrmEntity;
