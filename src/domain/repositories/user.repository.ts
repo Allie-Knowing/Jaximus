@@ -1,1 +1,3 @@
-export interface UserRepository {}
+export interface UserRepository {
+  findOne(userId: number);
+}

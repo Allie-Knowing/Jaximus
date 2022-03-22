@@ -1,3 +1,4 @@
+import { User } from 'src/domain/model/user';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { LikeTypeOrmEntity } from './like.entity';
 import { VideoTypeOrmEntity } from './video.entity';
@@ -24,4 +25,8 @@ export class UserTypeOrmEntity {
 
   @OneToMany(() => VideoTypeOrmEntity, (video) => video.user)
   videos: VideoTypeOrmEntity[];
+
+  public static of(user: User): UserTypeOrmEntity {
+    return { ...user, likes: [], videos: [] };
+  }
 }

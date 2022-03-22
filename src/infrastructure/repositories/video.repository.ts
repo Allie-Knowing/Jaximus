@@ -22,6 +22,10 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
   ) {}
 
+  findOne(videoId: number) {
+    return this.videoEntityRepository.findOne(videoId);
+  }
+
   getQuestionList(): Promise<QuestionList[]> {
     return this.videoEntityRepository
       .createQueryBuilder('video')
