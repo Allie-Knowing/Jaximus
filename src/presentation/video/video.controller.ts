@@ -23,21 +23,21 @@ export class VideoController {
   @Post('/')
   create(userId: number, @Body() request: Video) {
     this.createVideoUsecase.execute(userId, request);
+    return { status: 201, message: 'success' };
   }
 
   @Get('/')
-  async getQuestionList(): Promise<GetQuestionListPresenter[]> {
+  questionList(): Promise<GetQuestionListPresenter[]> {
     return this.getQuestionListUsecase.execute();
   }
 
   @Get('/answer/:videoId')
-  async getVideoCommentList(@Param('videoId', ParseIntPipe) videoId: number): Promise<GetVideoCommentListPresenter[]> {
+  videoAnswerList(@Param('videoId', ParseIntPipe) videoId: number): Promise<GetVideoCommentListPresenter[]> {
     return this.getVideoCommentListUseCases.execute(videoId);
   }
 
   @Post('/answer')
-  @UseInterceptors(FileInterceptor('file'))
-  async createVideoComment(@UploadedFile() file, userId: number, @Body() request: Video) {
+  async videoAnswer(userId: number, @Body() request: Video) {
     await this.createVideoCommentUsecase.execute(userId, request);
     return { status: 201, message: 'success' };
   }
