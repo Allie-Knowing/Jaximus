@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionFilter } from './infrastructure/common/filters/exception.filter';
@@ -21,6 +21,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new LoggingInterceptor(new LoggerService()));
   app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   await app.listen(3000);
 }
