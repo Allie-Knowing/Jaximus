@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, UploadedFile, UseInterceptors, Put } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
-import { GetQuestionListPresenter, GetVideoCommentListPresenter } from './video.presenter';
+import { GetVideoCommentListPresenter } from './video.presenter';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
@@ -30,7 +30,7 @@ export class VideoController {
   }
 
   @Get('/')
-  questionList(): Promise<GetQuestionListPresenter[]> {
+  questionList(): Promise<Video[]> {
     return this.getQuestionListUsecase.execute();
   }
 

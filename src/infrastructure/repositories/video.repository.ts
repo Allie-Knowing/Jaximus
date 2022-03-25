@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { GetVideoCommentList } from 'src/domain/repositories/dto/video.dto';
-import { QuestionList } from 'src/domain/repositories/dto/video.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
@@ -26,23 +25,24 @@ export class DatabaseVideoRepository implements VideoRepository {
     return this.videoEntityRepository.findOne(videoId);
   }
 
-  getQuestionList(): Promise<QuestionList[]> {
-    return this.videoEntityRepository
+  async getQuestionList(): Promise<Video[]> {
+    const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
       .leftJoin('video.likes', 'like')
       .innerJoin('video.user', 'user')
-      .select('video.id', 'video_id')
-      .addSelect('video.video_url', 'video_url')
+      .select('video.id', 'id')
+      .addSelect('video.videoUrl', 'videoUrl')
       .addSelect('video.title', 'title')
       .addSelect('video.description', 'description')
-      .addSelect('video.created_at', 'created_at')
-      .addSelect('user.id', 'user_id')
+      .addSelect('video.createdAt', 'createdAt')
+      .addSelect('user.id', 'userId')
       .addSelect('user.profile', 'profile')
-      .addSelect('COUNT(comment.id)', 'comment_cnt')
-      .addSelect('COUNT(like.id)', 'like_cnt')
+      .addSelect('COUNT(comment.id)', 'commentCnt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
       .groupBy('video.id')
       .getRawMany();
+    return videos.map((video) => new Video(video));
   }
 
   async save(video: Video): Promise<void> {
