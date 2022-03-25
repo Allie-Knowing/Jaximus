@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, UploadedFile, UseInterceptors, Put } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { GetQuestionListPresenter, GetVideoCommentListPresenter } from './video.presenter';
@@ -6,6 +6,7 @@ import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-commen
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
+import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 
 @Controller('/video')
 export class VideoController {
@@ -18,6 +19,8 @@ export class VideoController {
     private readonly getVideoCommentListUseCases: GetVideoCommentListUseCases,
     @Inject(CreateVideoCommentUsecase)
     private readonly createVideoCommentUsecase: CreateVideoCommentUsecase,
+    @Inject(VideoAdoptionUsecase)
+    private readonly videoAdoptionUsecase: VideoAdoptionUsecase,
   ) {}
 
   @Post('/')
@@ -46,5 +49,11 @@ export class VideoController {
   @UseInterceptors(FileInterceptor('file'))
   videoFile(@UploadedFile() file) {
     return { url: file.location };
+  }
+
+  @Put('/adoption/:videoId')
+  async videoAdoption(@Param('videoId', ParseIntPipe) videoId: number) {
+    await this.videoAdoptionUsecase.execute(videoId);
+    return { status: 200, message: 'success' };
   }
 }
