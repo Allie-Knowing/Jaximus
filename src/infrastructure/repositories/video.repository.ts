@@ -84,10 +84,12 @@ export class DatabaseVideoRepository implements VideoRepository {
 
   async createVideoComment(video: Video): Promise<void> {}
 
-  async videoAdoption(videoId: number) {
-    const video = await this.videoEntityRepository.findOne(videoId);
-    video.isAdoption = true;
-
-    await this.videoEntityRepository.save(video);
+  async videoAdoption(videoId: number): Promise<void> {
+    await this.videoEntityRepository
+      .createQueryBuilder()
+      .update(VideoTypeOrmEntity)
+      .set({ isAdoption: true })
+      .where('id = :id', { id: videoId })
+      .execute();
   }
 }
