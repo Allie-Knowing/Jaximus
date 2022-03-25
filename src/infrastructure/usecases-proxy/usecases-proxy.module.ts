@@ -1,5 +1,4 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { LikeRepository } from 'src/domain/repositories/like.repository';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
@@ -8,9 +7,7 @@ import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
-import { LikeTypeOrmEntity } from '../entities/like.entity';
-import { UserTypeOrmEntity } from '../entities/user.entity';
-import { VideoTypeOrmEntity } from '../entities/video.entity';
+import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';
@@ -20,12 +17,7 @@ import { DatabaseUserRepository } from '../repositories/user.repository';
 import { DatabaseVideoRepository } from '../repositories/video.repository';
 
 @Module({
-  imports: [
-    LoggerModule,
-    RepositoriesModule,
-    ExceptionsModule,
-    TypeOrmModule.forFeature([LikeTypeOrmEntity, UserTypeOrmEntity, VideoTypeOrmEntity]),
-  ],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -64,8 +56,21 @@ export class UsecasesProxyDynamicModule {
             videoEntityRepository: VideoRepository,
           ) => new CreateLikeUsecase(exceptionsService, likeEntityRepository, userEntityRepository, videoEntityRepository),
         },
+        {
+          inject: [DatabaseVideoRepository, ExceptionsService],
+          provide: VideoAdoptionUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new VideoAdoptionUsecase(databaseVideoRepository, exceptionsService),
+        },
       ],
-      exports: [CreateVideoUsecase, CreateVideoCommentUsecase, GetQuestionListUseCases, GetVideoCommentListUseCases, CreateLikeUsecase],
+      exports: [
+        CreateVideoUsecase,
+        CreateVideoCommentUsecase,
+        GetQuestionListUseCases,
+        GetVideoCommentListUseCases,
+        CreateLikeUsecase,
+        VideoAdoptionUsecase,
+      ],
     };
   }
 }
