@@ -8,6 +8,7 @@ export interface IException {
   questionNotFoundException(): void;
   videoNotFoundException(): void;
   videoCommentNotFoundException(): void;
+  commentNotFoundException(): void;
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
