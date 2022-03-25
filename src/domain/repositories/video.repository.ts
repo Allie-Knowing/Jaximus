@@ -8,4 +8,5 @@ export interface VideoRepository {
   getQuestionList(): Promise<QuestionList[]>;
   getVideoCommentList(videoId: number): Promise<GetVideoCommentList[]>;
   createVideoComment(video: Video): Promise<void>;
+  videoAdoption(videoId: number): Promise<void>;
 }
