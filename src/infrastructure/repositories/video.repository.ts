@@ -83,4 +83,11 @@ export class DatabaseVideoRepository implements VideoRepository {
   }
 
   async createVideoComment(video: Video): Promise<void> {}
+
+  async videoAdoption(videoId: number) {
+    const video = await this.videoEntityRepository.findOne(videoId);
+    video.isAdoption = true;
+
+    await this.videoEntityRepository.save(video);
+  }
 }
