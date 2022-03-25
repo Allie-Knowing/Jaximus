@@ -6,7 +6,7 @@ export class Video {
   description: string;
   title: string;
   videoUrl: string;
-  created_at: Date;
+  createdAt: Date;
   isAdoption: boolean;
   likes: Like[];
   answers: Video[];

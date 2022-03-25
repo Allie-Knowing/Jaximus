@@ -22,8 +22,8 @@ export class VideoTypeOrmEntity {
   @Column({ default: false, name: "is_adoption" })
   isAdoption: boolean;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: "created_at" })
+  createdAt: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
