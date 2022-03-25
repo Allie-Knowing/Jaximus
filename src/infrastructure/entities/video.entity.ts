@@ -19,7 +19,7 @@ export class VideoTypeOrmEntity {
   @Column({ length: 2000, name: 'video_url' })
   videoUrl: string;
 
-  @Column({ default: false })
+  @Column({ default: false, name: "is_adoption" })
   isAdoption: boolean;
 
   @CreateDateColumn()

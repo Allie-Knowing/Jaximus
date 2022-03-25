@@ -9,7 +9,7 @@ export class CommentTypeOrmEntity {
   @Column({ length: 200 })
   content: string;
 
-  @Column({ default: false })
+  @Column({ default: false, name: "is_adoption" })
   isAdoption: boolean;
 
   @ManyToOne(() => VideoTypeOrmEntity, (video) => video.comments)
