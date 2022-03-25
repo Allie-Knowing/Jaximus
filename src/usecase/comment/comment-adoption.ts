@@ -10,7 +10,6 @@ export class CommentAdoptionUsecase {
     if (!comment) this.exceptionsService.commentNotFoundException();
     if (comment.isAdoption) this.exceptionsService.adoptionAlreadyExistException();
 
-    console.log('응애');
     this.commentRepository.commentAdoption(commentId);
   }
 }
