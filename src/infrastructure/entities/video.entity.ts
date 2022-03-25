@@ -19,10 +19,10 @@ export class VideoTypeOrmEntity {
   @Column({ length: 2000, name: 'video_url' })
   videoUrl: string;
 
-  @Column({ default: false, name: "is_adoption" })
+  @Column({ default: false, name: 'is_adoption' })
   isAdoption: boolean;
 
-  @CreateDateColumn({ name: "created_at" })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
