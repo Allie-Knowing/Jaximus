@@ -2,6 +2,7 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { LikeRepository } from 'src/domain/repositories/like.repository';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
+import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
@@ -11,6 +12,7 @@ import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
 import { LoggerModule } from '../logger/logger.module';
+import { DatabaseCommentRepository } from '../repositories/comment.repository';
 import { DatabaseLikeRepository } from '../repositories/like.repository';
 import { RepositoriesModule } from '../repositories/repositories.module';
 import { DatabaseUserRepository } from '../repositories/user.repository';
@@ -62,6 +64,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
             new VideoAdoptionUsecase(databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseCommentRepository, ExceptionsService],
+          provide: CommentAdoptionUsecase,
+          useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
+            new CommentAdoptionUsecase(databaseCommentRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateVideoUsecase,
@@ -70,6 +78,7 @@ export class UsecasesProxyDynamicModule {
         GetVideoCommentListUseCases,
         CreateLikeUsecase,
         VideoAdoptionUsecase,
+        CommentAdoptionUsecase,
       ],
     };
   }

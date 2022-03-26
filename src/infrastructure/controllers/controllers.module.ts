@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
+import { CommentController } from 'src/presentation/comment/comment.controller';
 import { LikeController } from 'src/presentation/like/like.controller';
 import { VideoController } from 'src/presentation/video/video.controller';
 import { EnvironmentConfigModule } from '../config/environment-config/environment-config.module';
@@ -18,6 +19,6 @@ import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.mod
       inject: [EnvironmentConfigService],
     }),
   ],
-  controllers: [VideoController, LikeController],
+  controllers: [VideoController, LikeController, CommentController],
 })
 export class ControllersModule {}
