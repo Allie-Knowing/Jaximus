@@ -34,4 +34,14 @@ export class DatabaseLikeRepository implements LikeRepository {
       .leftJoin('like.video', 'video')
       .getOne();
   }
+
+  async deleteLike(videoId: number, userId: number): Promise<void> {
+    await this.likeEntityRepository
+      .createQueryBuilder()
+      .delete()
+      .from(LikeTypeOrmEntity)
+      .where('like.video_id = :video_id', { video_id: videoId })
+      .andWhere('like.user_id = :user_id', { user_id: userId })
+      .execute();
+  }
 }
