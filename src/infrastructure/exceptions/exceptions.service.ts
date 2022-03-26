@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   InternalServerErrorException,
@@ -23,7 +24,7 @@ export class ExceptionsService implements IException {
     throw new NotFoundException('Comment not found exception');
   }
   likesAlreadyExistException(): void {
-    throw new BadRequestException('Likes already exist exception');
+    throw new BadRequestException('Like already exist exception');
   }
   adoptionAlreadyExistException(): void {
     throw new BadRequestException('Adoption already exist exception');

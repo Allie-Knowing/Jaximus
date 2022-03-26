@@ -27,11 +27,19 @@ export class DatabaseLikeRepository implements LikeRepository {
   findOne(videoId: number, userId: number) {
     return this.likeEntityRepository
       .createQueryBuilder('like')
-      .select('like.id')
-      .where('user.id = :user_id', { user_id: userId })
-      .andWhere('video.id = :video_id', { video_id: videoId })
-      .leftJoin('like.user', 'user')
-      .leftJoin('like.video', 'video')
+      .select()
+      .where('like.user_id = :user_id', { user_id: userId })
+      .andWhere('like.video_id = :video_id', { video_id: videoId })
       .getOne();
+  }
+
+  async deleteLike(videoId: number, userId: number): Promise<void> {
+    await this.likeEntityRepository
+      .createQueryBuilder()
+      .delete()
+      .from(LikeTypeOrmEntity)
+      .where('like.video_id = :video_id', { video_id: videoId })
+      .andWhere('like.user_id = :user_id', { user_id: userId })
+      .execute();
   }
 }
