@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Inject, Post, Scope, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, HttpCode, Inject, Post, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
@@ -16,17 +16,17 @@ export class LikeController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/')
+  @HttpCode(201)
   async createLike(@Body('videoId') videoId: number) {
     const userId = this.request.user.userId;
     await this.createLikeUsecase.execute(videoId, userId);
-    return { status: 201, message: 'success' };
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/')
+  @HttpCode(200)
   async deleteLike(@Body('videoId') videoId: number) {
     const userId = this.request.user.userId;
     await this.deleteLikeUsecase.execute(videoId, userId);
-    return { status: 200, message: 'success' };
   }
 }
