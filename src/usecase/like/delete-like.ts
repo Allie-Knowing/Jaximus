@@ -1,19 +1,16 @@
 import { IException } from 'src/domain/exceptions/exceptions.interface';
+import { Like } from 'src/domain/model/like';
 import { LikeRepository } from 'src/domain/repositories/like.repository';
-import { VideoRepository } from 'src/domain/repositories/video.repository';
 
 export class DeleteLikeUsecase {
-  constructor(
-    private readonly likeRepository: LikeRepository,
-    private readonly videoRepository: VideoRepository,
-    private readonly exceptionsService: IException,
-  ) {}
+  constructor(private readonly likeRepository: LikeRepository, private readonly exceptionsService: IException) {}
 
   async execute(videoId: number, userId: number) {
-    const video = await this.videoRepository.findOne(videoId);
+    const like: Like = await this.likeRepository.findOne(videoId, userId);
 
-    if (!video) this.exceptionsService.videoNotFoundException();
+    if (!like.video.id) this.exceptionsService.videoNotFoundException();
+    if (like.video.id !== videoId) this.exceptionsService.videoIdNotMatchedException();
 
-    this.likeRepository.deleteLike(videoId, videoId);
+    this.likeRepository.deleteLike(videoId, userId);
   }
 }
