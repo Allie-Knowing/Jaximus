@@ -18,13 +18,15 @@ export class LikeController {
   @Post('/')
   async createLike(@Body('videoId') videoId: number) {
     const userId = this.request.user.userId;
-    this.createLikeUsecase.execute(videoId, userId);
+    await this.createLikeUsecase.execute(videoId, userId);
+    return { status: 201, message: 'success' };
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/')
   async deleteLike(@Body('videoId') videoId: number) {
     const userId = this.request.user.userId;
-    this.deleteLikeUsecase.execute(videoId, userId);
+    await this.deleteLikeUsecase.execute(videoId, userId);
+    return { status: 200, message: 'success' };
   }
 }
