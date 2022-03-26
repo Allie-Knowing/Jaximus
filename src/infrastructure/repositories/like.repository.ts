@@ -28,10 +28,8 @@ export class DatabaseLikeRepository implements LikeRepository {
     return this.likeEntityRepository
       .createQueryBuilder('like')
       .select()
-      .where('user.id = :user_id', { user_id: userId })
-      .andWhere('video.id = :video_id', { video_id: videoId })
-      .leftJoin('like.user', 'user')
-      .leftJoin('like.video', 'video')
+      .where('like.user_id = :user_id', { user_id: userId })
+      .andWhere('like.video_id = :video_id', { video_id: videoId })
       .getOne();
   }
 
