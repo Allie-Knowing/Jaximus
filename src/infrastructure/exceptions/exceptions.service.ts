@@ -29,9 +29,6 @@ export class ExceptionsService implements IException {
   adoptionAlreadyExistException(): void {
     throw new BadRequestException('Adoption already exist exception');
   }
-  videoIdNotMatchedException(): void {
-    throw new ConflictException('Video id not matched exception');
-  }
   badRequestException(data: IFormatExceptionMessage): void {
     throw new BadRequestException(data);
   }

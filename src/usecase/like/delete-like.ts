@@ -9,7 +9,6 @@ export class DeleteLikeUsecase {
     const like: Like = await this.likeRepository.findOne(videoId, userId);
 
     if (!like.video.id) this.exceptionsService.videoNotFoundException();
-    if (like.video.id !== videoId) this.exceptionsService.videoIdNotMatchedException();
 
     this.likeRepository.deleteLike(videoId, userId);
   }

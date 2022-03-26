@@ -11,7 +11,6 @@ export interface IException {
   commentNotFoundException(): void;
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
-  videoIdNotMatchedException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
   expiredTokenException(): void;
   forbiddenException(data?: IFormatExceptionMessage): void;
