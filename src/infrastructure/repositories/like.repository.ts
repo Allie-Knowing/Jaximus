@@ -27,7 +27,7 @@ export class DatabaseLikeRepository implements LikeRepository {
   findOne(videoId: number, userId: number) {
     return this.likeEntityRepository
       .createQueryBuilder('like')
-      .select('like.id')
+      .select()
       .where('user.id = :user_id', { user_id: userId })
       .andWhere('video.id = :video_id', { video_id: videoId })
       .leftJoin('like.user', 'user')
