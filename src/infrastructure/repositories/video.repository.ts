@@ -68,13 +68,13 @@ export class DatabaseVideoRepository implements VideoRepository {
   async getVideoCommentList(videoId: number): Promise<GetVideoCommentList[]> {
     return this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('video.id', 'video_id')
-      .addSelect('video.video_url', 'video_url')
+      .select('video.id', 'videoId')
+      .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.title', 'title')
-      .addSelect('SUBSTR(video.created_at, 1, 10)', 'created_at')
-      .addSelect('COUNT(like.id)', 'like_cnt')
+      .addSelect('SUBSTR(video.created_at, 1, 10)', 'createdAt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
       .addSelect('user.profile', 'profile')
-      .addSelect('user.id', 'user_id')
+      .addSelect('user.id', 'userId')
       .where('video.question = :video_id', { video_id: videoId })
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
@@ -82,7 +82,16 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getRawMany();
   }
 
-  async createVideoComment(video: Video): Promise<void> {}
+  async createVideoComment(video: Video): Promise<void> {
+    const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(video.userId);
+
+    await this.videoEntityRepository.save({
+      title: video.title,
+      videoUrl: video.videoUrl,
+      question_id: video.questionId,
+      user,
+    });
+  }
 
   async videoAdoption(videoId: number): Promise<void> {
     await this.videoEntityRepository
@@ -91,5 +100,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
       .execute();
+  }
+
+  findQuestion(questionId: number) {
+    return this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id')
+      .where('video.question = :question_id', { question_id: questionId })
+      .getOne();
   }
 }
