@@ -1,4 +1,18 @@
-import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, UploadedFile, UseInterceptors, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Param,
+  ParseIntPipe,
+  Scope,
+  UploadedFile,
+  UseInterceptors,
+  Put,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { GetVideoCommentListPresenter } from './video.presenter';
@@ -7,8 +21,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
+import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { REQUEST } from '@nestjs/core';
 
-@Controller('/video')
+@Controller({ path: '/video', scope: Scope.REQUEST })
 export class VideoController {
   constructor(
     @Inject(CreateVideoUsecase)
@@ -21,12 +37,15 @@ export class VideoController {
     private readonly createVideoCommentUsecase: CreateVideoCommentUsecase,
     @Inject(VideoAdoptionUsecase)
     private readonly videoAdoptionUsecase: VideoAdoptionUsecase,
+    @Inject(REQUEST)
+    private readonly request: IUserReqeust,
   ) {}
 
   @Post('/')
-  create(userId: number, @Body() request: Video) {
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() request: Video) {
+    const userId = this.request.user.userId;
     this.createVideoUsecase.execute(userId, request);
-    return { status: 201, message: 'success' };
   }
 
   @Get('/')
@@ -40,9 +59,10 @@ export class VideoController {
   }
 
   @Post('/answer')
-  async videoAnswer(userId: number, @Body() request: Video) {
+  @HttpCode(HttpStatus.CREATED)
+  async videoAnswer(@Body() request: Video) {
+    const userId = this.request.user.userId;
     await this.createVideoCommentUsecase.execute(userId, request);
-    return { status: 201, message: 'success' };
   }
 
   @Post('/file')
@@ -52,8 +72,8 @@ export class VideoController {
   }
 
   @Put('/adoption/:videoId')
+  @HttpCode(HttpStatus.OK)
   async videoAdoption(@Param('videoId', ParseIntPipe) videoId: number) {
     await this.videoAdoptionUsecase.execute(videoId);
-    return { status: 200, message: 'success' };
   }
 }
