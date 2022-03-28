@@ -33,9 +33,10 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoUsecase(databaseVideoRepository),
         },
         {
-          inject: [DatabaseVideoRepository],
+          inject: [DatabaseVideoRepository, ExceptionsService],
           provide: CreateVideoCommentUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoCommentUsecase(databaseVideoRepository),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new CreateVideoCommentUsecase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
