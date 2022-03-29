@@ -23,8 +23,8 @@ export class DatabaseUserRepository implements UserRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('COUNT(video.id)', 'videoCnt')
       .where('user.id = :user_id', { user_id: userId })
-      .leftJoin('user.videos', 'video')
-      .groupBy('user.name')
+      .innerJoin('user.videos', 'video')
+      .groupBy('user.id')
       .getRawOne();
   }
 }
