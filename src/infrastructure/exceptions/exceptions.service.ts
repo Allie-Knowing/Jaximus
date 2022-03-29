@@ -23,8 +23,14 @@ export class ExceptionsService implements IException {
   commentNotFoundException(): void {
     throw new NotFoundException('Comment not found exception');
   }
+  likeNotFoundException(): void {
+    throw new NotFoundException('Like not found excpetion');
+  }
   likesAlreadyExistException(): void {
     throw new BadRequestException('Like already exist exception');
+  }
+  itIsNotQuestionException(): void {
+    throw new BadRequestException('It is not question exception');
   }
   adoptionAlreadyExistException(): void {
     throw new BadRequestException('Adoption already exist exception');

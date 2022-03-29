@@ -9,8 +9,10 @@ export interface IException {
   videoNotFoundException(): void;
   videoCommentNotFoundException(): void;
   commentNotFoundException(): void;
+  likeNotFoundException(): void;
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
+  itIsNotQuestionException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
   expiredTokenException(): void;
   forbiddenException(data?: IFormatExceptionMessage): void;

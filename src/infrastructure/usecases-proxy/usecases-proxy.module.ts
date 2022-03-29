@@ -33,9 +33,10 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoUsecase(databaseVideoRepository),
         },
         {
-          inject: [DatabaseVideoRepository],
+          inject: [DatabaseVideoRepository, ExceptionsService],
           provide: CreateVideoCommentUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoCommentUsecase(databaseVideoRepository),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new CreateVideoCommentUsecase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
@@ -66,10 +67,13 @@ export class UsecasesProxyDynamicModule {
             new VideoAdoptionUsecase(databaseVideoRepository, exceptionsService),
         },
         {
-          inject: [DatabaseCommentRepository, ExceptionsService],
+          inject: [DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
           provide: CommentAdoptionUsecase,
-          useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
-            new CommentAdoptionUsecase(databaseCommentRepository, exceptionsService),
+          useFactory: (
+            databaseCommentRepository: DatabaseCommentRepository,
+            databaseVideoRepository: DatabaseVideoRepository,
+            exceptionsService: ExceptionsService,
+          ) => new CommentAdoptionUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseLikeRepository, ExceptionsService],
