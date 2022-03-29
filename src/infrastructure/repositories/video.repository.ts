@@ -109,4 +109,12 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('video.question = :question_id', { question_id: questionId })
       .getOne();
   }
+
+  matchUser(userId: number) {
+    return this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select()
+      .where('video.user_id = :user_id', { user_id: userId })
+      .getCount();
+  }
 }
