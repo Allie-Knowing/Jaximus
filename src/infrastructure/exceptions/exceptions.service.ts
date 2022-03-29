@@ -26,6 +26,9 @@ export class ExceptionsService implements IException {
   likeNotFoundException(): void {
     throw new NotFoundException('Like not found excpetion');
   }
+  userNotFoundException(): void {
+    throw new NotFoundException('User not found exception');
+  }
   likesAlreadyExistException(): void {
     throw new BadRequestException('Like already exist exception');
   }

@@ -10,6 +10,7 @@ export interface IException {
   videoCommentNotFoundException(): void;
   commentNotFoundException(): void;
   likeNotFoundException(): void;
+  userNotFoundException(): void;
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
   itIsNotQuestionException(): void;
