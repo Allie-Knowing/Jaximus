@@ -19,7 +19,8 @@ export class DatabaseUserRepository implements UserRepository {
   userInfo(userId: number): Promise<GetUserInfoPresenter> {
     return this.userEntityRepository
       .createQueryBuilder('user')
-      .select('user.name', 'name')
+      .select('user.id', 'user_id')
+      .addSelect('user.name', 'name')
       .addSelect('user.profile', 'profile')
       .addSelect('COUNT(video.id)', 'videoCnt')
       .where('user.id = :user_id', { user_id: userId })
