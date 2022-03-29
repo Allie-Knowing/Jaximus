@@ -5,6 +5,7 @@ import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { DeleteLikeUsecase } from 'src/usecase/like/delete-like';
+import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
@@ -81,6 +82,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseLikeRepository: DatabaseLikeRepository, exceptionsService: ExceptionsService) =>
             new DeleteLikeUsecase(databaseLikeRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseUserRepository, ExceptionsService],
+          provide: UserInfoUsecase,
+          useFactory: (databaseUserRepository: DatabaseUserRepository, exceptionsService: ExceptionsService) =>
+            new UserInfoUsecase(databaseUserRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateVideoUsecase,
@@ -91,6 +98,7 @@ export class UsecasesProxyDynamicModule {
         VideoAdoptionUsecase,
         CommentAdoptionUsecase,
         DeleteLikeUsecase,
+        UserInfoUsecase,
       ],
     };
   }
