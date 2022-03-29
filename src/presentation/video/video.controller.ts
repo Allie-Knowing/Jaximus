@@ -12,6 +12,7 @@ import {
   Put,
   HttpStatus,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
@@ -23,6 +24,7 @@ import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { REQUEST } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller({ path: '/video', scope: Scope.REQUEST })
 export class VideoController {
@@ -41,6 +43,7 @@ export class VideoController {
     private readonly request: IUserReqeust,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() request: Video) {
@@ -58,6 +61,7 @@ export class VideoController {
     return this.getVideoCommentListUseCases.execute(videoId);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/answer')
   @HttpCode(HttpStatus.CREATED)
   async videoAnswer(@Body() request: Video) {
