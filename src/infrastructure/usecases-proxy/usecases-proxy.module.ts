@@ -67,10 +67,13 @@ export class UsecasesProxyDynamicModule {
             new VideoAdoptionUsecase(databaseVideoRepository, exceptionsService),
         },
         {
-          inject: [DatabaseCommentRepository, ExceptionsService],
+          inject: [DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
           provide: CommentAdoptionUsecase,
-          useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
-            new CommentAdoptionUsecase(databaseCommentRepository, exceptionsService),
+          useFactory: (
+            databaseCommentRepository: DatabaseCommentRepository,
+            databaseVideoRepository: DatabaseVideoRepository,
+            exceptionsService: ExceptionsService,
+          ) => new CommentAdoptionUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseLikeRepository, ExceptionsService],
