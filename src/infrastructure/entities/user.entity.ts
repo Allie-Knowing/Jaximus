@@ -1,5 +1,6 @@
 import { User } from 'src/domain/model/user';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CommentTypeOrmEntity } from './comment.entity';
 import { LikeTypeOrmEntity } from './like.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -26,7 +27,10 @@ export class UserTypeOrmEntity {
   @OneToMany(() => VideoTypeOrmEntity, (video) => video.user)
   videos: VideoTypeOrmEntity[];
 
+  @OneToMany(() => CommentTypeOrmEntity, (comment) => comment.user)
+  comments: CommentTypeOrmEntity[];
+
   public static of(user: User): UserTypeOrmEntity {
-    return { ...user, likes: [], videos: [] };
+    return { ...user, likes: [], videos: [], comments: [] };
   }
 }
