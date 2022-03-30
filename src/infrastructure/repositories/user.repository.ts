@@ -27,14 +27,4 @@ export class DatabaseUserRepository implements UserRepository {
       .groupBy('user.id')
       .getRawOne();
   }
-
-  userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]> {
-    return this.userEntityRepository
-      .createQueryBuilder('user')
-      .select('video.id', 'videoId')
-      .addSelect('video.videoUrl', 'videoUrl')
-      .where('user.id = :user_id', { user_id: userId })
-      .innerJoin('user.videos', 'video')
-      .getRawMany();
-  }
 }
