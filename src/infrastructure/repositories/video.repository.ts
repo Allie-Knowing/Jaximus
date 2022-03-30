@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { GetVideoCommentList } from 'src/domain/repositories/dto/video.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
+import { GetUserQuestionListPresenter } from 'src/presentation/user/user.presenter';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -116,5 +117,14 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select()
       .where('video.user_id = :user_id', { user_id: userId })
       .getCount();
+  }
+
+  userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]> {
+    return this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id', 'videoId')
+      .addSelect('video.video_url', 'videoUrl')
+      .where('video.user_id = :user_id', { user_id: userId })
+      .getRawMany();
   }
 }

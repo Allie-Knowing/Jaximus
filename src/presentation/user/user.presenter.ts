@@ -8,3 +8,10 @@ export class GetUserInfoPresenter {
   @IsNumber()
   video_cnt: number;
 }
+
+export class GetUserQuestionListPresenter {
+  @IsNumber()
+  video_id: number;
+  @IsString()
+  video_url: string;
+}
