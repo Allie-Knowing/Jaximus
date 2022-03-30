@@ -1,11 +1,9 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { LikeRepository } from 'src/domain/repositories/like.repository';
-import { UserRepository } from 'src/domain/repositories/user.repository';
-import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { DeleteLikeUsecase } from 'src/usecase/like/delete-like';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
+import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
@@ -88,6 +86,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseUserRepository: DatabaseUserRepository, exceptionsService: ExceptionsService) =>
             new UserInfoUsecase(databaseUserRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseUserRepository, ExceptionsService],
+          provide: UserQuestionListUsecase,
+          useFactory: (databaseUserRepository: DatabaseUserRepository, exceptionsService: ExceptionsService) =>
+            new UserQuestionListUsecase(databaseUserRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateVideoUsecase,
@@ -99,6 +103,7 @@ export class UsecasesProxyDynamicModule {
         CommentAdoptionUsecase,
         DeleteLikeUsecase,
         UserInfoUsecase,
+        UserQuestionListUsecase,
       ],
     };
   }
