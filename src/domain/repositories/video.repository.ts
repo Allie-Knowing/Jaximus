@@ -1,4 +1,5 @@
 import { Video } from '../model/video';
+import { GetUserQuestionListPresenter } from './dto/user.dto';
 import { GetVideoCommentList } from './dto/video.dto';
 
 export interface VideoRepository {
@@ -10,5 +11,5 @@ export interface VideoRepository {
   videoAdoption(videoId: number): Promise<void>;
   findQuestion(questionId: number);
   matchUser(userId: number);
-  userQuestionList(userId: number);
+  userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]>;
 }
