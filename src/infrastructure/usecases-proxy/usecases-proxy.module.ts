@@ -6,6 +6,7 @@ import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
 import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
+import { DeleteAnswerCommentUsecase } from 'src/usecase/video/delte-answer-comment';
 import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
 import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
@@ -92,6 +93,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
             new UserQuestionListUsecase(databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseCommentRepository, ExceptionsService],
+          provide: DeleteAnswerCommentUsecase,
+          useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
+            new DeleteAnswerCommentUsecase(databaseCommentRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateVideoUsecase,
@@ -104,6 +111,7 @@ export class UsecasesProxyDynamicModule {
         DeleteLikeUsecase,
         UserInfoUsecase,
         UserQuestionListUsecase,
+        DeleteAnswerCommentUsecase,
       ],
     };
   }
