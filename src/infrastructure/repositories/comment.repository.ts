@@ -23,4 +23,21 @@ export class DatabaseCommentRepository implements CommentRepository {
       .where('id = :id', { id: commentId })
       .execute();
   }
+
+  async deleteAnswerComment(commentId: number): Promise<void> {
+    await this.commentEntityRepository
+      .createQueryBuilder()
+      .delete()
+      .from(CommentTypeOrmEntity)
+      .where('comment.id = :comment_id', { comment_id: commentId })
+      .execute();
+  }
+
+  matchUser(userId: number) {
+    return this.commentEntityRepository
+      .createQueryBuilder('comment')
+      .select()
+      .where('comment.user_id = :user_id', { user_id: userId })
+      .getCount();
+  }
 }

@@ -13,6 +13,7 @@ import {
   HttpStatus,
   HttpCode,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoUsecase } from 'src/usecase/video/create-video';
@@ -25,6 +26,7 @@ import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+import { DeleteAnswerCommentUsecase } from 'src/usecase/video/delte-answer-comment';
 
 @Controller({ path: '/video', scope: Scope.REQUEST })
 export class VideoController {
@@ -39,6 +41,8 @@ export class VideoController {
     private readonly createVideoCommentUsecase: CreateVideoCommentUsecase,
     @Inject(VideoAdoptionUsecase)
     private readonly videoAdoptionUsecase: VideoAdoptionUsecase,
+    @Inject(DeleteAnswerCommentUsecase)
+    private readonly deleteAnswerCommentUsecase: DeleteAnswerCommentUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -79,5 +83,13 @@ export class VideoController {
   @HttpCode(HttpStatus.OK)
   async videoAdoption(@Param('videoId', ParseIntPipe) videoId: number) {
     await this.videoAdoptionUsecase.execute(videoId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('/:commentId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delteVideoComment(@Param('commentId', ParseIntPipe) commentId: number) {
+    const userId = this.request.user.userId;
+    await this.deleteAnswerCommentUsecase.execute(commentId, userId);
   }
 }

@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
 @Entity('comment')
@@ -15,4 +16,8 @@ export class CommentTypeOrmEntity {
   @ManyToOne(() => VideoTypeOrmEntity, (video) => video.comments)
   @JoinColumn({ name: 'video_id' })
   video: VideoTypeOrmEntity;
+
+  @ManyToOne(() => UserTypeOrmEntity, (user) => user.comments)
+  @JoinColumn({ name: 'user_id' })
+  user: UserTypeOrmEntity;
 }
