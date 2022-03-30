@@ -10,4 +10,5 @@ export interface VideoRepository {
   videoAdoption(videoId: number): Promise<void>;
   findQuestion(questionId: number);
   matchUser(userId: number);
+  userQuestionList(userId: number);
 }
