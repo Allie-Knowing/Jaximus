@@ -87,10 +87,10 @@ export class UsecasesProxyDynamicModule {
             new UserInfoUsecase(databaseUserRepository, exceptionsService),
         },
         {
-          inject: [DatabaseUserRepository, ExceptionsService],
+          inject: [DatabaseVideoRepository, ExceptionsService],
           provide: UserQuestionListUsecase,
-          useFactory: (databaseUserRepository: DatabaseUserRepository, exceptionsService: ExceptionsService) =>
-            new UserQuestionListUsecase(databaseUserRepository, exceptionsService),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new UserQuestionListUsecase(databaseVideoRepository, exceptionsService),
         },
       ],
       exports: [
