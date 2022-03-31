@@ -13,4 +13,5 @@ export interface VideoRepository {
   matchUser(userId: number);
   userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]>;
   deleteQuestion(videoId: number): Promise<void>;
+  deleteVideoAnswer(questionId): Promise<void>;
 }

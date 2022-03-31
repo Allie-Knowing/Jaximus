@@ -137,4 +137,8 @@ export class DatabaseVideoRepository implements VideoRepository {
   async deleteQuestion(videoId: number): Promise<void> {
     await this.videoEntityRepository.softDelete(videoId);
   }
+
+  async deleteVideoAnswer(questionId: any): Promise<void> {
+    await this.videoEntityRepository.softDelete({ question: questionId });
+  }
 }
