@@ -6,8 +6,8 @@ export class CreateVideoAnswerUsecase {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
   async execute(userId: number, video: Video, questionId: number) {
-    const question = this.videoRepository.findQuestion(questionId);
-    if (!question) this.exceptionsService.questionNotFoundException();
+    const question = await this.videoRepository.findQuestion(questionId);
+    if (question === 0) this.exceptionsService.questionNotFoundException();
 
     this.videoRepository.createVideoAnswer({ ...video, userId, questionId });
   }
