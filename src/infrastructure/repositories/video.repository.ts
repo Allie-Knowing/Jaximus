@@ -125,6 +125,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'videoId')
       .addSelect('video.video_url', 'videoUrl')
       .where('video.user_id = :user_id', { user_id: userId })
+      .andWhere('video.question IS NULL')
       .getRawMany();
   }
 }
