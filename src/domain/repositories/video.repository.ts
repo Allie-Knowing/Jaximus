@@ -14,4 +14,5 @@ export interface VideoRepository {
   deleteVideoAnswer(questionId): Promise<void>;
   findUsersQuestion(videoId: number, userId: number);
   findQuestion(questionId: number): Promise<number>;
+  findVideo(videoId: number, userId: number);
 }
