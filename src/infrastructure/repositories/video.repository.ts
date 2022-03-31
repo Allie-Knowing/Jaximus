@@ -126,7 +126,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getOne();
   }
 
-  findVideo(videoId: number, userId: number) {
+  findUsersVideo(videoId: number, userId: number) {
     return this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id')
