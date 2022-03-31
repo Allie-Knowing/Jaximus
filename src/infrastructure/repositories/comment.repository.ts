@@ -21,6 +21,7 @@ export class DatabaseCommentRepository implements CommentRepository {
       .update(CommentTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: commentId })
+      .andWhere('video.deleted_at IS NULL')
       .execute();
   }
 
