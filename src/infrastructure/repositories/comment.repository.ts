@@ -36,4 +36,14 @@ export class DatabaseCommentRepository implements CommentRepository {
       .where('comment.user_id = :user_id', { user_id: userId })
       .getCount();
   }
+
+  findComment(commentId: number, userId: number) {
+    return this.commentEntityRepository
+      .createQueryBuilder('comment')
+      .select('comment.id')
+      .where('comment.id = :comment_id', { comment_id: commentId })
+      .andWhere('comment.user_id = :user_id', { user_id: userId })
+      .andWhere('video.deleted_at IS NULL')
+      .getOne();
+  }
 }
