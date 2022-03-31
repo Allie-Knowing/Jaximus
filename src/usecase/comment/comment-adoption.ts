@@ -11,14 +11,11 @@ export class CommentAdoptionUsecase {
 
   async execute(commentId: number, userId: number, videoId: number) {
     const comment = await this.commentRepository.findOne(commentId);
-    const video = await this.videoRepository.findOne(videoId);
+    const video = await this.videoRepository.findUsersQuestion(videoId, userId);
 
     if (video.question != null) {
       this.exceptionsService.itIsNotQuestionException();
     }
-
-    const matchUser = await this.videoRepository.matchUser(userId);
-    if (matchUser === 0) this.exceptionsService.forbiddenException();
 
     if (!comment) this.exceptionsService.commentNotFoundException();
     if (comment.isAdoption) this.exceptionsService.adoptionAlreadyExistException();

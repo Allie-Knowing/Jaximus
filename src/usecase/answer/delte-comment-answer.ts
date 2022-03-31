@@ -5,11 +5,8 @@ export class DeleteCommentAnswerUsecase {
   constructor(private readonly commentRepository: CommentRepository, private readonly exceptionsService: IException) {}
 
   async execute(commentId: number, userId: number) {
-    const comment = await this.commentRepository.findOne(commentId);
+    const comment = await this.commentRepository.findComment(commentId, userId);
     if (!comment) this.exceptionsService.commentNotFoundException();
-
-    const matchUser = await this.commentRepository.matchUser(userId);
-    if (matchUser === 0) this.exceptionsService.forbiddenException();
 
     this.commentRepository.deleteCommentAnswer(commentId);
   }
