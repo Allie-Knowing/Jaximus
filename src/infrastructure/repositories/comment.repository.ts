@@ -25,12 +25,7 @@ export class DatabaseCommentRepository implements CommentRepository {
   }
 
   async deleteAnswerComment(commentId: number): Promise<void> {
-    await this.commentEntityRepository
-      .createQueryBuilder()
-      .delete()
-      .from(CommentTypeOrmEntity)
-      .where('comment.id = :comment_id', { comment_id: commentId })
-      .execute();
+    await this.commentEntityRepository.softDelete(commentId);
   }
 
   matchUser(userId: number) {
