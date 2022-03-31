@@ -41,6 +41,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('COUNT(comment.id)', 'commentCnt')
       .addSelect('COUNT(like.id)', 'likeCnt')
+      .where('video.deleted_at IS NULL')
       .groupBy('video.id')
       .getRawMany();
     return videos.map((video) => new Video(video));
@@ -77,6 +78,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('user.id', 'userId')
       .where('video.question = :question_id', { question_id: questionId })
+      .andWhere('video.deleted_at IS NULL')
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
@@ -100,6 +102,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .update(VideoTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
+      .andWhere('video.deleted_at IS NULL')
       .execute();
   }
 
@@ -108,6 +111,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .createQueryBuilder('video')
       .select('video.id')
       .where('video.question = :question_id', { question_id: questionId })
+      .andWhere('video.deleted_at IS NULL')
       .getOne();
   }
 
@@ -126,6 +130,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.video_url', 'videoUrl')
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
+      .andWhere('video.deleted_at IS NULL')
       .getRawMany();
   }
 
