@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
-import { GetVideoCommentList } from 'src/domain/repositories/dto/video.dto';
+import { GetVideoAnswerList } from 'src/domain/repositories/dto/video.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { GetUserQuestionListPresenter } from 'src/presentation/user/user.presenter';
 import { Repository } from 'typeorm';
@@ -66,7 +66,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async getVideoCommentList(videoId: number): Promise<GetVideoCommentList[]> {
+  async getVideoAnswerList(questionId: number): Promise<GetVideoAnswerList[]> {
     return this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id', 'videoId')
@@ -76,14 +76,14 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('COUNT(like.id)', 'likeCnt')
       .addSelect('user.profile', 'profile')
       .addSelect('user.id', 'userId')
-      .where('video.question = :video_id', { video_id: videoId })
+      .where('video.question = :question_id', { question_id: questionId })
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
       .getRawMany();
   }
 
-  async createVideoComment(video: Video): Promise<void> {
+  async createVideoAnswer(video: Video): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(video.userId);
 
     await this.videoEntityRepository.save({

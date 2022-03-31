@@ -7,7 +7,7 @@ export interface IException {
   badRequestException(data: IFormatExceptionMessage): void;
   questionNotFoundException(): void;
   videoNotFoundException(): void;
-  videoCommentNotFoundException(): void;
+  videoAnswerNotFoundException(): void;
   commentNotFoundException(): void;
   likeNotFoundException(): void;
   userNotFoundException(): void;
