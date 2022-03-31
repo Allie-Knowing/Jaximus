@@ -106,21 +106,34 @@ export class DatabaseVideoRepository implements VideoRepository {
       .execute();
   }
 
-  findQuestion(questionId: number) {
+  async findQuestion(questionId: number): Promise<number> {
+    return await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id')
+      .where('video.id = :question_id', { question_id: questionId })
+      .andWhere('video.deleted_at IS NULL')
+      .andWhere('video.question IS NULL')
+      .getCount();
+  }
+
+  findUsersQuestion(questionId: number, userId: number) {
     return this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id')
       .where('video.question = :question_id', { question_id: questionId })
+      .andWhere('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.deleted_at IS NULL')
       .getOne();
   }
 
-  matchUser(userId: number) {
+  findVideo(videoId: number, userId: number) {
     return this.videoEntityRepository
       .createQueryBuilder('video')
-      .select()
-      .where('video.user_id = :user_id', { user_id: userId })
-      .getCount();
+      .select('video.id')
+      .where('video.id = :video_id', { video_id: videoId })
+      .andWhere('video.user_id = :user_id', { user_id: userId })
+      .andWhere('video.deleted_at IS NULL')
+      .getOne();
   }
 
   userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]> {
