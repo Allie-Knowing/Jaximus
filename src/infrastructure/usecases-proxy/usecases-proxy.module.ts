@@ -4,11 +4,11 @@ import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { DeleteLikeUsecase } from 'src/usecase/like/delete-like';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
-import { CreateVideoUsecase } from 'src/usecase/video/create-video';
-import { CreateVideoCommentUsecase } from 'src/usecase/video/create-video-comment';
-import { DeleteAnswerCommentUsecase } from 'src/usecase/video/delte-answer-comment';
-import { GetQuestionListUseCases } from 'src/usecase/video/get-questions-list';
-import { GetVideoCommentListUseCases } from 'src/usecase/video/get-video-comment-list';
+import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
+import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
+import { DeleteCommentAnswerUsecase } from 'src/usecase/answer/delte-comment-answer';
+import { GetQuestionListUseCases } from 'src/usecase/question/get-questions-list';
+import { GetVideoAnswerListUseCases } from 'src/usecase/answer/get-video-answer-list';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
@@ -29,14 +29,14 @@ export class UsecasesProxyDynamicModule {
       providers: [
         {
           inject: [DatabaseVideoRepository],
-          provide: CreateVideoUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateVideoUsecase(databaseVideoRepository),
+          provide: CreateQuestionUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateQuestionUsecase(databaseVideoRepository),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: CreateVideoCommentUsecase,
+          provide: CreateVideoAnswerUsecase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new CreateVideoCommentUsecase(databaseVideoRepository, exceptionsService),
+            new CreateVideoAnswerUsecase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
@@ -46,9 +46,9 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: GetVideoCommentListUseCases,
+          provide: GetVideoAnswerListUseCases,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new GetVideoCommentListUseCases(databaseVideoRepository, exceptionsService),
+            new GetVideoAnswerListUseCases(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseLikeRepository, DatabaseUserRepository, DatabaseVideoRepository, ExceptionsService],
@@ -95,23 +95,23 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseCommentRepository, ExceptionsService],
-          provide: DeleteAnswerCommentUsecase,
+          provide: DeleteCommentAnswerUsecase,
           useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
-            new DeleteAnswerCommentUsecase(databaseCommentRepository, exceptionsService),
+            new DeleteCommentAnswerUsecase(databaseCommentRepository, exceptionsService),
         },
       ],
       exports: [
-        CreateVideoUsecase,
-        CreateVideoCommentUsecase,
+        CreateQuestionUsecase,
+        CreateVideoAnswerUsecase,
         GetQuestionListUseCases,
-        GetVideoCommentListUseCases,
+        GetVideoAnswerListUseCases,
         CreateLikeUsecase,
         VideoAdoptionUsecase,
         CommentAdoptionUsecase,
         DeleteLikeUsecase,
         UserInfoUsecase,
         UserQuestionListUsecase,
-        DeleteAnswerCommentUsecase,
+        DeleteCommentAnswerUsecase,
       ],
     };
   }

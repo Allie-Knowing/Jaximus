@@ -17,8 +17,8 @@ export class ExceptionsService implements IException {
   videoNotFoundException(): void {
     throw new NotFoundException('Video not found exception');
   }
-  videoCommentNotFoundException(): void {
-    throw new NotFoundException('Video Comment not found exception');
+  videoAnswerNotFoundException(): void {
+    throw new NotFoundException('Video answer not found exception');
   }
   commentNotFoundException(): void {
     throw new NotFoundException('Comment not found exception');

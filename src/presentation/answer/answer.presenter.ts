@@ -1,20 +1,16 @@
 import { IsDate, IsNumber, IsString } from 'class-validator';
 
-export class GetQuestionListPresenter {
+export class GetVideoAnswerListPresenter {
   @IsNumber()
   video_id: number;
   @IsString()
   video_url: string;
   @IsString()
   title: string;
-  @IsString()
-  description: string;
-  @IsNumber()
-  like_cnt: number;
-  @IsNumber()
-  comment_cnt: number;
   @IsDate()
   created_at: Date;
+  @IsNumber()
+  like_cnt: number;
   @IsString()
   profile: string;
   @IsNumber()
