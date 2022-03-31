@@ -25,7 +25,7 @@ export class DatabaseCommentRepository implements CommentRepository {
       .execute();
   }
 
-  async deleteAnswerComment(commentId: number): Promise<void> {
+  async deleteCommentAnswer(commentId: number): Promise<void> {
     await this.commentEntityRepository.softDelete(commentId);
   }
 

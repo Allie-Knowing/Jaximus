@@ -11,6 +11,6 @@ export class DeleteCommentAnswerUsecase {
     const matchUser = await this.commentRepository.matchUser(userId);
     if (matchUser === 0) this.exceptionsService.forbiddenException();
 
-    this.commentRepository.deleteAnswerComment(commentId);
+    this.commentRepository.deleteCommentAnswer(commentId);
   }
 }
