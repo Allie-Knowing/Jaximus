@@ -128,4 +128,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .andWhere('video.question IS NULL')
       .getRawMany();
   }
+
+  async deleteQuestion(videoId: number): Promise<void> {
+    await this.videoEntityRepository.softDelete(videoId);
+  }
 }

@@ -1,5 +1,5 @@
 import { Video } from 'src/domain/model/video';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { HashTagTypeOrmEntity } from './hash-tag.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -16,14 +16,17 @@ export class VideoTypeOrmEntity {
   @Column({ length: 100 })
   title: string;
 
-  @Column({ length: 2000, name: 'video_url' })
+  @Column({ length: 2000 })
   videoUrl: string;
 
-  @Column({ default: false, name: 'is_adoption' })
+  @Column({ default: false })
   isAdoption: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   createdAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];

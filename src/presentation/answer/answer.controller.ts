@@ -25,7 +25,7 @@ export class AnswerController {
   @Post('/video/:questionId')
   @HttpCode(HttpStatus.CREATED)
   async videoAnswer(@Body() request: Video, @Param('questionId', ParseIntPipe) questionId: number) {
-    const userId = this.request.user.userId;
+    const userId = this.request.user.sub;
     await this.createVideoAnswerUsecase.execute(userId, request, questionId);
   }
 
@@ -38,7 +38,7 @@ export class AnswerController {
   @Delete('/comment/:commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteCommentAnswer(@Param('commentId', ParseIntPipe) commentId: number) {
-    const userId = this.request.user.userId;
+    const userId = this.request.user.sub;
     await this.deleteCommentAnswerUsecase.execute(commentId, userId);
   }
 }

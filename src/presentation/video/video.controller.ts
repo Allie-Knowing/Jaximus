@@ -37,7 +37,7 @@ export class VideoController {
   @Put('/adoption/:videoId')
   @HttpCode(HttpStatus.OK)
   async videoAdoption(@Param('videoId', ParseIntPipe) videoId: number) {
-    const userId = this.request.user.userId;
+    const userId = this.request.user.sub;
     await this.videoAdoptionUsecase.execute(videoId, userId);
   }
 }

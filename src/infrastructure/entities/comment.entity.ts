@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -10,8 +10,11 @@ export class CommentTypeOrmEntity {
   @Column({ length: 200 })
   content: string;
 
-  @Column({ default: false, name: 'is_adoption' })
+  @Column({ default: false })
   isAdoption: boolean;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
   @ManyToOne(() => VideoTypeOrmEntity, (video) => video.comments)
   @JoinColumn({ name: 'video_id' })
