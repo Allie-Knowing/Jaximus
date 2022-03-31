@@ -9,8 +9,10 @@ export interface VideoRepository {
   getVideoAnswerList(questionId: number): Promise<GetVideoAnswerList[]>;
   createVideoAnswer(video: Video): Promise<void>;
   videoAdoption(videoId: number): Promise<void>;
-  findQuestion(questionId: number);
-  matchUser(userId: number);
   userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]>;
   deleteQuestion(videoId: number): Promise<void>;
+  deleteVideoAnswer(questionId): Promise<void>;
+  findUsersQuestion(videoId: number, userId: number);
+  findQuestion(questionId: number): Promise<number>;
+  findUsersVideo(videoId: number, userId: number);
 }
