@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GetUserInfoPresenter, GetUserQuestionListPresenter } from 'src/domain/repositories/dto/user.dto';
+import { GetUserInfoPresenter } from 'src/domain/repositories/dto/user.dto';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { Repository } from 'typeorm';
 import { UserTypeOrmEntity } from '../entities/user.entity';
