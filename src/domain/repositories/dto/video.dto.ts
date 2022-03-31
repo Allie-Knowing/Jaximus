@@ -1,4 +1,4 @@
-export class GetVideoCommentList {
+export class GetVideoAnswerList {
   video_id: number;
   video_url: string;
   title: string;
