@@ -16,7 +16,7 @@ export class CommentController {
   @Put('/adoption/:commentId')
   @HttpCode(HttpStatus.OK)
   async videoAdoption(@Param('commentId', ParseIntPipe) commentId: number, @Body('videoId') videoId: number) {
-    const userId = this.request.user.userId;
+    const userId = this.request.user.sub;
     await this.commentAdoptionUsecase.execute(commentId, userId, videoId);
   }
 }
