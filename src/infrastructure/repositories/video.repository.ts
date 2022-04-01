@@ -76,6 +76,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('SUBSTR(video.created_at, 1, 10)', 'createdAt')
       .addSelect('COUNT(like.id)', 'likeCnt')
       .addSelect('user.profile', 'profile')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
       .where('video.question = :question_id', { question_id: questionId })
       .andWhere('video.deleted_at IS NULL')
