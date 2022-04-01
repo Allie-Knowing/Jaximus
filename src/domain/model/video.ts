@@ -21,6 +21,7 @@ export class Video {
   profile: string;
   @Expose({ name: 'user_id' })
   userId: number;
+  deletedAt: Date;
 
   constructor(obj) {
     return Object.assign(this, obj);
