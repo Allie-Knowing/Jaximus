@@ -7,4 +7,6 @@ export class Comment {
   childComments: Comment[];
   video: Video;
   parentComment: Comment;
+  userId: number;
+  deletedAt: Date;
 }

@@ -8,6 +8,7 @@ import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { DeleteCommentAnswerUsecase } from 'src/usecase/answer/delte-comment-answer';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
+import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
 
 @Controller({ path: '/answer', scope: Scope.REQUEST })
 export class AnswerController {
@@ -20,6 +21,8 @@ export class AnswerController {
     private readonly deleteCommentAnswerUsecase: DeleteCommentAnswerUsecase,
     @Inject(DeleteVideoAnswerUsecase)
     private readonly deleteVideoAnswerUsecase: DeleteVideoAnswerUsecase,
+    @Inject(CreateCommentAnswerUsecase)
+    private readonly createCommentAnswerUsecase: CreateCommentAnswerUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -43,6 +46,14 @@ export class AnswerController {
   async deleteVideoAnswer(@Param('questionId', ParseIntPipe) questionId: number) {
     const userId = this.request.user.sub;
     await this.deleteVideoAnswerUsecase.execute(questionId, userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/comment/:questionId')
+  @HttpCode(HttpStatus.CREATED)
+  async commentAnswer(@Body('content') content: string, @Param('questionId', ParseIntPipe) questionId: number) {
+    const userId = this.request.user.sub;
+    await this.createCommentAnswerUsecase.execute(content, questionId, userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
