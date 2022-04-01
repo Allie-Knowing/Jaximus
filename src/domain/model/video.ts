@@ -4,6 +4,8 @@ export class Video {
   id: number;
   description: string;
   title: string;
+  deletedAt: Date;
+  profile: string;
   @Expose({ name: 'video_url' })
   videoUrl: string;
   @Expose({ name: 'created_at' })
@@ -18,10 +20,8 @@ export class Video {
   hashTags: string[];
   @Expose({ name: 'question_id' })
   questionId: number;
-  profile: string;
   @Expose({ name: 'user_id' })
   userId: number;
-  deletedAt: Date;
 
   constructor(obj) {
     return Object.assign(this, obj);
