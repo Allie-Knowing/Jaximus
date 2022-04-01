@@ -6,5 +6,7 @@ export class User {
   email: string;
   profile: string;
   name: string;
+  createdAt: Date;
+  updatedAt: Date;
   like: Like[];
 }
