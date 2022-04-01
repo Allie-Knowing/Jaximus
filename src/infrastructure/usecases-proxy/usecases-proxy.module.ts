@@ -20,6 +20,7 @@ import { DatabaseUserRepository } from '../repositories/user.repository';
 import { DatabaseVideoRepository } from '../repositories/video.repository';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
+import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
@@ -113,6 +114,15 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
             new DeleteVideoAnswerUsecase(databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
+          provide: CreateCommentAnswerUsecase,
+          useFactory: (
+            databaseCommentRepository: DatabaseCommentRepository,
+            databaseVideoRepository: DatabaseVideoRepository,
+            exceptionsService: ExceptionsService,
+          ) => new CreateCommentAnswerUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -128,6 +138,7 @@ export class UsecasesProxyDynamicModule {
         DeleteCommentAnswerUsecase,
         DeleteQuestionUsecase,
         DeleteVideoAnswerUsecase,
+        CreateCommentAnswerUsecase,
       ],
     };
   }
