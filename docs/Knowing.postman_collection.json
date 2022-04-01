@@ -1,0 +1,634 @@
+{
+	"info": {
+		"_postman_id": "5460bb68-7418-4839-b018-4f4ef6ba3eb8",
+		"name": "Knowing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "video",
+			"item": [
+				{
+					"name": "/ - 질문 목록",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/video",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"video"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/ - 질문 목록",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/video",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"video"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "408"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"198-KRJX14OUtoDHEPOmqhQ+QKBrg7g\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 Mar 2022 05:54:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 7,\n            \"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n            \"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n            \"video_url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\",\n            \"created_at\": \"2022-03-23T23:46:09.355Z\",\n            \"user_id\": 1,\n            \"profile\": \"af\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/video\",\n    \"duration\": \"21ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/ - 질문 생성",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n\t\"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n\t\"hash_tag\": [\n\t\t\"노래\", \n\t\t\"이런 갬성\",\n\t\t\"대마고\"\n\t],\n\t\"videoUrl\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/video",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"video"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/ - 질문 생성",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n\t\"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n\t\"hash_tag\": [\n\t\t\"노래\", \n\t\t\"이런 갬성\",\n\t\t\"대마고\"\n\t],\n\t\"videoUrl\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/video",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"video"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "109"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6d-ne82qLGQj1r1NZCNTycAhdrVzS8\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Mar 2022 08:46:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"status\": 201,\n        \"message\": \"success\"\n    },\n    \"isArray\": false,\n    \"path\": \"/video\",\n    \"duration\": \"12ms\",\n    \"method\": \"POST\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/file - 영상 업로드",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/zuzu/Downloads/video-1647485744.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/video/file?type=question",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"video",
+								"file"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "question"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/file - 영상 업로드",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/Users/zuzu/Downloads/video-1647485744.mp4"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/video/file",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"video",
+										"file"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "190"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"be-2h3TE/OZC17OvJ+QGhqlUUrqdW4\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Mar 2022 02:57:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n    },\n    \"isArray\": false,\n    \"path\": \"/video/file\",\n    \"duration\": \"1641ms\",\n    \"method\": \"POST\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "oauth",
+			"item": [
+				{
+					"name": "GOOGLE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"GOOGLE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OAUTH_URL}}/auth",
+							"host": [
+								"{{OAUTH_URL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OAuth Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"GOOGLE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OAUTH_URL}}/auth",
+									"host": [
+										"{{OAUTH_URL}}"
+									],
+									"path": [
+										"auth"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Apr 2022 07:42:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html;charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "435"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Language",
+									"value": "en"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\",\n    \"refresh_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\"\n}"
+						}
+					]
+				},
+				{
+					"name": "NAVER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"NAVER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OAUTH_URL}}/auth",
+							"host": [
+								"{{OAUTH_URL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OAuth Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"NAVER\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OAUTH_URL}}/auth",
+									"host": [
+										"{{OAUTH_URL}}"
+									],
+									"path": [
+										"auth"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Apr 2022 07:42:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html;charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "435"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Language",
+									"value": "en"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\",\n    \"refresh_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\"\n}"
+						}
+					]
+				},
+				{
+					"name": "FACEBOOK",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"FACEBOOK\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OAUTH_URL}}/auth",
+							"host": [
+								"{{OAUTH_URL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OAuth Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"FACKBOOK\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OAUTH_URL}}/auth",
+									"host": [
+										"{{OAUTH_URL}}"
+									],
+									"path": [
+										"auth"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Apr 2022 07:42:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html;charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "435"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Language",
+									"value": "en"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\",\n    \"refresh_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\"\n}"
+						}
+					]
+				},
+				{
+					"name": "KAKAO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"KAKAO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OAUTH_URL}}/auth",
+							"host": [
+								"{{OAUTH_URL}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OAuth Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"KAKAO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OAUTH_URL}}/auth",
+									"host": [
+										"{{OAUTH_URL}}"
+									],
+									"path": [
+										"auth"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Apr 2022 07:42:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html;charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "435"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Language",
+									"value": "en"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\",\n    \"refresh_token\": \"eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://knowing-server.allie.kr"
+		},
+		{
+			"key": "OAUTH_URL",
+			"value": "http://knowing-server.allie.kr"
+		}
+	]
+}
