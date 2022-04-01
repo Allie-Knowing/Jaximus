@@ -107,14 +107,14 @@ export class DatabaseVideoRepository implements VideoRepository {
       .execute();
   }
 
-  async findQuestion(questionId: number): Promise<number> {
+  async findQuestion(questionId: number): Promise<Video> {
     return await this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('video.id')
+      .select()
       .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.deleted_at IS NULL')
       .andWhere('video.question IS NULL')
-      .getCount();
+      .getRawOne();
   }
 
   findUsersQuestion(questionId: number, userId: number) {
