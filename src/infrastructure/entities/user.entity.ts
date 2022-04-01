@@ -1,5 +1,5 @@
 import { User } from 'src/domain/model/user';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { LikeTypeOrmEntity } from './like.entity';
 import { VideoTypeOrmEntity } from './video.entity';
@@ -20,6 +20,12 @@ export class UserTypeOrmEntity {
 
   @Column({ length: 30 })
   name: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt?: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.user)
   likes: LikeTypeOrmEntity[];
