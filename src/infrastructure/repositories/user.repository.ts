@@ -26,7 +26,7 @@ export class DatabaseUserRepository implements UserRepository {
       .innerJoin('user.videos', 'video')
       .groupBy('user.id')
       .getRawOne();
-      
-      return new User(user);
+
+    return new User(user);
   }
 }

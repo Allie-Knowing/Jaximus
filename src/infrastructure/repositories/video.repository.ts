@@ -82,7 +82,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
       .getRawMany();
-      return videos.map((video) => new Video(video));
+    return videos.map((video) => new Video(video));
   }
 
   async createVideoAnswer(video: Video): Promise<void> {

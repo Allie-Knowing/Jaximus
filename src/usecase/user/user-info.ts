@@ -8,7 +8,7 @@ export class UserInfoUsecase {
   async execute(userId: number): Promise<User> {
     const user: User = await this.userRepository.userInfo(userId);
 
-    if (!user) this.exceptionService.userNotFoundException();    
+    if (!user) this.exceptionService.userNotFoundException();
 
     return user;
   }
