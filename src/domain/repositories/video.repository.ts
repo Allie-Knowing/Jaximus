@@ -1,12 +1,11 @@
 import { Video } from '../model/video';
 import { GetUserQuestionListPresenter } from './dto/user.dto';
-import { GetVideoAnswerList } from './dto/video.dto';
 
 export interface VideoRepository {
   save(video: Video): Promise<void>;
   findOne(videoId: number);
   getQuestionList(): Promise<Video[]>;
-  getVideoAnswerList(questionId: number): Promise<GetVideoAnswerList[]>;
+  getVideoAnswerList(questionId: number): Promise<Video[]>;
   createVideoAnswer(video: Video): Promise<void>;
   videoAdoption(videoId: number): Promise<void>;
   userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]>;

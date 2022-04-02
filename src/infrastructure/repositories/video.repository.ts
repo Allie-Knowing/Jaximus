@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
-import { GetVideoAnswerList } from 'src/domain/repositories/dto/video.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { GetUserQuestionListPresenter } from 'src/presentation/user/user.presenter';
 import { Repository } from 'typeorm';
@@ -67,8 +66,8 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async getVideoAnswerList(questionId: number): Promise<GetVideoAnswerList[]> {
-    return this.videoEntityRepository
+  async getVideoAnswerList(questionId: number): Promise<Video[]> {
+    const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id', 'videoId')
       .addSelect('video.video_url', 'videoUrl')
@@ -84,6 +83,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
       .getRawMany();
+      return videos.map((video) => new Video(video));
   }
 
   async createVideoAnswer(video: Video): Promise<void> {

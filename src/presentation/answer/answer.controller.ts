@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, HttpStatus, HttpCode, UseGuards, Delete } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
-import { GetVideoAnswerListPresenter } from './answer.presenter';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
 import { GetVideoAnswerListUseCases } from 'src/usecase/answer/get-video-answer-list';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
@@ -36,7 +35,7 @@ export class AnswerController {
   }
 
   @Get('/video/:questionId')
-  videoAnswerList(@Param('questionId', ParseIntPipe) questionId: number): Promise<GetVideoAnswerListPresenter[]> {
+  videoAnswerList(@Param('questionId', ParseIntPipe) questionId: number): Promise<Video[]> {
     return this.getVideoAnswerListUseCases.execute(questionId);
   }
 
