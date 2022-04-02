@@ -69,7 +69,7 @@ export class DatabaseVideoRepository implements VideoRepository {
   async getVideoAnswerList(questionId: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('video.id', 'videoId')
+      .select('video.id', 'id')
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.title', 'title')
       .addSelect('SUBSTR(video.created_at, 1, 10)', 'createdAt')
