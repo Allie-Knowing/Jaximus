@@ -21,9 +21,12 @@ import { DatabaseVideoRepository } from '../repositories/video.repository';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
+import { GetAutocompleteUsecase } from 'src/usecase/search/get-autocomplete';
+import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
+import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -123,6 +126,11 @@ export class UsecasesProxyDynamicModule {
             exceptionsService: ExceptionsService,
           ) => new CreateCommentAnswerUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [ElasticsearchService],
+          provide: GetAutocompleteUsecase,
+          useFactory: (elasticsearchService: ElasticsearchService) => new GetAutocompleteUsecase(elasticsearchService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -139,6 +147,7 @@ export class UsecasesProxyDynamicModule {
         DeleteQuestionUsecase,
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
+        GetAutocompleteUsecase,
       ],
     };
   }
