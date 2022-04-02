@@ -1,5 +1,4 @@
 import { Video } from '../model/video';
-import { GetUserQuestionListPresenter } from './dto/user.dto';
 
 export interface VideoRepository {
   save(video: Video): Promise<void>;
@@ -8,7 +7,7 @@ export interface VideoRepository {
   getVideoAnswerList(questionId: number): Promise<Video[]>;
   createVideoAnswer(video: Video): Promise<void>;
   videoAdoption(videoId: number): Promise<void>;
-  userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]>;
+  userQuestionList(userId: number): Promise<Video[]>;
   deleteQuestion(videoId: number): Promise<void>;
   deleteVideoAnswer(questionId): Promise<void>;
   findUsersQuestion(videoId: number, userId: number);

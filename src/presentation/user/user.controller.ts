@@ -1,8 +1,8 @@
 import { Controller, Get, Inject, Param, ParseIntPipe } from '@nestjs/common';
 import { User } from 'src/domain/model/user';
+import { Video } from 'src/domain/model/video';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
-import { GetUserQuestionListPresenter } from './user.presenter';
 
 @Controller('/user')
 export class UserController {
@@ -19,7 +19,7 @@ export class UserController {
   }
 
   @Get('/question/video/:userId')
-  async userQuestionList(@Param('userId', ParseIntPipe) userId: number): Promise<GetUserQuestionListPresenter[]> {
+  async userQuestionList(@Param('userId', ParseIntPipe) userId: number): Promise<Video[]> {
     return await this.userQuestionListUsecase.execute(userId);
   }
 }

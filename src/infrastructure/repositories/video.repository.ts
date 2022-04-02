@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
-import { GetUserQuestionListPresenter } from 'src/presentation/user/user.presenter';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -137,15 +136,16 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getOne();
   }
 
-  userQuestionList(userId: number): Promise<GetUserQuestionListPresenter[]> {
-    return this.videoEntityRepository
+  async userQuestionList(userId: number): Promise<Video[]> {
+    const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('video.id', 'videoId')
+      .select('video.id', 'id')
       .addSelect('video.video_url', 'videoUrl')
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
       .andWhere('video.deleted_at IS NULL')
       .getRawMany();
+    return videos.map((video) => new Video(video));
   }
 
   async deleteQuestion(videoId: number): Promise<void> {
