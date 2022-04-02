@@ -1,4 +1,18 @@
-import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, HttpStatus, HttpCode, UseGuards, Delete, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Param,
+  ParseIntPipe,
+  Scope,
+  HttpStatus,
+  HttpCode,
+  UseGuards,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
 import { GetVideoAnswerListUseCases } from 'src/usecase/answer/get-video-answer-list';
@@ -67,7 +81,11 @@ export class AnswerController {
   }
 
   @Get('/comment/:questionId')
-  textAnswer(@Param('questionId', ParseIntPipe) questionId: number, @Query("page", ParseIntPipe) page: number, @Query("size", ParseIntPipe) size: number) {
+  textAnswer(
+    @Param('questionId', ParseIntPipe) questionId: number,
+    @Query('page', ParseIntPipe) page: number,
+    @Query('size', ParseIntPipe) size: number,
+  ) {
     return this.getTextAnswerUsecase.execute(questionId, page, size);
   }
 }

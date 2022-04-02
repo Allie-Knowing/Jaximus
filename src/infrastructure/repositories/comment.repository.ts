@@ -18,20 +18,21 @@ export class DatabaseCommentRepository implements CommentRepository {
   ) {}
 
   async findTextAnswer(questionId: number, page: number, size: number): Promise<Comment[]> {
-    const textAnswers: any[] =  await this.commentEntityRepository.createQueryBuilder("comment")
-      .select("comment.id")
-      .addSelect("comment.content")
-      .addSelect("comment.updateAt")
-      .addSelect("comment.isAdoption")
-      .addSelect("user.id")
-      .addSelect("user.profile")
+    const textAnswers: any[] = await this.commentEntityRepository
+      .createQueryBuilder('comment')
+      .select('comment.id')
+      .addSelect('comment.content')
+      .addSelect('comment.updateAt')
+      .addSelect('comment.isAdoption')
+      .addSelect('user.id')
+      .addSelect('user.profile')
       .offset(page * size)
       .limit(size)
-      .innerJoin("comment.user", "user")
-      .where("comment.deletedAt IS NULL")
+      .innerJoin('comment.user', 'user')
+      .where('comment.deletedAt IS NULL')
       .getMany();
 
-    return textAnswers.map(t => new Comment(t));
+    return textAnswers.map((t) => new Comment(t));
   }
 
   findOne(commentId: number) {

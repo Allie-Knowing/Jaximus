@@ -136,7 +136,7 @@ export class UsecasesProxyDynamicModule {
           inject: [DatabaseCommentRepository],
           provide: GetTextAnswerUseCase,
           useFactory: (databaseCommentRepository: DatabaseCommentRepository) => new GetTextAnswerUseCase(databaseCommentRepository),
-        }
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -154,7 +154,7 @@ export class UsecasesProxyDynamicModule {
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
         GetAutocompleteUsecase,
-        GetTextAnswerUseCase
+        GetTextAnswerUseCase,
       ],
     };
   }
