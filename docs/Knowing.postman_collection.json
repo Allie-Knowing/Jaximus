@@ -269,11 +269,14 @@
 				{
 					"name": "GOOGLE",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"GOOGLE\"\n}",
+							"raw": "{\n    \"id_token\": \"4/0AX4XfWhjNpG83AiH4tr38Ws_zPswfLs4jEmAQg3PR-oDa_xVOYqTWXWE1cMezF-pPxol9Q\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -281,12 +284,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{OAUTH_URL}}/auth",
+							"raw": "{{BASE_URL}}/google",
 							"host": [
-								"{{OAUTH_URL}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
-								"auth"
+								"google"
 							]
 						}
 					},
@@ -298,7 +301,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"GOOGLE\"\n}",
+									"raw": "{\n    \"id_token\": \"4/0AX4XfWhjNpG83AiH4tr38Ws_zPswfLs4jEmAQg3PR-oDa_xVOYqTWXWE1cMezF-pPxol9Q\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -306,12 +309,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{OAUTH_URL}}/auth",
+									"raw": "{{OAUTH_URL}}/google",
 									"host": [
 										"{{OAUTH_URL}}"
 									],
 									"path": [
-										"auth"
+										"google"
 									]
 								}
 							},
@@ -356,7 +359,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"NAVER\"\n}",
+							"raw": "{\n    \"code\": \"KTOXCTRGA9T7WbtYpP\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -364,12 +367,18 @@
 							}
 						},
 						"url": {
-							"raw": "{{OAUTH_URL}}/auth",
+							"raw": "{{OAUTH_URL}}/auth?provider=NAVER",
 							"host": [
 								"{{OAUTH_URL}}"
 							],
 							"path": [
 								"auth"
+							],
+							"query": [
+								{
+									"key": "provider",
+									"value": "NAVER"
+								}
 							]
 						}
 					},
@@ -381,7 +390,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"NAVER\"\n}",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -389,12 +398,18 @@
 									}
 								},
 								"url": {
-									"raw": "{{OAUTH_URL}}/auth",
+									"raw": "{{OAUTH_URL}}/auth?provider=NAVER",
 									"host": [
 										"{{OAUTH_URL}}"
 									],
 									"path": [
 										"auth"
+									],
+									"query": [
+										{
+											"key": "provider",
+											"value": "NAVER"
+										}
 									]
 								}
 							},
@@ -439,7 +454,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"FACEBOOK\"\n}",
+							"raw": "{\n    \"code\": \"AQDjIeXRLIEGJf-9IEDxmI9akAWX_M4ZH5hnzsXX3bDq0VNB7Vz7_DDOGFF-jLqxRXqV0yMJfKnVqEZkejC6DC_YFleZHzA-BhxHGdtgE4y1PDRtz7dluHZ0A-vZxHnOVStjpdWryo4eizH068v-2rVZ4yvzALagDBKlFGoOL-uG6HexP3NAWMtS8x2KOjBV-jUvCxTxdpB1D7Yb7vqT0Gf3h399Z_DQY1zlhJmR6wBOJwq4cCVUGks8-H1Sviheg084jOiYtjHzW5ZNj-EBcTv91sEl5q77Fy_uikxV9xvVKYDL0ZvadxfED0GqtBq1r-1CPkjZBzbxiqU8pI7USzAU5E4I_FH4HxVZj2Mf4K7lIKjVexh10DvEmep_67PJtcWRhGFxPP3wjKVpfe6zV0yzOUO_gp1M8SA8ZhmDJUBYeg#_=_\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -447,12 +462,18 @@
 							}
 						},
 						"url": {
-							"raw": "{{OAUTH_URL}}/auth",
+							"raw": "{{OAUTH_URL}}/auth?provider=FACEBOOK",
 							"host": [
 								"{{OAUTH_URL}}"
 							],
 							"path": [
 								"auth"
+							],
+							"query": [
+								{
+									"key": "provider",
+									"value": "FACEBOOK"
+								}
 							]
 						}
 					},
@@ -464,7 +485,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"FACKBOOK\"\n}",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -472,12 +493,18 @@
 									}
 								},
 								"url": {
-									"raw": "{{OAUTH_URL}}/auth",
+									"raw": "{{OAUTH_URL}}/auth?provider=FACEBOOK",
 									"host": [
 										"{{OAUTH_URL}}"
 									],
 									"path": [
 										"auth"
+									],
+									"query": [
+										{
+											"key": "provider",
+											"value": "FACEBOOK"
+										}
 									]
 								}
 							},
@@ -522,7 +549,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"KAKAO\"\n}",
+							"raw": "{\n    \"code\": \"TqwtviJiunW2oE0ArLe_r1nE7IyhrNv6r_mnZh3To9BiHBIaXxzt91ynMnzn1nSl8vyGKgo9dJcAAAF_5LGLxQ\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -530,12 +557,18 @@
 							}
 						},
 						"url": {
-							"raw": "{{OAUTH_URL}}/auth",
+							"raw": "{{OAUTH_URL}}/auth?provider=KAKAO",
 							"host": [
 								"{{OAUTH_URL}}"
 							],
 							"path": [
 								"auth"
+							],
+							"query": [
+								{
+									"key": "provider",
+									"value": "KAKAO"
+								}
 							]
 						}
 					},
@@ -547,7 +580,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\",\n    \"provider\": \"KAKAO\"\n}",
+									"raw": "{\n    \"code\": \"4/0AX4XfWhmnGqWUSvI7-l2kwJQxv_MVm8B7emtTQPL0aLV7WIis4sWNsHRSmZnKWbac7hNpw\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -555,12 +588,18 @@
 									}
 								},
 								"url": {
-									"raw": "{{OAUTH_URL}}/auth",
+									"raw": "{{OAUTH_URL}}/auth?provider=KAKAO",
 									"host": [
 										"{{OAUTH_URL}}"
 									],
 									"path": [
 										"auth"
+									],
+									"query": [
+										{
+											"key": "provider",
+											"value": "KAKAO"
+										}
 									]
 								}
 							},
@@ -599,6 +638,311 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "question",
+			"item": [
+				{
+					"name": "/ - 질문 목록",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/question",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"question"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/ - 질문 목록",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/question",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"question"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 12:27:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "705"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2c1-jFvIKcLfXGLKezqDdXhQnli/XSc\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"description\": \"설명\",\n            \"title\": \"제목\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:01:02.144Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        },\n        {\n            \"id\": 2,\n            \"description\": \"ㅂㅈㄷ\",\n            \"title\": \"답변답변\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:07:15.829Z\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question\",\n    \"duration\": \"16ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "answer",
+			"item": [
+				{
+					"name": "/video/:questionId - 영상답변 목록",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/answer/video/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"answer",
+								"video",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/video/:questionId - 영상답변 목록",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/answer/video/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"answer",
+										"video",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 12:27:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "376"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"178-L0qd5uajRE0UcB3T5K90gwqc4gc\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"videoId\": 2,\n            \"title\": \"답변답변\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01\",\n            \"like_cnt\": \"0\",\n            \"is_adoption\": 0\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/video/1\",\n    \"duration\": \"6ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/info/:userId - 유저 정보",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_URL}}/user/info/1",
+							"host": [
+								"{{LOCAL_URL}}"
+							],
+							"path": [
+								"user",
+								"info",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/info/:userId - 유저 정보",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/user/info/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"info",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "131"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"83-aUuWZww50CN7RYAh8feFBg0wUFo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 12:47:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"profile\": \"https://profile.html/profile.png\",\n        \"name\": \"정지우\",\n        \"video_cnt\": \"1\"\n    },\n    \"isArray\": false,\n    \"path\": \"/user/info/1\",\n    \"duration\": \"146ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/question/video/:userId - 마이페이지 질문  영상",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user/question/video/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"question",
+								"video",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/question/video/:userId - 마이페이지 질문  영상",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/user/question/video/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"question",
+										"video",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "212"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d4-wfRDSzlSTvNdl5pKyrJLybM1KBo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Apr 2022 13:12:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 7,\n            \"video_url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/user/question/video/1\",\n    \"duration\": \"51ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
@@ -629,6 +973,10 @@
 		{
 			"key": "OAUTH_URL",
 			"value": "http://knowing-server.allie.kr"
+		},
+		{
+			"key": "LOCAL_URL",
+			"value": "http://localhost:8080"
 		}
 	]
 }
