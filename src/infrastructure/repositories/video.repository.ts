@@ -40,6 +40,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('COUNT(comment.id)', 'commentCnt')
       .addSelect('COUNT(like.id)', 'likeCnt')
       .where('video.deleted_at IS NULL')
+      .andWhere('video.question IS NULL')
       .groupBy('video.id')
       .getRawMany();
     return videos.map((video) => new Video(video));
