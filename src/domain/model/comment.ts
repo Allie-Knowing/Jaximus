@@ -1,12 +1,17 @@
-import { Video } from './video';
+import { Expose } from "class-transformer";
 
 export class Comment {
   id: number;
   content: string;
+  @Expose({ name: "is_adoption" })
   isAdoption: boolean;
-  childComments: Comment[];
-  video: Video;
-  parentComment: Comment;
+  profile: string;
+  @Expose({ name: "user_id" })
   userId: number;
-  deletedAt: Date;
+  @Expose({ name: "update_at" })
+  updateAt: Date;
+
+  constructor(obj) {
+    return Object.assign(this, obj);
+  }
 }

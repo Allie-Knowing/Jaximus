@@ -13,6 +13,9 @@ export class CommentTypeOrmEntity {
   @Column({ default: false })
   isAdoption: boolean;
 
+  @Column()
+  updateAt: Date;
+
   @DeleteDateColumn()
   deletedAt?: Date;
 

@@ -24,6 +24,7 @@ import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-an
 import { GetAutocompleteUsecase } from 'src/usecase/search/get-autocomplete';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
+import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -131,6 +132,11 @@ export class UsecasesProxyDynamicModule {
           provide: GetAutocompleteUsecase,
           useFactory: (elasticsearchService: ElasticsearchService) => new GetAutocompleteUsecase(elasticsearchService),
         },
+        {
+          inject: [DatabaseCommentRepository],
+          provide: GetTextAnswerUseCase,
+          useFactory: (databaseCommentRepository: DatabaseCommentRepository) => new GetTextAnswerUseCase(databaseCommentRepository),
+        }
       ],
       exports: [
         CreateQuestionUsecase,
@@ -148,6 +154,7 @@ export class UsecasesProxyDynamicModule {
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
         GetAutocompleteUsecase,
+        GetTextAnswerUseCase
       ],
     };
   }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, HttpStatus, HttpCode, UseGuards, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Param, ParseIntPipe, Scope, HttpStatus, HttpCode, UseGuards, Delete, Query } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
 import { GetVideoAnswerListUseCases } from 'src/usecase/answer/get-video-answer-list';
@@ -8,6 +8,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { DeleteCommentAnswerUsecase } from 'src/usecase/answer/delte-comment-answer';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
+import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
 
 @Controller({ path: '/answer', scope: Scope.REQUEST })
 export class AnswerController {
@@ -22,6 +23,8 @@ export class AnswerController {
     private readonly deleteVideoAnswerUsecase: DeleteVideoAnswerUsecase,
     @Inject(CreateCommentAnswerUsecase)
     private readonly createCommentAnswerUsecase: CreateCommentAnswerUsecase,
+    @Inject(GetTextAnswerUseCase)
+    private readonly getTextAnswerUsecase: GetTextAnswerUseCase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -61,5 +64,10 @@ export class AnswerController {
   async deleteCommentAnswer(@Param('commentId', ParseIntPipe) commentId: number) {
     const userId = this.request.user.sub;
     await this.deleteCommentAnswerUsecase.execute(commentId, userId);
+  }
+
+  @Get('/comment/:questionId')
+  textAnswer(@Param('questionId', ParseIntPipe) questionId: number, @Query("page", ParseIntPipe) page: number, @Query("size", ParseIntPipe) size: number) {
+    return this.getTextAnswerUsecase.execute(questionId, page, size);
   }
 }
