@@ -1,4 +1,4 @@
-import { Like } from './like';
+import { Expose } from "class-transformer";
 
 export class User {
   id: number;
@@ -6,7 +6,16 @@ export class User {
   email: string;
   profile: string;
   name: string;
+  @Expose({ name: 'created_at' })
   createdAt: Date;
+  @Expose({ name: 'updated_at' })
   updatedAt: Date;
-  like: Like[];
+  @Expose({ name: 'like_cnt' })
+  likeCnt: number;
+  @Expose({ name: 'video_cnt' })
+  videoCnt: number;
+
+  constructor(obj) {
+    return Object.assign(this, obj);
+  }
 }
