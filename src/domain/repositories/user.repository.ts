@@ -1,6 +1,6 @@
-import { GetUserInfoPresenter } from './dto/user.dto';
+import { User } from '../model/user';
 
 export interface UserRepository {
   findOne(userId: number);
-  userInfo(userId: number): Promise<GetUserInfoPresenter>;
+  userInfo(userId: number): Promise<User>;
 }

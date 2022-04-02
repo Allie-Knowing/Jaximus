@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GetUserInfoPresenter } from 'src/domain/repositories/dto/user.dto';
+import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { Repository } from 'typeorm';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -16,8 +16,8 @@ export class DatabaseUserRepository implements UserRepository {
     return this.userEntityRepository.findOne(userId);
   }
 
-  userInfo(userId: number): Promise<GetUserInfoPresenter> {
-    return this.userEntityRepository
+  async userInfo(userId: number): Promise<User> {
+    const user: any = await this.userEntityRepository
       .createQueryBuilder('user')
       .select('user.name', 'name')
       .addSelect('user.profile', 'profile')
@@ -26,5 +26,7 @@ export class DatabaseUserRepository implements UserRepository {
       .innerJoin('user.videos', 'video')
       .groupBy('user.id')
       .getRawOne();
+      
+      return new User(user);
   }
 }

@@ -1,15 +1,15 @@
 import { IException } from 'src/domain/exceptions/exceptions.interface';
-import { GetUserInfoPresenter } from 'src/domain/repositories/dto/user.dto';
+import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 
 export class UserInfoUsecase {
   constructor(private readonly userRepository: UserRepository, private readonly exceptionService: IException) {}
 
-  async execute(userId: number): Promise<GetUserInfoPresenter> {
-    const userInfo = await this.userRepository.userInfo(userId);
+  async execute(userId: number): Promise<User> {
+    const user: User = await this.userRepository.userInfo(userId);
 
-    if (!userInfo) this.exceptionService.userNotFoundException();
+    if (!user) this.exceptionService.userNotFoundException();    
 
-    return userInfo;
+    return user;
   }
 }
