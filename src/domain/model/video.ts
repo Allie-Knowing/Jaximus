@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class Video {
   id: number;
@@ -12,8 +12,10 @@ export class Video {
   createdAt: Date;
   @Expose({ name: 'is_adoption' })
   isAdoption: boolean;
+  @Transform(({ value }) => parseInt(value))
   @Expose({ name: 'like_cnt' })
   likeCnt: number;
+  @Transform(({ value }) => parseInt(value))
   @Expose({ name: 'comment_cnt' })
   commentCnt: number;
   @Expose({ name: 'hash_tag' })

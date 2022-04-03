@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class User {
   id: number;
@@ -10,8 +10,10 @@ export class User {
   createdAt: Date;
   @Expose({ name: 'updated_at' })
   updatedAt: Date;
+  @Transform(({ value }) => parseInt(value))
   @Expose({ name: 'like_cnt' })
   likeCnt: number;
+  @Transform(({ value }) => parseInt(value))
   @Expose({ name: 'video_cnt' })
   videoCnt: number;
 
