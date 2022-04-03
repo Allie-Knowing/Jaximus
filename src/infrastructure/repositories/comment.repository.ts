@@ -20,6 +20,8 @@ export class DatabaseCommentRepository implements CommentRepository {
   async findTextAnswer(questionId: number, page: number, size: number): Promise<Comment[]> {
     const textAnswers: any[] = await this.commentEntityRepository
       .createQueryBuilder('comment')
+      .innerJoin('comment.video', 'video')
+      .innerJoin('comment.user', 'user')
       .select('comment.id')
       .addSelect('comment.content')
       .addSelect('comment.updateAt')
@@ -28,8 +30,8 @@ export class DatabaseCommentRepository implements CommentRepository {
       .addSelect('user.profile')
       .offset(page * size)
       .limit(size)
-      .innerJoin('comment.user', 'user')
-      .where('comment.deletedAt IS NULL')
+      .where('video.id := id', { id: questionId })
+      .andWhere('comment.deletedAt IS NULL')
       .getMany();
 
     return textAnswers.map((t) => new Comment(t));
