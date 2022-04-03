@@ -3,8 +3,8 @@ import { Video } from '../model/video';
 export interface VideoRepository {
   save(video: Video): Promise<void>;
   findOne(videoId: number);
-  getQuestionList(): Promise<Video[]>;
-  getVideoAnswerList(questionId: number): Promise<Video[]>;
+  getQuestionList(page: number, size: number): Promise<Video[]>;
+  getVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]>;
   createVideoAnswer(video: Video): Promise<void>;
   videoAdoption(videoId: number): Promise<void>;
   userQuestionList(userId: number): Promise<Video[]>;

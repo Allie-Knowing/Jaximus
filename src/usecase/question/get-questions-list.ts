@@ -5,8 +5,8 @@ import { VideoRepository } from 'src/domain/repositories/video.repository';
 export class GetQuestionListUseCases {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
-  async execute(): Promise<Video[]> {
-    const questions = await this.videoRepository.getQuestionList();
+  async execute(page: number, size: number): Promise<Video[]> {
+    const questions = await this.videoRepository.getQuestionList(page, size);
     if (questions.length === 0) this.exceptionsService.questionNotFoundException();
     return questions;
   }

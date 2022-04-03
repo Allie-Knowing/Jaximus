@@ -24,7 +24,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return this.videoEntityRepository.findOne(videoId);
   }
 
-  async getQuestionList(): Promise<Video[]> {
+  async getQuestionList(page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
@@ -39,6 +39,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('COUNT(comment.id)', 'commentCnt')
       .addSelect('COUNT(like.id)', 'likeCnt')
+      .offset(page * size)
+      .limit(size)
       .where('video.deleted_at IS NULL')
       .andWhere('video.question IS NULL')
       .groupBy('video.id')
@@ -66,7 +68,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async getVideoAnswerList(questionId: number): Promise<Video[]> {
+  async getVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id', 'id')
@@ -77,6 +79,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
+      .offset(page * size)
+      .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
       .andWhere('video.deleted_at IS NULL')
       .leftJoin('video.user', 'user')
