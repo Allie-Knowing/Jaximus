@@ -788,6 +788,35 @@
 							"body": "{\n    \"data\": [\n        {\n            \"videoId\": 2,\n            \"title\": \"답변답변\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01\",\n            \"like_cnt\": \"0\",\n            \"is_adoption\": 0\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/video/1\",\n    \"duration\": \"6ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
+				},
+				{
+					"name": "/comment/:questionId - 글답변 목록",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_URL}}/answer/comment/1?page=0&size=2",
+							"host": [
+								"{{LOCAL_URL}}"
+							],
+							"path": [
+								"answer",
+								"comment",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
