@@ -1,4 +1,4 @@
-import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -13,8 +13,8 @@ export class CommentTypeOrmEntity {
   @Column({ default: false })
   isAdoption: boolean;
 
-  @Column()
-  updateAt: Date;
+  @UpdateDateColumn()
+  updatedAt?: Date;
 
   @DeleteDateColumn()
   deletedAt?: Date;
