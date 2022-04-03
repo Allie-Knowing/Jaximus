@@ -6,7 +6,7 @@ export class GetQuestionListUseCases {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
   async execute(page: number, size: number): Promise<Video[]> {
-    const questions = await this.videoRepository.getQuestionList(page, size);
+    const questions = await this.videoRepository.findQuestionList(page, size);
     if (questions.length === 0) this.exceptionsService.questionNotFoundException();
     return questions;
   }

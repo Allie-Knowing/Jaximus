@@ -24,7 +24,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return this.videoEntityRepository.findOne(videoId);
   }
 
-  async getQuestionList(page: number, size: number): Promise<Video[]> {
+  async findQuestionList(page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
@@ -68,7 +68,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async getVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]> {
+  async findVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id', 'id')
