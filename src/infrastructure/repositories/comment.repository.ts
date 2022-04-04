@@ -6,6 +6,7 @@ import { CommentRepository } from 'src/domain/repositories/comment.repository';
 import { Repository } from 'typeorm';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
+import { VideoTypeOrmEntity } from '../entities/video.entity';
 
 @Injectable()
 export class DatabaseCommentRepository implements CommentRepository {
@@ -73,12 +74,12 @@ export class DatabaseCommentRepository implements CommentRepository {
       .getOne();
   }
 
-  async createCommentAnswer(content: string, question: Video, userId: number): Promise<void> {
+  async createCommentAnswer(content: string, question: VideoTypeOrmEntity, userId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
 
     await this.commentEntityRepository.save({
       content,
-      questionId: question.id,
+      question: question.id,
       user,
     });
   }
