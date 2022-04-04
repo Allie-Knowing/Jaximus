@@ -22,6 +22,7 @@ export class DatabaseUserRepository implements UserRepository {
       .select('user.name', 'name')
       .addSelect('user.profile', 'profile')
       .addSelect('COUNT(video.id)', 'videoCnt')
+      .addSelect('video.thumbnail', 'thumbnail')
       .where('user.id = :user_id', { user_id: userId })
       .leftJoin('user.videos', 'video')
       .groupBy('user.id')
