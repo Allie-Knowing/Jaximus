@@ -31,7 +31,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
       .leftJoin('video.likes', 'like')
-      .leftJoin('video.hashTags', 'hash_tag')
       .innerJoin('video.user', 'user')
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
@@ -40,13 +39,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile', 'profile')
-      .addSelect('hash_tag.id')
-      .addSelect('hash_tag.title')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .addSelect('COUNT(comment.id)', 'commentCnt')
       .offset(page * size)
       .limit(size)
       .where('video.deleted_at IS NULL')
       .andWhere('video.question IS NULL')
-      .getMany();
+      .getRawMany();
     return videos.map((video) => new Video(video));
   }
 
@@ -92,13 +91,13 @@ export class DatabaseVideoRepository implements VideoRepository {
     return videos.map((video) => new Video(video));
   }
 
-  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
+  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: VideoTypeOrmEntity): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
 
     await this.videoEntityRepository.save({
       title: request.title,
       videoUrl: request.videoUrl,
-      questionId: questionId,
+      question,
       user,
     });
   }
@@ -113,14 +112,12 @@ export class DatabaseVideoRepository implements VideoRepository {
       .execute();
   }
 
-  async findQuestion(questionId: number): Promise<Video> {
+  async checkQuestion(questionId: number): Promise<number> {
     return await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
-      .where('video.id = :question_id', { question_id: questionId })
-      .andWhere('video.deleted_at IS NULL')
-      .andWhere('video.question IS NULL')
-      .getRawOne();
+      .where('video.question = :question_id', { question_id: questionId })
+      .getCount();
   }
 
   findUsersQuestion(questionId: number, userId: number) {
