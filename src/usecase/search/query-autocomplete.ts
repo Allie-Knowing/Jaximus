@@ -20,7 +20,7 @@ export class QueryAutocompleteUsecase {
     }
 
     const result = await this.client.search({
-      index: 'titlesearch',
+      index: 'videosearch',
       body: {
         query: {
           bool: {
