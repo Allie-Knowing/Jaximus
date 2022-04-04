@@ -26,12 +26,11 @@ export class DatabaseVideoRepository implements VideoRepository {
     return this.videoEntityRepository.findOne(videoId);
   }
 
-  async findQuestionList(page: number, size: number): Promise<Video[]> {
+  async findQuestionList(page: number, size: number) {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
       .leftJoin('video.likes', 'like')
-      .leftJoin('video.hashTags', 'hash_tag')
       .innerJoin('video.user', 'user')
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
@@ -40,13 +39,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile', 'profile')
-      .addSelect('hash_tag.id')
-      .addSelect('hash_tag.title')
-      .offset(page * size)
+      .addSelect('COUNT(comment.id)', 'commentCnt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .offset((page - 1) * size)
       .limit(size)
-      .where('video.deleted_at IS NULL')
       .andWhere('video.question IS NULL')
-      .getMany();
+      .groupBy('video.id')
+      .getRawMany();
     return videos.map((video) => new Video(video));
   }
 
@@ -81,7 +80,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
-      .offset(page * size)
+      .offset((page - 1) * size)
       .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
       .andWhere('video.deleted_at IS NULL')

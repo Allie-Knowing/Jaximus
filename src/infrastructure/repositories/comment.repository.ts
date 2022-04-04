@@ -28,7 +28,7 @@ export class DatabaseCommentRepository implements CommentRepository {
       .addSelect('comment.isAdoption')
       .addSelect('user.id')
       .addSelect('user.profile')
-      .offset(page * size)
+      .offset((page - 1) * size)
       .limit(size)
       .where('video.id := id', { id: questionId })
       .andWhere('comment.deletedAt IS NULL')
