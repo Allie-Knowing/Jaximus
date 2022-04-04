@@ -5,7 +5,7 @@ import { Video } from '../model/video';
 export interface VideoRepository {
   save(video: CreateQuestionDto, userId: number): Promise<void>;
   findOne(videoId: number);
-  findQuestionList(page: number, size: number);
+  findQuestionList(page: number, size: number): Promise<Video[]>;
   findVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]>;
   createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void>;
   videoAdoption(videoId: number): Promise<void>;

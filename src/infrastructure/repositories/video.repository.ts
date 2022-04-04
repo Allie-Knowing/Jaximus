@@ -26,7 +26,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return this.videoEntityRepository.findOne(videoId);
   }
 
-  async findQuestionList(page: number, size: number) {
+  async findQuestionList(page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
