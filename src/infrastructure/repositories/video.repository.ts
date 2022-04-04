@@ -116,7 +116,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id')
-      .where('video.question = :question_id', { question_id: questionId })
+      .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
       .getOne();
   }
