@@ -1,8 +1,9 @@
 import { Video } from '../model/video';
 import { CreateVideoAnswerDto } from './dto/answer.dto';
+import { CreateVideoDto } from './dto/question.dto';
 
 export interface VideoRepository {
-  save(video: Video): Promise<void>;
+  save(video: CreateVideoDto, userId: number): Promise<void>;
   findOne(videoId: number);
   findQuestionList(page: number, size: number): Promise<Video[]>;
   findVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]>;
