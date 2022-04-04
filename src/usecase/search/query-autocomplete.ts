@@ -20,7 +20,7 @@ export class QueryAutocompleteUsecase {
     }
 
     const result = await this.client.search({
-      index: 'auto_complete',
+      index: 'titlesearch',
       body: {
         query: {
           bool: {
@@ -29,7 +29,6 @@ export class QueryAutocompleteUsecase {
                 match: {
                   'search_string.ngram': {
                     query: q,
-                    analyzer: 'my_ngram_analyzer',
                   },
                 },
               },
@@ -39,7 +38,6 @@ export class QueryAutocompleteUsecase {
                 match: {
                   'search_string.jaso': {
                     query: q,
-                    analyzer: 'suggest_search_analyzer',
                   },
                 },
               },
