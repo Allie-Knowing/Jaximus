@@ -75,7 +75,7 @@ export class DatabaseCommentRepository implements CommentRepository {
 
     await this.commentEntityRepository.save({
       content,
-      question: question.id,
+      question,
       user,
     });
   }
