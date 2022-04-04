@@ -108,11 +108,7 @@ export class DatabaseVideoRepository implements VideoRepository {
   }
 
   async findOne(id: number): Promise<Video> {
-    const question = await this.videoEntityRepository
-      .createQueryBuilder('video')
-      .select()
-      .where('video.id = :id', { id })
-      .getOne();
+    const question = await this.videoEntityRepository.createQueryBuilder('video').select().where('video.id = :id', { id }).getOne();
     return question ? new Video(question) : null;
   }
 

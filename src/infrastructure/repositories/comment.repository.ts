@@ -17,7 +17,7 @@ export class DatabaseCommentRepository implements CommentRepository {
     private readonly userEntityRepository: Repository<UserTypeOrmEntity>,
 
     @InjectRepository(VideoTypeOrmEntity)
-    private readonly videoTypeOrmEntity: Repository<VideoTypeOrmEntity>
+    private readonly videoTypeOrmEntity: Repository<VideoTypeOrmEntity>,
   ) {}
 
   async findTextAnswer(questionId: number, page: number, size: number): Promise<Comment[]> {
@@ -68,7 +68,7 @@ export class DatabaseCommentRepository implements CommentRepository {
 
   async createCommentAnswer(content: string, questionId: number, userId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
-    const question: VideoTypeOrmEntity = await this.videoTypeOrmEntity.findOne(questionId);    
+    const question: VideoTypeOrmEntity = await this.videoTypeOrmEntity.findOne(questionId);
 
     await this.commentEntityRepository.save({
       content,

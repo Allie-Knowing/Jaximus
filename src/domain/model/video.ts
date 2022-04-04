@@ -2,7 +2,6 @@ import { Expose, Transform } from 'class-transformer';
 import { IsArray, IsString } from 'class-validator';
 
 export class Video {
-
   id: number;
 
   @IsString()
