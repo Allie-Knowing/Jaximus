@@ -20,6 +20,7 @@ import { Video } from 'src/domain/model/video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { GetQuestionListUseCases } from 'src/usecase/question/get-questions-list';
+import { CreateVideoDto } from './question.dto';
 
 @Controller({ path: '/question', scope: Scope.REQUEST })
 export class QuestionController {
@@ -37,9 +38,9 @@ export class QuestionController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() request: Video) {
+  create(@Body() video: CreateVideoDto) {
     const userId = this.request.user.sub;
-    this.createQuestionUsecase.execute(userId, request);
+    this.createQuestionUsecase.execute(video, userId);
   }
 
   @Get('/')
