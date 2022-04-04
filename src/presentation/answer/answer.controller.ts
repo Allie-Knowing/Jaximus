@@ -23,6 +23,7 @@ import { DeleteCommentAnswerUsecase } from 'src/usecase/answer/delte-comment-ans
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
 import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
+import { CreateVideoAnswerDto } from './answer.dto';
 
 @Controller({ path: '/answer', scope: Scope.REQUEST })
 export class AnswerController {
@@ -46,7 +47,7 @@ export class AnswerController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/video/:questionId')
   @HttpCode(HttpStatus.CREATED)
-  async videoAnswer(@Body() request: Video, @Param('questionId', ParseIntPipe) questionId: number) {
+  async videoAnswer(@Body() request: CreateVideoAnswerDto, @Param('questionId', ParseIntPipe) questionId: number) {
     const userId = this.request.user.sub;
     await this.createVideoAnswerUsecase.execute(userId, request, questionId);
   }
