@@ -15,8 +15,11 @@ export class Comment {
   @Expose({ name: 'user_id' })
   userId: number;
 
-  @Expose({ name: 'update_at' })
-  updateAt: Date;
+  @Expose({ name: 'created_at' })
+  createdAt: Date;
+
+  @Expose({ name: 'updated_at' })
+  updatedAt: Date;
 
   @IsNumber()
   videoId: number;
