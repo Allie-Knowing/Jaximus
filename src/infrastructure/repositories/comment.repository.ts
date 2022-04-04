@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from 'src/domain/model/comment';
-import { Video } from 'src/domain/model/video';
 import { CommentRepository } from 'src/domain/repositories/comment.repository';
 import { Repository } from 'typeorm';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
@@ -32,7 +31,6 @@ export class DatabaseCommentRepository implements CommentRepository {
       .offset(page * size)
       .limit(size)
       .where('video.id := id', { id: questionId })
-      .andWhere('comment.deletedAt IS NULL')
       .getMany();
 
     return textAnswers.map((t) => new Comment(t));
@@ -48,7 +46,6 @@ export class DatabaseCommentRepository implements CommentRepository {
       .update(CommentTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: commentId })
-      .andWhere('video.deleted_at IS NULL')
       .execute();
   }
 
@@ -70,7 +67,6 @@ export class DatabaseCommentRepository implements CommentRepository {
       .select('comment.id')
       .where('comment.id = :comment_id', { comment_id: commentId })
       .andWhere('comment.user_id = :user_id', { user_id: userId })
-      .andWhere('video.deleted_at IS NULL')
       .getOne();
   }
 
