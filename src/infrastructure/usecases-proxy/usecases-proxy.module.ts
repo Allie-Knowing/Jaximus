@@ -137,12 +137,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryAutocompleteUsecase(elasticsearchService),
         },
         {
-          inject: [QueryTitleUsecase],
+          inject: [ElasticsearchService],
           provide: QueryTitleUsecase,
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryTitleUsecase(elasticsearchService),
         },
         {
-          inject: [QueryHashtagUsecase],
+          inject: [ElasticsearchService],
           provide: QueryHashtagUsecase,
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryHashtagUsecase(elasticsearchService),
         },
