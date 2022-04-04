@@ -29,7 +29,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/zuzu/Pictures/Photos Library.photoslibrary/resources/renders/E/E3F8C5B0-A54A-4360-B487-1890892BCA64_1_201_a.heic"
+									"src": "/Users/zuzu/Downloads/IMG_7077.MOV"
 								}
 							]
 						},
@@ -699,9 +699,28 @@
 				{
 					"name": "/:videoId - 질문 삭제",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "{{BASE_URL}}/question/14",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"question",
+								"14"
+							]
+						}
 					},
 					"response": []
 				}
@@ -716,7 +735,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/answer/video/1",
+							"raw": "{{BASE_URL}}/answer/video/1?page=1&size=3",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -724,6 +743,16 @@
 								"answer",
 								"video",
 								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -1196,6 +1225,152 @@
 						"method": "DELETE",
 						"header": [],
 						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "/autocomplete - 자동완성",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/search/autocomplete?q=머",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"autocomplete"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "머"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/title - 제목",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/search/title?q=S",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"title"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "S"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/title - 제목",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/search/title?q=S",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"search",
+										"title"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "S"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 04 Apr 2022 17:52:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "438"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b6-YULM2wX2gQjoYy5xA6+KoYKPbJg\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"9\",\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"thumbnail\": null\n        },\n        {\n            \"id\": \"11\",\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"thumbnail\": null\n        },\n        {\n            \"id\": \"13\",\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"thumbnail\": null\n        },\n        {\n            \"id\": \"8\",\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"thumbnail\": null\n        },\n        {\n            \"id\": \"10\",\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"thumbnail\": null\n        },\n        {\n            \"id\": \"12\",\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"thumbnail\": null\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/title\",\n    \"duration\": \"4ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/hashtag - 해시태그",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/search/hashtag?q=f",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"hashtag"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "f"
+								}
+							]
+						}
 					},
 					"response": []
 				}
