@@ -137,6 +137,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .createQueryBuilder('video')
       .select('video.id', 'id')
       .addSelect('video.video_url', 'videoUrl')
+      .addSelect('video.thumbnail', 'thumbnail')
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
       .getRawMany();
