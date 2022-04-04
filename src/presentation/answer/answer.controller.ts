@@ -12,6 +12,7 @@ import {
   UseGuards,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
@@ -24,10 +25,16 @@ import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
 import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
 import { CreateVideoAnswerDto } from './answer.dto';
+import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
+import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
 
 @Controller({ path: '/answer', scope: Scope.REQUEST })
 export class AnswerController {
   constructor(
+    @Inject(VideoAdoptionUsecase)
+    private readonly videoAdoptionUsecase: VideoAdoptionUsecase,
+    @Inject(CommentAdoptionUsecase)
+    private readonly commentAdoptionUsecase: CommentAdoptionUsecase,
     @Inject(GetVideoAnswerListUseCases)
     private readonly getVideoAnswerListUseCases: GetVideoAnswerListUseCases,
     @Inject(CreateVideoAnswerUsecase)
@@ -70,27 +77,43 @@ export class AnswerController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Post('/comment/:questionId')
+  @Post('/text/:questionId')
   @HttpCode(HttpStatus.CREATED)
-  async commentAnswer(@Body('content') content: string, @Param('questionId', ParseIntPipe) questionId: number) {
+  async textAnswer(@Body('content') content: string, @Param('questionId', ParseIntPipe) questionId: number) {
     const userId = this.request.user.sub;
     await this.createCommentAnswerUsecase.execute(content, questionId, userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('/comment/:commentId')
+  @Delete('/text/:commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteCommentAnswer(@Param('commentId', ParseIntPipe) commentId: number) {
     const userId = this.request.user.sub;
     await this.deleteCommentAnswerUsecase.execute(commentId, userId);
   }
 
-  @Get('/comment/:questionId')
-  textAnswer(
+  @Get('/text/:questionId')
+  textAnswerList(
     @Param('questionId', ParseIntPipe) questionId: number,
     @Query('page', ParseIntPipe) page: number,
     @Query('size', ParseIntPipe) size: number,
   ) {
     return this.getTextAnswerUsecase.execute(questionId, page, size);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put('/video/adoption/:videoId')
+  @HttpCode(HttpStatus.OK)
+  async videoAnswerAdoption(@Param('videoId', ParseIntPipe) videoId: number) {
+    const userId = this.request.user.sub;
+    await this.videoAdoptionUsecase.execute(videoId, userId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put('/adoption/:commentId')
+  @HttpCode(HttpStatus.OK)
+  async textAnswerAdoption(@Param('commentId', ParseIntPipe) commentId: number, @Body('videoId') videoId: number) {
+    const userId = this.request.user.sub;
+    await this.commentAdoptionUsecase.execute(commentId, userId, videoId);
   }
 }
