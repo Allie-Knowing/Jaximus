@@ -13,7 +13,7 @@ export interface VideoRepository {
   userQuestionList(userId: number): Promise<Video[]>;
   deleteQuestion(videoId: number): Promise<void>;
   deleteVideoAnswer(questionId): Promise<void>;
+  findQuestion(questionId: number): Promise<VideoTypeOrmEntity>
   findUsersQuestion(videoId: number, userId: number);
-  checkQuestion(questionId: number): Promise<number>;
   findUsersVideo(videoId: number, userId: number);
 }
