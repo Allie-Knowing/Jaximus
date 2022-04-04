@@ -1,4 +1,18 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Post, Scope, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+  Scope,
+  UseGuards,
+} from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
@@ -29,8 +43,8 @@ export class QuestionController {
   }
 
   @Get('/')
-  questionList(): Promise<Video[]> {
-    return this.getQuestionListUsecase.execute();
+  questionList(@Query('page', ParseIntPipe) page: number, @Query('size', ParseIntPipe) size: number): Promise<Video[]> {
+    return this.getQuestionListUsecase.execute(page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))

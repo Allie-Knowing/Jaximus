@@ -52,8 +52,12 @@ export class AnswerController {
   }
 
   @Get('/video/:questionId')
-  videoAnswerList(@Param('questionId', ParseIntPipe) questionId: number): Promise<Video[]> {
-    return this.getVideoAnswerListUseCases.execute(questionId);
+  videoAnswerList(
+    @Param('questionId', ParseIntPipe) questionId: number,
+    @Query('page', ParseIntPipe) page: number,
+    @Query('size', ParseIntPipe) size: number,
+  ): Promise<Video[]> {
+    return this.getVideoAnswerListUseCases.execute(questionId, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
