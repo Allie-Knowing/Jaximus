@@ -10,8 +10,9 @@ export class QueryTitleUsecase {
     function mapFunc(record: any) {
       return {
         id: record._id,
-        source: record._source,
-        highlight: record.highlight,
+        description: record._source.description,
+        title: record._source.title,
+        thumbnail: record._source.thumbnail,
       };
     }
 
