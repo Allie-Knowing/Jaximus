@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
-import { CreateVideoDto } from 'src/presentation/question/question.dto';
+import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -50,7 +50,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return videos.map((video) => new Video(video));
   }
 
-  async save(video: CreateVideoDto, userId: number): Promise<void> {
+  async save(video: CreateQuestionDto, userId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
 
     const videoEntity: VideoTypeOrmEntity = await this.videoEntityRepository.save({

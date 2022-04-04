@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { IsArray, IsString } from 'class-validator';
 
-export class CreateVideoDto {
+export class CreateQuestionDto {
   @IsString()
   title: string;
 
@@ -12,6 +12,7 @@ export class CreateVideoDto {
   @Expose({ name: 'hash_tag' })
   hashTags: string[];
 
+  @IsString()
   @Expose({ name: 'video_url' })
   videoUrl: string;
 }
