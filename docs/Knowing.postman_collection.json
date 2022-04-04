@@ -9,164 +9,18 @@
 			"name": "video",
 			"item": [
 				{
-					"name": "/ - 질문 목록",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/video",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"video"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/ - 질문 목록",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BASE_URL}}/video",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"video"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "408"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"198-KRJX14OUtoDHEPOmqhQ+QKBrg7g\""
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 25 Mar 2022 05:54:00 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"data\": [\n        {\n            \"id\": 7,\n            \"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n            \"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n            \"video_url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\",\n            \"created_at\": \"2022-03-23T23:46:09.355Z\",\n            \"user_id\": 1,\n            \"profile\": \"af\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/video\",\n    \"duration\": \"21ms\",\n    \"method\": \"GET\"\n}"
-						}
-					]
-				},
-				{
-					"name": "/ - 질문 생성",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n\t\"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n\t\"hash_tag\": [\n\t\t\"노래\", \n\t\t\"이런 갬성\",\n\t\t\"대마고\"\n\t],\n\t\"videoUrl\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BASE_URL}}/video",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"video"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/ - 질문 생성",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n\t\"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n\t\"hash_tag\": [\n\t\t\"노래\", \n\t\t\"이런 갬성\",\n\t\t\"대마고\"\n\t],\n\t\"videoUrl\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/video",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"video"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "109"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"6d-ne82qLGQj1r1NZCNTycAhdrVzS8\""
-								},
-								{
-									"key": "Date",
-									"value": "Thu, 24 Mar 2022 08:46:09 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"status\": 201,\n        \"message\": \"success\"\n    },\n    \"isArray\": false,\n    \"path\": \"/video\",\n    \"duration\": \"12ms\",\n    \"method\": \"POST\"\n}"
-						}
-					]
-				},
-				{
 					"name": "/file - 영상 업로드",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -175,7 +29,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/zuzu/Downloads/video-1647485744.mp4"
+									"src": "/Users/zuzu/Pictures/Photos Library.photoslibrary/resources/renders/E/E3F8C5B0-A54A-4360-B487-1890892BCA64_1_201_a.heic"
 								}
 							]
 						},
@@ -260,6 +114,15 @@
 							"body": "{\n    \"data\": {\n        \"url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n    },\n    \"isArray\": false,\n    \"path\": \"/video/file\",\n    \"duration\": \"1641ms\",\n    \"method\": \"POST\"\n}"
 						}
 					]
+				},
+				{
+					"name": "/search - 영상 검색 (태그)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
 				}
 			]
 		},
@@ -645,15 +508,28 @@
 				{
 					"name": "/ - 질문 목록",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/question",
+							"raw": "{{BASE_URL}}/question?page=1&size=3",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"question"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -710,6 +586,124 @@
 							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"description\": \"설명\",\n            \"title\": \"제목\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:01:02.144Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        },\n        {\n            \"id\": 2,\n            \"description\": \"ㅂㅈㄷ\",\n            \"title\": \"답변답변\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:07:15.829Z\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question\",\n    \"duration\": \"16ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
+				},
+				{
+					"name": "/ - 질문 생성",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"제가 흥얼거리는 노래  ^^\",\n\t\"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n\t\"hash_tag\": [\n\t\t\"노래shit\", \n\t\t\"이런 갬성shir\",\n\t\t\"대마고\"\n\t],\n\t\"video_url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/question/ca3aab1e-cf90-4b81-9750-3a172e782bcb.heic\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/question",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:videoId/hashtag - 질문 해시태그 가져오기",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/question/14/hashtag",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"question",
+								"14",
+								"hashtag"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/:video-id/hashtag - 질문 해시태그 가져오기",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/question/14/hashtag",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"question",
+										"14",
+										"hashtag"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 04 Apr 2022 12:14:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "189"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"bd-9yRdw5uwGcqru2VhkoV8gI6DM2Y\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 146,\n            \"title\": \"노래shit\"\n        },\n        {\n            \"id\": 147,\n            \"title\": \"이런 갬성shir\"\n        },\n        {\n            \"id\": 148,\n            \"title\": \"대마고\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question/14/hashtag\",\n    \"duration\": \"4ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/:videoId - 질문 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": null
+					},
+					"response": []
 				}
 			]
 		},
@@ -790,24 +784,24 @@
 					]
 				},
 				{
-					"name": "/comment/:questionId - 글답변 목록",
+					"name": "/text/:questionId - 글답변 목록",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_URL}}/answer/comment/1?page=0&size=2",
+							"raw": "{{BASE_URL}}/answer/text/7?page=1&size=2",
 							"host": [
-								"{{LOCAL_URL}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"answer",
-								"comment",
-								"1"
+								"text",
+								"7"
 							],
 							"query": [
 								{
 									"key": "page",
-									"value": "0"
+									"value": "1"
 								},
 								{
 									"key": "size",
@@ -815,6 +809,207 @@
 								}
 							]
 						}
+					},
+					"response": [
+						{
+							"name": "/text/:questionId - 글답변 목록",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/answer/text/7?page=1&size=2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"answer",
+										"text",
+										"7"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "202"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ca-lqckKLkiU5F/sBthGaOMcm1N8f0\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 04 Apr 2022 11:10:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 5,\n            \"content\": \"fucks\",\n            \"is_adoption\": false,\n            \"updatedAt\": \"2022-04-04T02:10:51.062Z\",\n            \"user\": {\n                \"id\": 1,\n                \"profile\": \"af\"\n            }\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/comment/7\",\n    \"duration\": \"63ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/text/:questionId - 글답변생성",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"fucks\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/answer/text/7",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"answer",
+								"text",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/comment/:questionId - 글답변생성",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"fucks\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/answer/text/7",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"answer",
+										"text",
+										"7"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-EvjbGDEuM9cn7hrN/3EQiNzJSjA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 04 Apr 2022 11:10:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"isArray\": false,\n    \"path\": \"/answer/comment/7\",\n    \"duration\": \"80ms\",\n    \"method\": \"POST\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/video/:questionId - 영상답변 생성",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/text/:commentId - 글답변 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/text/adoption/:commentId - 글답변 채택",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/video/adoption/:videoId - 영상 답변 채택",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": null
 					},
 					"response": []
 				}
@@ -899,6 +1094,16 @@
 				{
 					"name": "/question/video/:userId - 마이페이지 질문  영상",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -972,6 +1177,29 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "like",
+			"item": [
+				{
+					"name": "/ - 좋아요 추가",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "/ - 좋아요 취소",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -1006,6 +1234,14 @@
 		{
 			"key": "LOCAL_URL",
 			"value": "http://localhost:8080"
+		},
+		{
+			"key": "accessToken",
+			"value": "eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4NjUxMDYwfQ.FCSj2HgtWBlPZNNLrCNwC27g5Y415AaRXpwQY_pGHss"
+		},
+		{
+			"key": "refreshToken",
+			"value": "eyJ0eXAiOiJhY2Nlc3MiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NDg2NTEwNjEsInN1YiI6IjEiLCJ0eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0ODY1MTA2MH0.Bt3UfwZkZeZ83dvaBcg0j4hv_mwtTWXHmL4IuhC8QEU"
 		}
 	]
 }
