@@ -17,11 +17,15 @@ export class User {
   @Expose({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Transform(({ value }) => parseInt(value))
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
   @Expose({ name: 'like_cnt' })
   likeCnt: number;
 
-  @Transform(({ value }) => parseInt(value))
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
   @Expose({ name: 'video_cnt' })
   videoCnt: number;
 

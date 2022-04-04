@@ -26,11 +26,15 @@ export class Video {
   @Expose({ name: 'is_adoption' })
   isAdoption: boolean;
 
-  @Transform(({ value }) => parseInt(value))
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
   @Expose({ name: 'like_cnt' })
   likeCnt: number;
 
-  @Transform(({ value }) => parseInt(value))
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
   @Expose({ name: 'comment_cnt' })
   commentCnt: number;
 
