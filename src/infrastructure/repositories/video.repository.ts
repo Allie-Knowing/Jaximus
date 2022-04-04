@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
+import { CreateVideoAnswerDto } from 'src/domain/repositories/dto/answer.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
@@ -29,6 +30,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
       .leftJoin('video.likes', 'like')
+      .leftJoin('video.hashTags', 'hash_tag')
       .innerJoin('video.user', 'user')
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
@@ -37,14 +39,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile', 'profile')
-      .addSelect('COUNT(comment.id)', 'commentCnt')
-      .addSelect('COUNT(like.id)', 'likeCnt')
+      .addSelect('hash_tag.id')
+      .addSelect('hash_tag.title')
       .offset(page * size)
       .limit(size)
       .where('video.deleted_at IS NULL')
       .andWhere('video.question IS NULL')
-      .groupBy('video.id')
-      .getRawMany();
+      .getMany();
     return videos.map((video) => new Video(video));
   }
 
@@ -90,13 +91,13 @@ export class DatabaseVideoRepository implements VideoRepository {
     return videos.map((video) => new Video(video));
   }
 
-  async createVideoAnswer(video: Video): Promise<void> {
-    const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(video.userId);
+  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
+    const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
 
     await this.videoEntityRepository.save({
-      title: video.title,
-      videoUrl: video.videoUrl,
-      questionId: video.questionId,
+      title: request.title,
+      videoUrl: request.video_url,
+      questionId: questionId,
       user,
     });
   }
