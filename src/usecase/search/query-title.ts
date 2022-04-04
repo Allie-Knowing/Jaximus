@@ -1,7 +1,7 @@
 import { Client } from '@elastic/elasticsearch';
 import { ElasticsearchService } from 'src/infrastructure/config/elasticsearch/elasticsearch.service';
 
-export class GetAutocompleteUsecase {
+export class QueryTitleUsecase {
   client: Client;
 
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -20,16 +20,15 @@ export class GetAutocompleteUsecase {
     }
 
     const result = await this.client.search({
-      index: 'auto_complete',
+      index: 'videosearch',
       body: {
         query: {
           bool: {
             must: [
               {
                 match: {
-                  'search_string.jaso': {
+                  'title.ngram': {
                     query: q,
-                    analyzer: 'suggest_search_analyzer',
                   },
                 },
               },
@@ -37,9 +36,15 @@ export class GetAutocompleteUsecase {
             should: [
               {
                 match: {
-                  'search_string.ngram': {
+                  'title.jaso': {
                     query: q,
-                    analyzer: 'my_ngram_analyzer',
+                  },
+                },
+              },
+              {
+                match: {
+                  description: {
+                    query: q,
                   },
                 },
               },
