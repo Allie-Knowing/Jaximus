@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
-import { CreateVideoAnswerDto } from 'src/domain/repositories/dto/answer.dto';
-import { CreateVideoDto } from 'src/domain/repositories/dto/question.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
+import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
+import { CreateVideoDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';

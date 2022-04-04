@@ -1,5 +1,5 @@
-import { CreateVideoDto } from 'src/domain/repositories/dto/question.dto';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
+import { CreateVideoDto } from 'src/presentation/question/question.dto';
 
 export class CreateQuestionUsecase {
   constructor(private readonly videoRepository: VideoRepository) {}
