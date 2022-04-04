@@ -30,6 +30,8 @@ export class MulterConfigService implements MulterOptionsFactory {
         bucket: this.configService.getBucketName(),
         acl: 'public-read',
         key: (req, file: Express.Multer.File, cb) => {
+          console.log("1:   ", file);
+          
           cb(
             null,
             `/pre-process/${req.query.type}/${verify(req.headers['authorization'].split(' ')[1], JWT_SECRET_KEY).sub}^${v4()}.${
