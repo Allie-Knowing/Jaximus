@@ -43,7 +43,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('COUNT(like.id)', 'likeCnt')
       .offset((page - 1) * size)
       .limit(size)
-      .andWhere('video.question IS NULL')
+      .where('video.question IS NULL')
       .groupBy('video.id')
       .getRawMany();
     return videos.map((video) => new Video(video));
@@ -83,7 +83,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
-      .andWhere('video.deleted_at IS NULL')
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
@@ -91,13 +90,13 @@ export class DatabaseVideoRepository implements VideoRepository {
     return videos.map((video) => new Video(video));
   }
 
-  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
+  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: VideoTypeOrmEntity): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
 
     await this.videoEntityRepository.save({
       title: request.title,
       videoUrl: request.videoUrl,
-      questionId: questionId,
+      question,
       user,
     });
   }
@@ -108,18 +107,16 @@ export class DatabaseVideoRepository implements VideoRepository {
       .update(VideoTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
-      .andWhere('video.deleted_at IS NULL')
       .execute();
   }
 
-  async findQuestion(questionId: number): Promise<Video> {
-    return await this.videoEntityRepository
+  async findQuestion(questionId: number): Promise<VideoTypeOrmEntity> {
+    return this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
       .where('video.id = :question_id', { question_id: questionId })
-      .andWhere('video.deleted_at IS NULL')
       .andWhere('video.question IS NULL')
-      .getRawOne();
+      .getOne();
   }
 
   findUsersQuestion(questionId: number, userId: number) {
@@ -128,7 +125,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id')
       .where('video.question = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
-      .andWhere('video.deleted_at IS NULL')
       .getOne();
   }
 
@@ -138,7 +134,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id')
       .where('video.id = :video_id', { video_id: videoId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
-      .andWhere('video.deleted_at IS NULL')
       .getOne();
   }
 
@@ -149,7 +144,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.video_url', 'videoUrl')
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
-      .andWhere('video.deleted_at IS NULL')
       .getRawMany();
     return videos.map((video) => new Video(video));
   }
