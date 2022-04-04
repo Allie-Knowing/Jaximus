@@ -10,7 +10,7 @@ export class VideoTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   description: string;
 
   @Column({ length: 100 })
