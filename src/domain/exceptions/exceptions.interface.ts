@@ -6,6 +6,7 @@ export interface IFormatExceptionMessage {
 export interface IException {
   badRequestException(data: IFormatExceptionMessage): void;
   questionNotFoundException(): void;
+  hashtagNotFoundException(): void;
   videoNotFoundException(): void;
   videoAnswerNotFoundException(): void;
   commentNotFoundException(): void;
