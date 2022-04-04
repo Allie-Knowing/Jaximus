@@ -25,6 +25,8 @@ import { GetAutocompleteUsecase } from 'src/usecase/search/get-autocomplete';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
 import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
+import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question-hashtag-list';
+import { DatabaseHashTagRepository } from '../repositories/hash-tag.repository';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -137,6 +139,12 @@ export class UsecasesProxyDynamicModule {
           provide: GetTextAnswerUseCase,
           useFactory: (databaseCommentRepository: DatabaseCommentRepository) => new GetTextAnswerUseCase(databaseCommentRepository),
         },
+        {
+          inject: [DatabaseHashTagRepository, ExceptionsService],
+          provide: GetQuestionHashtagListUseCase,
+          useFactory: (databaseHashTagRepository: DatabaseHashTagRepository, exceptionService: ExceptionsService) =>
+            new GetQuestionHashtagListUseCase(databaseHashTagRepository, exceptionService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -155,6 +163,7 @@ export class UsecasesProxyDynamicModule {
         CreateCommentAnswerUsecase,
         GetAutocompleteUsecase,
         GetTextAnswerUseCase,
+        GetQuestionHashtagListUseCase,
       ],
     };
   }
