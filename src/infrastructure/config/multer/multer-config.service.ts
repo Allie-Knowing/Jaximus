@@ -5,8 +5,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
 import { S3Config } from 'src/domain/config/s3.interface';
 import { EnvironmentConfigService } from '../environment-config/environment-config.service';
-import { verify } from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from 'src/infrastructure/common/constants/jwt.constant';
 
 @Injectable()
 export class MulterConfigService implements MulterOptionsFactory {
@@ -30,14 +28,9 @@ export class MulterConfigService implements MulterOptionsFactory {
         bucket: this.configService.getBucketName(),
         acl: 'public-read',
         key: (req, file: Express.Multer.File, cb) => {
-          console.log("1:   ", file);
-          
-          cb(
-            null,
-            `/pre-process/${req.query.type}/${verify(req.headers['authorization'].split(' ')[1], JWT_SECRET_KEY).sub}^${v4()}.${
-              file.originalname.split('.')[file.originalname.split('.').length - 1]
-            }`,
-          );
+          console.log('1:   ', file);
+
+          cb(null, `video/${req.query.type}/${v4()}.${file.originalname.split('.')[file.originalname.split('.').length - 1]}`);
         },
       }),
       limits: { fieldSize: 50 * 1024 * 1024 },
