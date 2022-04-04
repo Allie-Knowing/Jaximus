@@ -14,6 +14,8 @@ export class Video {
 
   profile: string;
 
+  thumbnail: string;
+
   @IsString()
   @Expose({ name: 'video_url' })
   videoUrl: string;

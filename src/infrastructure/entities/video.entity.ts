@@ -28,6 +28,9 @@ export class VideoTypeOrmEntity {
   @DeleteDateColumn()
   deletedAt?: Date;
 
+  @Column({ length: 2000 })
+  thumbnail: string;
+
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
 
