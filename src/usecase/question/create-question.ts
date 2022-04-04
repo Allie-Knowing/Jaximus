@@ -1,10 +1,10 @@
 import { VideoRepository } from 'src/domain/repositories/video.repository';
-import { CreateVideoDto } from 'src/presentation/question/question.dto';
+import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 
 export class CreateQuestionUsecase {
   constructor(private readonly videoRepository: VideoRepository) {}
 
-  async execute(video: CreateVideoDto, userId: number) {
+  async execute(video: CreateQuestionDto, userId: number) {
     this.videoRepository.save(video, userId);
   }
 }
