@@ -1,6 +1,6 @@
+import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
+import { CreateVideoDto } from 'src/presentation/question/question.dto';
 import { Video } from '../model/video';
-import { CreateVideoAnswerDto } from './dto/answer.dto';
-import { CreateVideoDto } from './dto/question.dto';
 
 export interface VideoRepository {
   save(video: CreateVideoDto, userId: number): Promise<void>;
