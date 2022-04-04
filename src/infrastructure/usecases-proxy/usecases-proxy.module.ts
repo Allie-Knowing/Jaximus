@@ -21,12 +21,14 @@ import { DatabaseVideoRepository } from '../repositories/video.repository';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
-import { GetAutocompleteUsecase } from 'src/usecase/search/get-autocomplete';
+import { QueryAutocompleteUsecase } from 'src/usecase/search/query-autocomplete';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
 import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
 import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question-hashtag-list';
 import { DatabaseHashTagRepository } from '../repositories/hash-tag.repository';
+import { QueryTitleUsecase } from 'src/usecase/search/query-title';
+import { QueryHashtagUsecase } from 'src/usecase/search/query-hash-tag';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -131,8 +133,18 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [ElasticsearchService],
-          provide: GetAutocompleteUsecase,
-          useFactory: (elasticsearchService: ElasticsearchService) => new GetAutocompleteUsecase(elasticsearchService),
+          provide: QueryAutocompleteUsecase,
+          useFactory: (elasticsearchService: ElasticsearchService) => new QueryAutocompleteUsecase(elasticsearchService),
+        },
+        {
+          inject: [QueryTitleUsecase],
+          provide: QueryTitleUsecase,
+          useFactory: (elasticsearchService: ElasticsearchService) => new QueryTitleUsecase(elasticsearchService),
+        },
+        {
+          inject: [QueryHashtagUsecase],
+          provide: QueryHashtagUsecase,
+          useFactory: (elasticsearchService: ElasticsearchService) => new QueryHashtagUsecase(elasticsearchService),
         },
         {
           inject: [DatabaseCommentRepository],
@@ -161,7 +173,7 @@ export class UsecasesProxyDynamicModule {
         DeleteQuestionUsecase,
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
-        GetAutocompleteUsecase,
+        QueryAutocompleteUsecase,
         GetTextAnswerUseCase,
         GetQuestionHashtagListUseCase,
       ],
