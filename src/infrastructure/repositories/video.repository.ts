@@ -96,7 +96,7 @@ export class DatabaseVideoRepository implements VideoRepository {
 
     await this.videoEntityRepository.save({
       title: request.title,
-      videoUrl: request.video_url,
+      videoUrl: request.videoUrl,
       questionId: questionId,
       user,
     });
