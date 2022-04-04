@@ -10,9 +10,9 @@ export class CreateCommentAnswerUsecase {
   ) {}
 
   async execute(content: string, questionId: number, userId: number) {
-    const question = await this.videoRepository.findQuestion(questionId);
+    const question = await this.videoRepository.findOne(questionId);
     if (!question) this.exceptionsService.questionNotFoundException();
 
-    this.commentRepository.createCommentAnswer(content, question, userId);
+    this.commentRepository.createCommentAnswer(content, questionId, userId);
   }
 }

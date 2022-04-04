@@ -15,6 +15,9 @@ export class DatabaseCommentRepository implements CommentRepository {
 
     @InjectRepository(UserTypeOrmEntity)
     private readonly userEntityRepository: Repository<UserTypeOrmEntity>,
+
+    @InjectRepository(VideoTypeOrmEntity)
+    private readonly videoTypeOrmEntity: Repository<VideoTypeOrmEntity>
   ) {}
 
   async findTextAnswer(questionId: number, page: number, size: number): Promise<Comment[]> {
@@ -24,20 +27,21 @@ export class DatabaseCommentRepository implements CommentRepository {
       .innerJoin('comment.user', 'user')
       .select('comment.id')
       .addSelect('comment.content')
-      .addSelect('comment.updateAt')
+      .addSelect('comment.updatedAt')
       .addSelect('comment.isAdoption')
       .addSelect('user.id')
       .addSelect('user.profile')
       .offset((page - 1) * size)
       .limit(size)
-      .where('video.id := id', { id: questionId })
+      .where('video.id = :id', { id: questionId })
       .getMany();
 
     return textAnswers.map((t) => new Comment(t));
   }
 
-  findOne(commentId: number) {
-    return this.commentEntityRepository.findOne(commentId);
+  async findOne(commentId: number): Promise<Comment> {
+    const comment = await this.commentEntityRepository.findOne(commentId);
+    return comment ? new Comment(comment) : null;
   }
 
   async commentAdoption(commentId: number): Promise<void> {
@@ -53,14 +57,6 @@ export class DatabaseCommentRepository implements CommentRepository {
     await this.commentEntityRepository.softDelete(commentId);
   }
 
-  matchUser(userId: number) {
-    return this.commentEntityRepository
-      .createQueryBuilder('comment')
-      .select()
-      .where('comment.user_id = :user_id', { user_id: userId })
-      .getCount();
-  }
-
   findComment(commentId: number, userId: number) {
     return this.commentEntityRepository
       .createQueryBuilder('comment')
@@ -70,12 +66,13 @@ export class DatabaseCommentRepository implements CommentRepository {
       .getOne();
   }
 
-  async createCommentAnswer(content: string, question: VideoTypeOrmEntity, userId: number): Promise<void> {
+  async createCommentAnswer(content: string, questionId: number, userId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
+    const question: VideoTypeOrmEntity = await this.videoTypeOrmEntity.findOne(questionId);    
 
     await this.commentEntityRepository.save({
       content,
-      question,
+      video: question,
       user,
     });
   }

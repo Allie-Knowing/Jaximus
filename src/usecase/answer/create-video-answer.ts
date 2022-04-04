@@ -9,6 +9,6 @@ export class CreateVideoAnswerUsecase {
     const question = await this.videoRepository.findOne(questionId);
     if (!question) this.exceptionsService.questionNotFoundException();
 
-    this.videoRepository.createVideoAnswer(request, userId, question);
+    this.videoRepository.createVideoAnswer(request, userId, questionId);
   }
 }

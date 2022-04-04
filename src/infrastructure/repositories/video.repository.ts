@@ -22,10 +22,6 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
   ) {}
 
-  findOne(videoId: number) {
-    return this.videoEntityRepository.findOne(videoId);
-  }
-
   async findQuestionList(page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
@@ -90,8 +86,9 @@ export class DatabaseVideoRepository implements VideoRepository {
     return videos.map((video) => new Video(video));
   }
 
-  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: VideoTypeOrmEntity): Promise<void> {
+  async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
+    const question: VideoTypeOrmEntity = await this.videoEntityRepository.findOne(questionId);
 
     await this.videoEntityRepository.save({
       title: request.title,
@@ -110,13 +107,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .execute();
   }
 
-  async findQuestion(questionId: number): Promise<VideoTypeOrmEntity> {
-    return this.videoEntityRepository
+  async findOne(id: number): Promise<Video> {
+    const question = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
-      .where('video.id = :question_id', { question_id: questionId })
-      .andWhere('video.question IS NULL')
+      .where('video.id = :id', { id })
       .getOne();
+    return question ? new Video(question) : null;
   }
 
   findUsersQuestion(questionId: number, userId: number) {
