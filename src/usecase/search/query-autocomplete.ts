@@ -1,7 +1,7 @@
 import { Client } from '@elastic/elasticsearch';
 import { ElasticsearchService } from 'src/infrastructure/config/elasticsearch/elasticsearch.service';
 
-export class GetAutocompleteUsecase {
+export class QueryAutocompleteUsecase {
   client: Client;
 
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
@@ -27,9 +27,9 @@ export class GetAutocompleteUsecase {
             must: [
               {
                 match: {
-                  'search_string.jaso': {
+                  'search_string.ngram': {
                     query: q,
-                    analyzer: 'suggest_search_analyzer',
+                    analyzer: 'my_ngram_analyzer',
                   },
                 },
               },
@@ -37,9 +37,9 @@ export class GetAutocompleteUsecase {
             should: [
               {
                 match: {
-                  'search_string.ngram': {
+                  'search_string.jaso': {
                     query: q,
-                    analyzer: 'my_ngram_analyzer',
+                    analyzer: 'suggest_search_analyzer',
                   },
                 },
               },
