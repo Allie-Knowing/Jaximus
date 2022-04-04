@@ -21,7 +21,6 @@ import { DatabaseVideoRepository } from '../repositories/video.repository';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
-import { QueryAutocompleteUsecase } from 'src/usecase/search/query-autocomplete';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
 import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
@@ -133,11 +132,6 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [ElasticsearchService],
-          provide: QueryAutocompleteUsecase,
-          useFactory: (elasticsearchService: ElasticsearchService) => new QueryAutocompleteUsecase(elasticsearchService),
-        },
-        {
-          inject: [ElasticsearchService],
           provide: QueryTitleUsecase,
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryTitleUsecase(elasticsearchService),
         },
@@ -173,7 +167,6 @@ export class UsecasesProxyDynamicModule {
         DeleteQuestionUsecase,
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
-        QueryAutocompleteUsecase,
         QueryTitleUsecase,
         QueryHashtagUsecase,
         GetTextAnswerUseCase,
