@@ -6,9 +6,12 @@ export class CreateVideoAnswerUsecase {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
   async execute(userId: number, request: CreateVideoAnswerDto, questionId: number) {
-    const question = await this.videoRepository.findQuestion(questionId);
-    if (!question) this.exceptionsService.questionNotFoundException();
+    const video = await this.videoRepository.findOne(questionId);
+    if (!video) this.exceptionsService.questionNotFoundException();
 
-    this.videoRepository.createVideoAnswer(request, userId, questionId);
+    const checkQuestion = await this.videoRepository.checkQuestion(video.id);
+    if (checkQuestion === 0) this.exceptionsService.itIsNotQuestionException();
+
+    this.videoRepository.createVideoAnswer(request, userId, video);
   }
 }
