@@ -174,6 +174,8 @@ export class UsecasesProxyDynamicModule {
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
         QueryAutocompleteUsecase,
+        QueryTitleUsecase,
+        QueryHashtagUsecase,
         GetTextAnswerUseCase,
         GetQuestionHashtagListUseCase,
       ],
