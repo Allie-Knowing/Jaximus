@@ -52,6 +52,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       description: video.description,
       title: video.title,
       videoUrl: video.videoUrl,
+      thumbnail: video.videoUrl.split('.')[0] + '.png',
       user,
     });
 
@@ -93,6 +94,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     await this.videoEntityRepository.save({
       title: request.title,
       videoUrl: request.videoUrl,
+      thumbnail: request.videoUrl.split('.')[0] + '.png',
       question,
       user,
     });
