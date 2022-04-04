@@ -27,7 +27,7 @@ export class QueryAutocompleteUsecase {
             must: [
               {
                 match: {
-                  'search_string.ngram': {
+                  'title.ngram': {
                     query: q,
                   },
                 },
@@ -36,7 +36,7 @@ export class QueryAutocompleteUsecase {
             should: [
               {
                 match: {
-                  'search_string.jaso': {
+                  'title.jaso': {
                     query: q,
                   },
                 },
