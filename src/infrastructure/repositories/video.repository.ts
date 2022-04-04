@@ -39,11 +39,12 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile', 'profile')
-      .addSelect('COUNT(like.id)', 'likeCnt')
       .addSelect('COUNT(comment.id)', 'commentCnt')
-      .offset(page * size)
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .offset((page - 1) * size)
       .limit(size)
-      .andWhere('video.question IS NULL')
+      .where('video.question IS NULL')
+      .groupBy('video.id')
       .getRawMany();
     return videos.map((video) => new Video(video));
   }
@@ -79,7 +80,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.profile', 'profile')
       .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
-      .offset(page * size)
+      .offset((page - 1) * size)
       .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
       .leftJoin('video.user', 'user')
