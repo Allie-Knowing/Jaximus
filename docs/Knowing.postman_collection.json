@@ -523,16 +523,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/answer/text/1?page=1&size=11",
+							"raw": "http://localhost:3000/question?page=1&size=11",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"answer",
-								"text",
-								"1"
+								"question"
 							],
 							"query": [
 								{
@@ -553,12 +551,22 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/question",
+									"raw": "{{BASE_URL}}/question?size=1&page=1",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"question"
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -596,7 +604,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"description\": \"설명\",\n            \"title\": \"제목\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:01:02.144Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        },\n        {\n            \"id\": 2,\n            \"description\": \"ㅂㅈㄷ\",\n            \"title\": \"답변답변\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:07:15.829Z\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"comment_cnt\": \"0\",\n            \"like_cnt\": \"0\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question\",\n    \"duration\": \"16ms\",\n    \"method\": \"GET\"\n}"
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"description\": \"ㅁㅇㄹㅁㅁ\",\n            \"title\": \"ㅁㅁㄴㅇㄹㅁㅇㄴㄹ\",\n            \"video_url\": \"ㅁㅁㄴㅇㄹ\",\n            \"created_at\": \"2022-04-03T19:37:57.793Z\",\n            \"user_id\": 1,\n            \"profile\": \"ㅁㄴㅇㅁ\\n\",\n            \"comment_cnt\": 1,\n            \"like_cnt\": 0,\n            \"is_mine\": true\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question\",\n    \"duration\": \"62ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
 				},
@@ -717,7 +725,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "gaov0vy0jf",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -736,6 +744,62 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "/:videoId - 질문 상세 가져오기",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/question/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"question",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/:videoId - 질문 상세 가져오기",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/question/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"question",
+										"1"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 2,\n        \"description\": \"ㅁㅇㄹㅁㅁ\",\n        \"title\": \"ㅁㅁㄴㅇㄹㅁㅇㄴㄹ\",\n        \"videoUrl\": \"ㅁㅁㄴㅇㄹ\",\n        \"createdAt\": \"2022-04-03T19:37:57.793Z\",\n        \"userId\": 1,\n        \"profile\": \"ㅁㄴㅇㅁ\\n\",\n        \"commentCnt\": \"1\",\n        \"likeCnt\": \"0\",\n        \"is_mine\": true\n    },\n    \"isArray\": false,\n    \"path\": \"/question/2\",\n    \"duration\": \"97ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -1492,9 +1556,21 @@
 							"name": "/ - 좋아요 취소",
 							"originalRequest": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": ""
+									"raw": "{{BASE_URL}}/like",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"like"
+									]
 								}
 							},
 							"_postman_previewlanguage": null,
