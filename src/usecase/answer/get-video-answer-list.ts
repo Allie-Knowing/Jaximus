@@ -2,7 +2,7 @@ import { IException } from 'src/domain/exceptions/exceptions.interface';
 import { Video } from 'src/domain/model/video';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 
-export class GetVideoAnswerListUseCase {
+export class GetVideoAnswerListUsecase {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
   async execute(questionId: number, userId: number, page: number, size: number): Promise<Video[]> {
