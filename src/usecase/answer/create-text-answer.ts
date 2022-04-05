@@ -2,7 +2,7 @@ import { IException } from 'src/domain/exceptions/exceptions.interface';
 import { CommentRepository } from 'src/domain/repositories/comment.repository';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 
-export class CreateCommentAnswerUsecase {
+export class CreateTextAnswerUsecase {
   constructor(
     private readonly commentRepository: CommentRepository,
     private readonly videoRepository: VideoRepository,

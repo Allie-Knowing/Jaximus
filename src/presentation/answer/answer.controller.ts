@@ -16,14 +16,14 @@ import {
 } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
-import { GetVideoAnswerListUseCases } from 'src/usecase/answer/get-video-answer-list';
+import { GetVideoAnswerListUsecase } from 'src/usecase/answer/get-video-answer-list';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { DeleteCommentAnswerUsecase } from 'src/usecase/answer/delte-comment-answer';
+import { DeleteTextAnswerUsecase } from 'src/usecase/answer/delte-text-answer';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
-import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
-import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
+import { CreateTextAnswerUsecase } from 'src/usecase/answer/create-text-answer';
+import { GetTextAnswerUsecase } from 'src/usecase/answer/get-text-answer';
 import { CreateVideoAnswerDto } from './answer.dto';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
@@ -35,18 +35,18 @@ export class AnswerController {
     private readonly videoAdoptionUsecase: VideoAdoptionUsecase,
     @Inject(CommentAdoptionUsecase)
     private readonly commentAdoptionUsecase: CommentAdoptionUsecase,
-    @Inject(GetVideoAnswerListUseCases)
-    private readonly getVideoAnswerListUseCases: GetVideoAnswerListUseCases,
+    @Inject(GetVideoAnswerListUsecase)
+    private readonly getVideoAnswerListUsecase: GetVideoAnswerListUsecase,
     @Inject(CreateVideoAnswerUsecase)
     private readonly createVideoAnswerUsecase: CreateVideoAnswerUsecase,
-    @Inject(DeleteCommentAnswerUsecase)
-    private readonly deleteCommentAnswerUsecase: DeleteCommentAnswerUsecase,
+    @Inject(DeleteTextAnswerUsecase)
+    private readonly deleteTextAnswerUsecase: DeleteTextAnswerUsecase,
     @Inject(DeleteVideoAnswerUsecase)
     private readonly deleteVideoAnswerUsecase: DeleteVideoAnswerUsecase,
-    @Inject(CreateCommentAnswerUsecase)
-    private readonly createCommentAnswerUsecase: CreateCommentAnswerUsecase,
-    @Inject(GetTextAnswerUseCase)
-    private readonly getTextAnswerUsecase: GetTextAnswerUseCase,
+    @Inject(CreateTextAnswerUsecase)
+    private readonly createTextAnswerUsecase: CreateTextAnswerUsecase,
+    @Inject(GetTextAnswerUsecase)
+    private readonly getTextAnswerUsecase: GetTextAnswerUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -65,7 +65,7 @@ export class AnswerController {
     @Query('page', ParseIntPipe) page: number,
     @Query('size', ParseIntPipe) size: number,
   ): Promise<Video[]> {
-    return this.getVideoAnswerListUseCases.execute(questionId, this.request.user.sub, page, size);
+    return this.getVideoAnswerListUsecase.execute(questionId, this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -79,14 +79,14 @@ export class AnswerController {
   @Post('/text/:questionId')
   @HttpCode(HttpStatus.CREATED)
   async textAnswer(@Body('content') content: string, @Param('questionId', ParseIntPipe) questionId: number) {
-    await this.createCommentAnswerUsecase.execute(content, questionId, this.request.user.sub);
+    await this.createTextAnswerUsecase.execute(content, questionId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/text/:commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteCommentAnswer(@Param('commentId', ParseIntPipe) commentId: number) {
-    await this.deleteCommentAnswerUsecase.execute(commentId, this.request.user.sub);
+    await this.deleteTextAnswerUsecase.execute(commentId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))

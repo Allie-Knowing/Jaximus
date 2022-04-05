@@ -1,7 +1,7 @@
 import { IException } from 'src/domain/exceptions/exceptions.interface';
 import { CommentRepository } from 'src/domain/repositories/comment.repository';
 
-export class DeleteCommentAnswerUsecase {
+export class DeleteTextAnswerUsecase {
   constructor(private readonly commentRepository: CommentRepository, private readonly exceptionsService: IException) {}
 
   async execute(commentId: number, userId: number) {

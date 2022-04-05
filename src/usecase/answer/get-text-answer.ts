@@ -2,7 +2,7 @@ import { IException } from 'src/domain/exceptions/exceptions.interface';
 import { Comment } from 'src/domain/model/comment';
 import { CommentRepository } from 'src/domain/repositories/comment.repository';
 
-export class GetTextAnswerUseCase {
+export class GetTextAnswerUsecase {
   constructor(private readonly commentRepository: CommentRepository, private readonly exceptionService: IException) {}
 
   async execute(questionId: number, userId: number, page: number, size: number): Promise<Comment[]> {
