@@ -141,9 +141,10 @@ export class UsecasesProxyDynamicModule {
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryHashtagUsecase(elasticsearchService),
         },
         {
-          inject: [DatabaseCommentRepository],
+          inject: [DatabaseCommentRepository, ExceptionsService],
           provide: GetTextAnswerUseCase,
-          useFactory: (databaseCommentRepository: DatabaseCommentRepository) => new GetTextAnswerUseCase(databaseCommentRepository),
+          useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
+            new GetTextAnswerUseCase(databaseCommentRepository, exceptionsService),
         },
         {
           inject: [DatabaseHashTagRepository, ExceptionsService],
