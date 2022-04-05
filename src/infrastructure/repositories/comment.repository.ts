@@ -4,6 +4,7 @@ import { Comment } from 'src/domain/model/comment';
 import { CommentRepository } from 'src/domain/repositories/comment.repository';
 import { Repository } from 'typeorm';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
+import { LikeTypeOrmEntity } from '../entities/like.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
 
@@ -18,6 +19,9 @@ export class DatabaseCommentRepository implements CommentRepository {
 
     @InjectRepository(VideoTypeOrmEntity)
     private readonly videoTypeOrmEntity: Repository<VideoTypeOrmEntity>,
+
+    @InjectRepository(LikeTypeOrmEntity)
+    private readonly likeEntityRepository: Repository<LikeTypeOrmEntity>,
   ) {}
 
   async findTextAnswer(questionId: number, userId: number, page: number, size: number): Promise<Comment[]> {
@@ -39,10 +43,13 @@ export class DatabaseCommentRepository implements CommentRepository {
       .orderBy('comment.createdAt', 'DESC')
       .getMany();
 
-    return textAnswers.map((t) => {
-      t.isMine = t.user.id == userId ? true : false;
-      return new Comment(t);
-    });
+    return Promise.all(
+      textAnswers.map(async (t) => {
+        t.isMine = t.user.id == userId ? true : false;
+        t.isLike = !!(await this.findLike(userId, t.id));
+        return new Comment(t);
+      }),
+    );
   }
 
   async findOne(commentId: number): Promise<Comment> {
@@ -81,5 +88,14 @@ export class DatabaseCommentRepository implements CommentRepository {
       video: question,
       user,
     });
+  }
+
+  private findLike(userId: number, videoId: number) {
+    return this.likeEntityRepository
+      .createQueryBuilder('like')
+      .select()
+      .where('like.user_id = :user_id', { user_id: userId })
+      .andWhere('like.video_id = :video_id', { video_id: videoId })
+      .getOne();
   }
 }

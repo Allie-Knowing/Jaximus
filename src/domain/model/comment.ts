@@ -27,6 +27,9 @@ export class Comment {
   @Expose({ name: 'is_mine' })
   isMine: boolean;
 
+  @Expose({ name: 'is_like' })
+  isLike: boolean;
+
   constructor(obj) {
     return Object.assign(this, obj);
   }

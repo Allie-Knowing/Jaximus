@@ -23,7 +23,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
 
     @InjectRepository(LikeTypeOrmEntity)
-    private readonly likeEntityRepository: Repository<LikeTypeOrmEntity>
+    private readonly likeEntityRepository: Repository<LikeTypeOrmEntity>,
   ) {}
 
   async findQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
@@ -48,11 +48,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawMany();
 
-    return Promise.all(videos.map(async (video) => {
-      video.isMine = video.userId == userId ? true : false;
-      video.isLike = !!(await this.findLike(userId, video.id));
-      return new Video(video);
-    }));
+    return Promise.all(
+      videos.map(async (video) => {
+        video.isMine = video.userId == userId ? true : false;
+        video.isLike = !!(await this.findLike(userId, video.id));
+        return new Video(video);
+      }),
+    );
   }
 
   async save(video: CreateQuestionDto, userId: number): Promise<void> {
@@ -95,10 +97,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawMany();
 
-    return videos.map((video) => {
-      video.isMine = video.userId == userId ? true : false;
-      return new Video(video);
-    });
+    return Promise.all(
+      videos.map(async (video) => {
+        video.isMine = video.userId == userId ? true : false;
+        video.isLike = !!(await this.findLike(userId, video.id));
+        return new Video(video);
+      }),
+    );
   }
 
   async findQuestionDetail(videoId: number, userId: number): Promise<Video> {
@@ -121,7 +126,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawOne();
 
-    video.is_mine = video.userId == userId ? true : false;
+    video.isMine = video.userId == userId ? true : false;
+    video.isLike = !!(await this.findLike(userId, video.id));
     return video;
   }
 
