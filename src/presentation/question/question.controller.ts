@@ -42,21 +42,20 @@ export class QuestionController {
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() video: CreateQuestionDto) {
-    const userId = this.request.user.sub;
-    this.createQuestionUsecase.execute(video, userId);
+    this.createQuestionUsecase.execute(video, this.request.user.sub);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/')
   questionList(@Query('page', ParseIntPipe) page: number, @Query('size', ParseIntPipe) size: number): Promise<Video[]> {
-    return this.getQuestionListUsecase.execute(page, size);
+    return this.getQuestionListUsecase.execute(this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/:videoId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteQuestion(@Param('videoId', ParseIntPipe) videoId: number) {
-    const userId = this.request.user.sub;
-    await this.deleteQuestionUsecase.execute(videoId, userId);
+    await this.deleteQuestionUsecase.execute(videoId, this.request.user.sub);
   }
 
   @Get('/:videoId/hashtag')

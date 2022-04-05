@@ -48,6 +48,9 @@ export class Video {
   @Expose({ name: 'user_id' })
   userId: number;
 
+  @Expose({ name: 'is_mine' })
+  isMine: boolean;
+
   constructor(obj) {
     return Object.assign(this, obj);
   }
