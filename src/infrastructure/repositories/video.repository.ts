@@ -149,17 +149,18 @@ export class DatabaseVideoRepository implements VideoRepository {
   findUsersQuestion(questionId: number, userId: number) {
     return this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('video.id')
+      .select()
       .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
+      .andWhere('video.question IS NULL')
       .getOne();
   }
 
   findUsersVideo(videoId: number, userId: number) {
     return this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('video.id')
-      .where('video.id = :video_id', { video_id: videoId })
+      .select()
+      .where('video.id = :id', { id: videoId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
       .getOne();
   }
