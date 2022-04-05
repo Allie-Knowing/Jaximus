@@ -40,11 +40,11 @@ export class AnswerController {
     @Inject(CreateVideoAnswerUsecase)
     private readonly createVideoAnswerUsecase: CreateVideoAnswerUsecase,
     @Inject(DeleteTextAnswerUsecase)
-    private readonly deleteCommentAnswerUsecase: DeleteTextAnswerUsecase,
+    private readonly deleteTextAnswerUsecase: DeleteTextAnswerUsecase,
     @Inject(DeleteVideoAnswerUsecase)
     private readonly deleteVideoAnswerUsecase: DeleteVideoAnswerUsecase,
     @Inject(CreateTextAnswerUsecase)
-    private readonly createCommentAnswerUsecase: CreateTextAnswerUsecase,
+    private readonly createTextAnswerUsecase: CreateTextAnswerUsecase,
     @Inject(GetTextAnswerUsecase)
     private readonly getTextAnswerUsecase: GetTextAnswerUsecase,
     @Inject(REQUEST)
@@ -79,14 +79,14 @@ export class AnswerController {
   @Post('/text/:questionId')
   @HttpCode(HttpStatus.CREATED)
   async textAnswer(@Body('content') content: string, @Param('questionId', ParseIntPipe) questionId: number) {
-    await this.createCommentAnswerUsecase.execute(content, questionId, this.request.user.sub);
+    await this.createTextAnswerUsecase.execute(content, questionId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/text/:commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteCommentAnswer(@Param('commentId', ParseIntPipe) commentId: number) {
-    await this.deleteCommentAnswerUsecase.execute(commentId, this.request.user.sub);
+    await this.deleteTextAnswerUsecase.execute(commentId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
