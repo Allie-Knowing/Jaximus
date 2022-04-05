@@ -95,6 +95,30 @@ export class DatabaseVideoRepository implements VideoRepository {
     });
   }
 
+  async findQuestionDetail(videoId: number, userId: number): Promise<Video> {
+    const video: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .leftJoin('video.comments', 'comment')
+      .leftJoin('video.likes', 'like')
+      .innerJoin('video.user', 'user')
+      .select('video.id', 'id')
+      .addSelect('video.videoUrl', 'videoUrl')
+      .addSelect('video.title', 'title')
+      .addSelect('video.description', 'description')
+      .addSelect('video.createdAt', 'createdAt')
+      .addSelect('user.id', 'userId')
+      .addSelect('user.profile', 'profile')
+      .addSelect('COUNT(comment.id)', 'commentCnt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .where('video.question IS NULL')
+      .andWhere('video.id = :video_id', { video_id: videoId })
+      .groupBy('video.id')
+      .getRawOne();
+
+    video.is_mine = video.user.id == userId ? true : false;
+    return video;
+  }
+
   async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
     const question: VideoTypeOrmEntity = await this.videoEntityRepository.findOne(questionId);
