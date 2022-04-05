@@ -185,6 +185,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .limit(size)
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
+      .groupBy('video.id')
       .getRawMany();
     return videos.map((video) => new Video(video));
   }
