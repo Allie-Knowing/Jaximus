@@ -36,6 +36,7 @@ export class DatabaseCommentRepository implements CommentRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.id = :id', { id: questionId })
+      .orderBy('comment.createdAt', 'DESC')
       .getMany();
 
     return textAnswers.map((t) => {
