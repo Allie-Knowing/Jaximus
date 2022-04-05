@@ -1586,13 +1586,108 @@
 			"name": "search",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "/title - 검색 API",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "{{BASE_URL}}/search/title?q=ㅂ",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"title"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "ㅂ"
+								}
+							]
+						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "/title - 검색 API",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/search/title?q=ㅇ",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"search",
+										"title"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "ㅇ"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"158\",\n            \"title\": \"이런 갬성shir\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/title\",\n    \"duration\": \"26ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/hashtag - 해쉬태그 검색 API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/search/hashtag?q=a",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"hashtag"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/hashtag - 해쉬태그 검색 API",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/search/hashtag?q=a",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"search",
+										"hashtag"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"153\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:22.039Z\",\n                \"title\": \"asdasd\",\n                \"question_id\": 1\n            }\n        },\n        {\n            \"id\": \"25\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:21.879Z\",\n                \"title\": \"Yeah\",\n                \"question_id\": 1\n            }\n        },\n        {\n            \"id\": \"12\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:21.857Z\",\n                \"title\": \"album\",\n                \"question_id\": 4\n            }\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/hashtag\",\n    \"duration\": \"2ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
 				}
 			]
 		}
