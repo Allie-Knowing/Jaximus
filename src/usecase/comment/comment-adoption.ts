@@ -11,10 +11,10 @@ export class CommentAdoptionUsecase {
 
   async execute(commentId: number, userId: number, videoId: number) {
     const comment = await this.commentRepository.findOne(commentId);
-    const video = await this.videoRepository.findUsersQuestion(videoId, userId);
+    const question = await this.videoRepository.findUsersQuestion(videoId, userId);
 
-    if (video.question != null) {
-      this.exceptionsService.itIsNotQuestionException();
+    if (!question) {
+      this.exceptionsService.questionNotFoundException();
     }
 
     if (!comment) this.exceptionsService.commentNotFoundException();
