@@ -7,8 +7,8 @@ import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
 import { DeleteTextAnswerUsecase } from 'src/usecase/answer/delte-text-answer';
-import { GetQuestionListUseCase } from 'src/usecase/question/get-questions-list';
-import { GetVideoAnswerListUseCase } from 'src/usecase/answer/get-video-answer-list';
+import { GetQuestionListUsecase } from 'src/usecase/question/get-questions-list';
+import { GetVideoAnswerListUsecase } from 'src/usecase/answer/get-video-answer-list';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
@@ -51,15 +51,15 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: GetQuestionListUseCase,
+          provide: GetQuestionListUsecase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new GetQuestionListUseCase(databaseVideoRepository, exceptionsService),
+            new GetQuestionListUsecase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: GetVideoAnswerListUseCase,
+          provide: GetVideoAnswerListUsecase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new GetVideoAnswerListUseCase(databaseVideoRepository, exceptionsService),
+            new GetVideoAnswerListUsecase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseLikeRepository, DatabaseUserRepository, DatabaseVideoRepository, ExceptionsService],
@@ -163,8 +163,8 @@ export class UsecasesProxyDynamicModule {
       exports: [
         CreateQuestionUsecase,
         CreateVideoAnswerUsecase,
-        GetQuestionListUseCase,
-        GetVideoAnswerListUseCase,
+        GetQuestionListUsecase,
+        GetVideoAnswerListUsecase,
         CreateLikeUsecase,
         VideoAdoptionUsecase,
         CommentAdoptionUsecase,
