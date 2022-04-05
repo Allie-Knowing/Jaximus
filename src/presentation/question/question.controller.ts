@@ -20,8 +20,8 @@ import { Video } from 'src/domain/model/video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
-import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question-hashtag-list';
-import { GetQuestionListUseCases } from 'src/usecase/question/get-questions-list';
+import { GetQuestionHashtagListUsecase } from 'src/usecase/question/get-question-hashtag-list';
+import { GetQuestionListUseCase } from 'src/usecase/question/get-questions-list';
 import { CreateQuestionDto } from './question.dto';
 
 @Controller({ path: '/question', scope: Scope.REQUEST })
@@ -29,12 +29,12 @@ export class QuestionController {
   constructor(
     @Inject(CreateQuestionUsecase)
     private readonly createQuestionUsecase: CreateQuestionUsecase,
-    @Inject(GetQuestionListUseCases)
-    private readonly getQuestionListUsecase: GetQuestionListUseCases,
+    @Inject(GetQuestionListUseCase)
+    private readonly getQuestionListUsecase: GetQuestionListUseCase,
     @Inject(DeleteQuestionUsecase)
     private readonly deleteQuestionUsecase: DeleteQuestionUsecase,
-    @Inject(GetQuestionHashtagListUseCase)
-    private readonly getQuestionHashtagListUsecase: GetQuestionHashtagListUseCase,
+    @Inject(GetQuestionHashtagListUsecase)
+    private readonly getQuestionHashtagListUsecase: GetQuestionHashtagListUsecase,
     @Inject(GetQuestionDetailUsecase)
     private readonly getQuestionDetailUsecase: GetQuestionDetailUsecase,
     @Inject(REQUEST)
