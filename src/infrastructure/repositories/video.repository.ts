@@ -6,6 +6,7 @@ import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
+import { LikeTypeOrmEntity } from '../entities/like.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
 
@@ -20,6 +21,9 @@ export class DatabaseVideoRepository implements VideoRepository {
 
     @InjectRepository(HashTagTypeOrmEntity)
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
+
+    @InjectRepository(LikeTypeOrmEntity)
+    private readonly likeEntityRepository: Repository<LikeTypeOrmEntity>
   ) {}
 
   async findQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
@@ -44,10 +48,11 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawMany();
 
-    return videos.map((video) => {
+    return Promise.all(videos.map(async (video) => {
       video.isMine = video.userId == userId ? true : false;
+      video.isLike = !!(await this.findLike(userId, video.id));
       return new Video(video);
-    });
+    }));
   }
 
   async save(video: CreateQuestionDto, userId: number): Promise<void> {
@@ -197,5 +202,14 @@ export class DatabaseVideoRepository implements VideoRepository {
 
   async deleteVideoAnswer(questionId: any): Promise<void> {
     await this.videoEntityRepository.softDelete({ question: questionId });
+  }
+
+  private findLike(userId: number, videoId: number) {
+    return this.likeEntityRepository
+      .createQueryBuilder('like')
+      .select()
+      .where('like.user_id = :user_id', { user_id: userId })
+      .andWhere('like.video_id = :video_id', { video_id: videoId })
+      .getOne();
   }
 }
