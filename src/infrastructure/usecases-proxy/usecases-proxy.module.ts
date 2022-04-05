@@ -21,7 +21,6 @@ import { DatabaseVideoRepository } from '../repositories/video.repository';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
-import { QueryAutocompleteUsecase } from 'src/usecase/search/query-autocomplete';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
 import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
@@ -29,6 +28,7 @@ import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question
 import { DatabaseHashTagRepository } from '../repositories/hash-tag.repository';
 import { QueryTitleUsecase } from 'src/usecase/search/query-title';
 import { QueryHashtagUsecase } from 'src/usecase/search/query-hash-tag';
+import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -133,11 +133,6 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [ElasticsearchService],
-          provide: QueryAutocompleteUsecase,
-          useFactory: (elasticsearchService: ElasticsearchService) => new QueryAutocompleteUsecase(elasticsearchService),
-        },
-        {
-          inject: [ElasticsearchService],
           provide: QueryTitleUsecase,
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryTitleUsecase(elasticsearchService),
         },
@@ -147,15 +142,22 @@ export class UsecasesProxyDynamicModule {
           useFactory: (elasticsearchService: ElasticsearchService) => new QueryHashtagUsecase(elasticsearchService),
         },
         {
-          inject: [DatabaseCommentRepository],
+          inject: [DatabaseCommentRepository, ExceptionsService],
           provide: GetTextAnswerUseCase,
-          useFactory: (databaseCommentRepository: DatabaseCommentRepository) => new GetTextAnswerUseCase(databaseCommentRepository),
+          useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
+            new GetTextAnswerUseCase(databaseCommentRepository, exceptionsService),
         },
         {
           inject: [DatabaseHashTagRepository, ExceptionsService],
           provide: GetQuestionHashtagListUseCase,
           useFactory: (databaseHashTagRepository: DatabaseHashTagRepository, exceptionService: ExceptionsService) =>
             new GetQuestionHashtagListUseCase(databaseHashTagRepository, exceptionService),
+        },
+        {
+          inject: [DatabaseVideoRepository, ExceptionsService],
+          provide: GetQuestionDetailUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionService: ExceptionsService) =>
+            new GetQuestionDetailUsecase(databaseVideoRepository, exceptionService),
         },
       ],
       exports: [
@@ -173,9 +175,11 @@ export class UsecasesProxyDynamicModule {
         DeleteQuestionUsecase,
         DeleteVideoAnswerUsecase,
         CreateCommentAnswerUsecase,
-        QueryAutocompleteUsecase,
+        QueryTitleUsecase,
+        QueryHashtagUsecase,
         GetTextAnswerUseCase,
         GetQuestionHashtagListUseCase,
+        GetQuestionDetailUsecase,
       ],
     };
   }

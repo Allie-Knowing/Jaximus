@@ -27,7 +27,7 @@ export class QueryHashtagUsecase {
             must: [
               {
                 match: {
-                  'title.ngram': {
+                  'title.jaso': {
                     query: q,
                   },
                 },
@@ -36,7 +36,7 @@ export class QueryHashtagUsecase {
             should: [
               {
                 match: {
-                  'title.jaso': {
+                  'title.ngram': {
                     query: q,
                   },
                 },

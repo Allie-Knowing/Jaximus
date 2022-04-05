@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param, ParseIntPipe, Scope, UseGuards } from '@nestjs/common';
+import { Controller, Get, Inject, Param, ParseIntPipe, Query, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
@@ -24,14 +24,17 @@ export class UserController {
   }
 
   @Get('/question/video/:userId')
-  async userQuestionList(@Param('userId', ParseIntPipe) userId: number): Promise<Video[]> {
-    return await this.userQuestionListUsecase.execute(userId);
+  async userQuestionList(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Query('page', ParseIntPipe) page: number,
+    @Query('size', ParseIntPipe) size: number,
+  ): Promise<Video[]> {
+    return await this.userQuestionListUsecase.execute(userId, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/my')
   userId() {
-    const userId = this.request.user.sub;
-    return userId;
+    return this.request.user.sub;
   }
 }

@@ -19,6 +19,7 @@ import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { Video } from 'src/domain/model/video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
+import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question-hashtag-list';
 import { GetQuestionListUseCases } from 'src/usecase/question/get-questions-list';
 import { CreateQuestionDto } from './question.dto';
@@ -34,6 +35,8 @@ export class QuestionController {
     private readonly deleteQuestionUsecase: DeleteQuestionUsecase,
     @Inject(GetQuestionHashtagListUseCase)
     private readonly getQuestionHashtagListUsecase: GetQuestionHashtagListUseCase,
+    @Inject(GetQuestionDetailUsecase)
+    private readonly getQuestionDetailUsecase: GetQuestionDetailUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -42,21 +45,26 @@ export class QuestionController {
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() video: CreateQuestionDto) {
-    const userId = this.request.user.sub;
-    this.createQuestionUsecase.execute(video, userId);
+    this.createQuestionUsecase.execute(video, this.request.user.sub);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/')
   questionList(@Query('page', ParseIntPipe) page: number, @Query('size', ParseIntPipe) size: number): Promise<Video[]> {
-    return this.getQuestionListUsecase.execute(page, size);
+    return this.getQuestionListUsecase.execute(this.request.user.sub, page, size);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/:videoId')
+  questionDetail(@Param('videoId', ParseIntPipe) videoId: number): Promise<Video> {
+    return this.getQuestionDetailUsecase.execute(videoId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/:videoId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteQuestion(@Param('videoId', ParseIntPipe) videoId: number) {
-    const userId = this.request.user.sub;
-    await this.deleteQuestionUsecase.execute(videoId, userId);
+    await this.deleteQuestionUsecase.execute(videoId, this.request.user.sub);
   }
 
   @Get('/:videoId/hashtag')

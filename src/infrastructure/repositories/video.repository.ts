@@ -22,7 +22,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
   ) {}
 
-  async findQuestionList(page: number, size: number): Promise<Video[]> {
+  async findQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
@@ -42,7 +42,11 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('video.question IS NULL')
       .groupBy('video.id')
       .getRawMany();
-    return videos.map((video) => new Video(video));
+
+    return videos.map((video) => {
+      video.isMine = video.user.id == userId ? true : false;
+      return new Video(video);
+    });
   }
 
   async save(video: CreateQuestionDto, userId: number): Promise<void> {
@@ -52,6 +56,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       description: video.description,
       title: video.title,
       videoUrl: video.videoUrl,
+      thumbnail: video.videoUrl.split('.')[0] + '.png',
       user,
     });
 
@@ -65,7 +70,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async findVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]> {
+  async findVideoAnswerList(questionId: number, userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select('video.id', 'id')
@@ -83,7 +88,35 @@ export class DatabaseVideoRepository implements VideoRepository {
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
       .getRawMany();
-    return videos.map((video) => new Video(video));
+
+    return videos.map((video) => {
+      video.isMine = video.user.id == userId ? true : false;
+      return new Video(video);
+    });
+  }
+
+  async findQuestionDetail(videoId: number, userId: number): Promise<Video> {
+    const video: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .leftJoin('video.comments', 'comment')
+      .leftJoin('video.likes', 'like')
+      .innerJoin('video.user', 'user')
+      .select('video.id', 'id')
+      .addSelect('video.videoUrl', 'videoUrl')
+      .addSelect('video.title', 'title')
+      .addSelect('video.description', 'description')
+      .addSelect('video.createdAt', 'createdAt')
+      .addSelect('user.id', 'userId')
+      .addSelect('user.profile', 'profile')
+      .addSelect('COUNT(comment.id)', 'commentCnt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .where('video.question IS NULL')
+      .andWhere('video.id = :video_id', { video_id: videoId })
+      .groupBy('video.id')
+      .getRawOne();
+
+    video.is_mine = video.user.id == userId ? true : false;
+    return video;
   }
 
   async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
@@ -93,6 +126,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     await this.videoEntityRepository.save({
       title: request.title,
       videoUrl: request.videoUrl,
+      thumbnail: request.videoUrl.split('.')[0] + '.png',
       question,
       user,
     });
@@ -130,11 +164,24 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getOne();
   }
 
-  async userQuestionList(userId: number): Promise<Video[]> {
+  async userQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
+      .leftJoin('video.comments', 'comment')
+      .leftJoin('video.likes', 'like')
+      .innerJoin('video.user', 'user')
       .select('video.id', 'id')
+      .addSelect('video.title')
+      .addSelect('video.description')
       .addSelect('video.video_url', 'videoUrl')
+      .addSelect('video.thumbnail', 'thumbnail')
+      .addSelect('video.created_at', 'createdAt')
+      .addSelect('user.id')
+      .addSelect('user.profile')
+      .addSelect('COUNT(comment.id)', 'commentCnt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .offset((page - 1) * size)
+      .limit(size)
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
       .getRawMany();
