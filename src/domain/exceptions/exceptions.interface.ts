@@ -9,6 +9,7 @@ export interface IException {
   hashtagNotFoundException(): void;
   videoNotFoundException(): void;
   videoAnswerNotFoundException(): void;
+  textAnswerNotFoundException(): void;
   commentNotFoundException(): void;
   likeNotFoundException(): void;
   userNotFoundException(): void;

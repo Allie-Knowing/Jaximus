@@ -11,6 +11,9 @@ import { IException, IFormatExceptionMessage } from 'src/domain/exceptions/excep
 
 @Injectable()
 export class ExceptionsService implements IException {
+  textAnswerNotFoundException(): void {
+    throw new NotFoundException('Text answer not found exception');
+  }
   hashtagNotFoundException(): void {
     throw new NotFoundException('Hashtag not found exception');
   }
