@@ -28,6 +28,7 @@ import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question
 import { DatabaseHashTagRepository } from '../repositories/hash-tag.repository';
 import { QueryTitleUsecase } from 'src/usecase/search/query-title';
 import { QueryHashtagUsecase } from 'src/usecase/search/query-hash-tag';
+import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -152,6 +153,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseHashTagRepository: DatabaseHashTagRepository, exceptionService: ExceptionsService) =>
             new GetQuestionHashtagListUseCase(databaseHashTagRepository, exceptionService),
         },
+        {
+          inject: [DatabaseVideoRepository, ExceptionsService],
+          provide: GetQuestionDetailUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionService: ExceptionsService) =>
+            new GetQuestionDetailUsecase(databaseVideoRepository, exceptionService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -172,6 +179,7 @@ export class UsecasesProxyDynamicModule {
         QueryHashtagUsecase,
         GetTextAnswerUseCase,
         GetQuestionHashtagListUseCase,
+        GetQuestionDetailUsecase,
       ],
     };
   }
