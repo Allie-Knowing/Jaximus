@@ -44,7 +44,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getRawMany();
 
     return videos.map((video) => {
-      video.isMine = video.user.id == userId ? true : false;
+      video.isMine = video.userId == userId ? true : false;
       return new Video(video);
     });
   }
@@ -90,7 +90,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getRawMany();
 
     return videos.map((video) => {
-      video.isMine = video.user.id == userId ? true : false;
+      video.isMine = video.userId == userId ? true : false;
       return new Video(video);
     });
   }
@@ -115,7 +115,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawOne();
 
-    video.is_mine = video.user.id == userId ? true : false;
+    video.is_mine = video.userId == userId ? true : false;
     return video;
   }
 
