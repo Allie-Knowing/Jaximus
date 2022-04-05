@@ -24,6 +24,9 @@ export class Comment {
   @IsNumber()
   videoId: number;
 
+  @Expose({ name: 'is_mine' })
+  isMine: boolean;
+
   constructor(obj) {
     return Object.assign(this, obj);
   }
