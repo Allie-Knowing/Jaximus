@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e3b07552-fd09-4934-b0e3-037c5ae97ae1",
+		"_postman_id": "58640723-152d-4765-b0ea-f8ceee6e572c",
 		"name": "Knowing",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -515,7 +515,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "{{accessToken}}",
 									"type": "string"
 								}
 							]
@@ -523,12 +523,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/question?page=1&size=11",
-							"protocol": "http",
+							"raw": "{{BASE_URL}}/question?page=1&size=11",
 							"host": [
-								"localhost"
+								"{{BASE_URL}}"
 							],
-							"port": "3000",
 							"path": [
 								"question"
 							],
@@ -551,7 +549,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/question?size=1&page=1",
+									"raw": "{{BASE_URL}}/question?page=1&size=11",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -560,12 +558,12 @@
 									],
 									"query": [
 										{
-											"key": "size",
+											"key": "page",
 											"value": "1"
 										},
 										{
-											"key": "page",
-											"value": "1"
+											"key": "size",
+											"value": "11"
 										}
 									]
 								}
@@ -580,7 +578,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 02 Apr 2022 12:27:12 GMT"
+									"value": "Tue, 05 Apr 2022 15:48:42 GMT"
 								},
 								{
 									"key": "Content-Type",
@@ -588,7 +586,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "705"
+									"value": "3375"
 								},
 								{
 									"key": "Connection",
@@ -600,11 +598,11 @@
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"2c1-jFvIKcLfXGLKezqDdXhQnli/XSc\""
+									"value": "W/\"d2f-zL9xI7V66xfFeZ05tau9txTP/o4\""
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"description\": \"ㅁㅇㄹㅁㅁ\",\n            \"title\": \"ㅁㅁㄴㅇㄹㅁㅇㄴㄹ\",\n            \"video_url\": \"ㅁㅁㄴㅇㄹ\",\n            \"created_at\": \"2022-04-03T19:37:57.793Z\",\n            \"user_id\": 1,\n            \"profile\": \"ㅁㄴㅇㅁ\\n\",\n            \"comment_cnt\": 1,\n            \"like_cnt\": 0,\n            \"is_mine\": true\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question\",\n    \"duration\": \"62ms\",\n    \"method\": \"GET\"\n}"
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"description\": \"설명\",\n            \"title\": \"제목\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:01:02.144Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 2516,\n            \"like_cnt\": 2516,\n            \"is_mine\": true,\n            \"is_like\": true\n        },\n        {\n            \"id\": 3,\n            \"description\": \"얍\",\n            \"title\": \"이 노래 이름이 뭘까요\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-03T07:14:48.532Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 4,\n            \"description\": \"1 + 1\",\n            \"title\": \"문제가 너무 어려워요\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-03T09:31:29.477Z\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": false,\n            \"is_like\": false\n        },\n        {\n            \"id\": 5,\n            \"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n            \"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n            \"video_url\": \"\",\n            \"created_at\": \"2022-04-04T03:58:40.132Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 6,\n            \"description\": \"아니 이노래 뭐냐고요 ㅡㅡ\",\n            \"title\": \"제가 흥얼거리는 노래 맞춰보세요 ^^\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:15:00.476Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 7,\n            \"description\": \"\",\n            \"title\": \"감사\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:16:22.022Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 8,\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:17:36.791Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 9,\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:22:10.815Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 10,\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:27:08.531Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 11,\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:27:18.239Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 12,\n            \"description\": \"\",\n            \"title\": \"SEX\",\n            \"video_url\": \"video-1649037658.mp4\",\n            \"created_at\": \"2022-04-04T04:27:19.229Z\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"comment_cnt\": 0,\n            \"like_cnt\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/question\",\n    \"duration\": \"70ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
 				},
@@ -647,16 +645,26 @@
 				{
 					"name": "/:videoId/hashtag - 질문 해시태그 가져오기",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/question/14/hashtag",
+							"raw": "{{BASE_URL}}/question/24/hashtag",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"question",
-								"14",
+								"24",
 								"hashtag"
 							]
 						}
@@ -776,13 +784,7 @@
 							"name": "/:videoId - 질문 상세 가져오기",
 							"originalRequest": {
 								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{accessToken}}",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"url": {
 									"raw": "{{BASE_URL}}/question/1",
 									"host": [
@@ -790,53 +792,6 @@
 									],
 									"path": [
 										"question",
-										"1"
-									]
-								}
-							},
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"id\": 2,\n        \"description\": \"ㅁㅇㄹㅁㅁ\",\n        \"title\": \"ㅁㅁㄴㅇㄹㅁㅇㄴㄹ\",\n        \"videoUrl\": \"ㅁㅁㄴㅇㄹ\",\n        \"createdAt\": \"2022-04-03T19:37:57.793Z\",\n        \"userId\": 1,\n        \"profile\": \"ㅁㄴㅇㅁ\\n\",\n        \"commentCnt\": \"1\",\n        \"likeCnt\": \"0\",\n        \"is_mine\": true\n    },\n    \"isArray\": false,\n    \"path\": \"/question/2\",\n    \"duration\": \"97ms\",\n    \"method\": \"GET\"\n}"
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "answer",
-			"item": [
-				{
-					"name": "/video/:questionId - 영상답변 목록",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/answer/video/1",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"answer",
-								"video",
-								"1"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "/video/:questionId - 영상답변 목록",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BASE_URL}}/answer/video/1",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"answer",
-										"video",
 										"1"
 									]
 								}
@@ -851,7 +806,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 02 Apr 2022 12:27:24 GMT"
+									"value": "Tue, 05 Apr 2022 16:04:51 GMT"
 								},
 								{
 									"key": "Content-Type",
@@ -859,7 +814,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "376"
+									"value": "403"
 								},
 								{
 									"key": "Connection",
@@ -871,11 +826,119 @@
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"178-L0qd5uajRE0UcB3T5K90gwqc4gc\""
+									"value": "W/\"193-NohpmNUn53+Mqk2nr0oPp5XJHK4\""
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": [\n        {\n            \"videoId\": 2,\n            \"title\": \"답변답변\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01\",\n            \"like_cnt\": \"0\",\n            \"is_adoption\": 0\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/video/1\",\n    \"duration\": \"6ms\",\n    \"method\": \"GET\"\n}"
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"description\": \"설명\",\n        \"title\": \"제목\",\n        \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n        \"created_at\": \"2022-04-01T14:01:02.144Z\",\n        \"user_id\": 1,\n        \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n        \"comment_cnt\": 68,\n        \"like_cnt\": 68,\n        \"is_mine\": true,\n        \"is_like\": true\n    },\n    \"isArray\": false,\n    \"path\": \"/question/1\",\n    \"duration\": \"23ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "answer",
+			"item": [
+				{
+					"name": "/video/:questionId - 영상답변 목록",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/answer/video/1?page=1&size=3",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"answer",
+								"video",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/video/:questionId - 영상답변 목록",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/answer/video/1?page=1&size=3",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"answer",
+										"video",
+										"1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Apr 2022 15:58:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "867"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"363-k2dARacwe3sWQK0wX7GvzmmBek0\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"답변답변\",\n            \"user_id\": 2,\n            \"profile\": \"https://lh3.googleusercontent.com/a/AATXAJw8Le-Lra_YobUXlqqBWBKQXeYbyF3f_I7uoOwnMg=s96-c\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01\",\n            \"like_cnt\": 0,\n            \"is_adoption\": 0,\n            \"is_mine\": false,\n            \"is_like\": false\n        },\n        {\n            \"id\": 19,\n            \"title\": \"제목\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"video_url\": \"https://video.com\",\n            \"created_at\": \"2022-04-05\",\n            \"like_cnt\": 0,\n            \"is_adoption\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 20,\n            \"title\": \"제목\",\n            \"user_id\": 1,\n            \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"video_url\": \"https://video.com\",\n            \"created_at\": \"2022-04-05\",\n            \"like_cnt\": 0,\n            \"is_adoption\": 0,\n            \"is_mine\": true,\n            \"is_like\": false\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/video/1\",\n    \"duration\": \"8ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
 				},
@@ -895,16 +958,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/answer/text/2?page=1&size=2",
-							"protocol": "http",
+							"raw": "{{BASE_URL}}/answer/text/1?page=1&size=2",
 							"host": [
-								"localhost"
+								"{{BASE_URL}}"
 							],
-							"port": "3000",
 							"path": [
 								"answer",
 								"text",
-								"2"
+								"1"
 							],
 							"query": [
 								{
@@ -925,14 +986,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/answer/text/7?page=1&size=2",
+									"raw": "{{BASE_URL}}/answer/text/1?page=1&size=2",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"answer",
 										"text",
-										"7"
+										"1"
 									],
 									"query": [
 										{
@@ -951,8 +1012,12 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
-									"key": "X-Powered-By",
-									"value": "Express"
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 05 Apr 2022 15:59:10 GMT"
 								},
 								{
 									"key": "Content-Type",
@@ -960,27 +1025,23 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "202"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"ca-lqckKLkiU5F/sBthGaOMcm1N8f0\""
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 04 Apr 2022 11:10:53 GMT"
+									"value": "627"
 								},
 								{
 									"key": "Connection",
 									"value": "keep-alive"
 								},
 								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"273-0QZXYC3Qvj6uwMfKyzXxcSaXrU0\""
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"content\": \"qwe\",\n            \"is_adoption\": false,\n            \"created_at\": \"2022-04-04T16:00:03.351Z\",\n            \"updated_at\": \"2022-04-04T05:02:28.000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"profile\": \"ㅁㄴㅇㅁ\\n\",\n                \"name\": \"손채건\"\n            },\n            \"is_mine\": true\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/text/2\",\n    \"duration\": \"62ms\",\n    \"method\": \"GET\"\n}"
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 69,\n            \"content\": \"ffggggg\",\n            \"is_adoption\": false,\n            \"created_at\": \"2022-04-05T13:40:43.602Z\",\n            \"updated_at\": \"2022-04-05T13:40:43.602Z\",\n            \"user\": {\n                \"id\": 1,\n                \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n                \"name\": \"손채건\"\n            },\n            \"is_mine\": true,\n            \"is_like\": false\n        },\n        {\n            \"id\": 68,\n            \"content\": \"cugivivih\",\n            \"is_adoption\": false,\n            \"created_at\": \"2022-04-05T13:40:36.952Z\",\n            \"updated_at\": \"2022-04-05T13:40:36.952Z\",\n            \"user\": {\n                \"id\": 1,\n                \"profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n                \"name\": \"손채건\"\n            },\n            \"is_mine\": true,\n            \"is_like\": false\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/answer/text/1\",\n    \"duration\": \"7ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
 				},
@@ -1133,10 +1194,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -1175,10 +1236,10 @@
 							},
 							"status": "No Content",
 							"code": 204,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -1218,10 +1279,10 @@
 							},
 							"status": "No Content",
 							"code": 204,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -1230,7 +1291,9 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -1256,10 +1319,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -1314,10 +1377,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				}
@@ -1509,7 +1572,9 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -1517,12 +1582,14 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": ""
+								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				}
@@ -1534,10 +1601,35 @@
 				{
 					"name": "/ - 좋아요 추가",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"video_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "{{BASE_URL}}/like",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"like"
+							]
 						}
 					},
 					"response": [
@@ -1577,10 +1669,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -1615,10 +1707,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				}
@@ -1673,7 +1765,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"data\": [\n        {\n            \"id\": \"158\",\n            \"title\": \"이런 갬성shir\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/title\",\n    \"duration\": \"26ms\",\n    \"method\": \"GET\"\n}"
 						}
@@ -1725,7 +1817,7 @@
 								}
 							},
 							"_postman_previewlanguage": "json",
-							"header": null,
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"data\": [\n        {\n            \"id\": \"153\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:22.039Z\",\n                \"title\": \"asdasd\",\n                \"question_id\": 1\n            }\n        },\n        {\n            \"id\": \"25\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:21.879Z\",\n                \"title\": \"Yeah\",\n                \"question_id\": 1\n            }\n        },\n        {\n            \"id\": \"12\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:21.857Z\",\n                \"title\": \"album\",\n                \"question_id\": 4\n            }\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/hashtag\",\n    \"duration\": \"2ms\",\n    \"method\": \"GET\"\n}"
 						}
