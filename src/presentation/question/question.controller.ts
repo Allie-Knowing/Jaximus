@@ -46,9 +46,10 @@ export class QuestionController {
     this.createQuestionUsecase.execute(video, userId);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/')
   questionList(@Query('page', ParseIntPipe) page: number, @Query('size', ParseIntPipe) size: number): Promise<Video[]> {
-    return this.getQuestionListUsecase.execute(page, size);
+    return this.getQuestionListUsecase.execute(this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
