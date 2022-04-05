@@ -42,8 +42,7 @@ export class QuestionController {
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() video: CreateQuestionDto) {
-    const userId = this.request.user.sub;
-    this.createQuestionUsecase.execute(video, userId);
+    this.createQuestionUsecase.execute(video, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -56,8 +55,7 @@ export class QuestionController {
   @Delete('/:videoId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteQuestion(@Param('videoId', ParseIntPipe) videoId: number) {
-    const userId = this.request.user.sub;
-    await this.deleteQuestionUsecase.execute(videoId, userId);
+    await this.deleteQuestionUsecase.execute(videoId, this.request.user.sub);
   }
 
   @Get('/:videoId/hashtag')

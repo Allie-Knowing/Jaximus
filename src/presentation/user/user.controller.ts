@@ -35,7 +35,6 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/my')
   userId() {
-    const userId = this.request.user.sub;
-    return userId;
+    return this.request.user.sub;
   }
 }

@@ -55,8 +55,7 @@ export class AnswerController {
   @Post('/video/:questionId')
   @HttpCode(HttpStatus.CREATED)
   async videoAnswer(@Body() request: CreateVideoAnswerDto, @Param('questionId', ParseIntPipe) questionId: number) {
-    const userId = this.request.user.sub;
-    await this.createVideoAnswerUsecase.execute(userId, request, questionId);
+    await this.createVideoAnswerUsecase.execute(this.request.user.sub, request, questionId);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -73,24 +72,21 @@ export class AnswerController {
   @Delete('/video/:questionId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteVideoAnswer(@Param('questionId', ParseIntPipe) questionId: number) {
-    const userId = this.request.user.sub;
-    await this.deleteVideoAnswerUsecase.execute(questionId, userId);
+    await this.deleteVideoAnswerUsecase.execute(questionId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/text/:questionId')
   @HttpCode(HttpStatus.CREATED)
   async textAnswer(@Body('content') content: string, @Param('questionId', ParseIntPipe) questionId: number) {
-    const userId = this.request.user.sub;
-    await this.createCommentAnswerUsecase.execute(content, questionId, userId);
+    await this.createCommentAnswerUsecase.execute(content, questionId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('/text/:commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteCommentAnswer(@Param('commentId', ParseIntPipe) commentId: number) {
-    const userId = this.request.user.sub;
-    await this.deleteCommentAnswerUsecase.execute(commentId, userId);
+    await this.deleteCommentAnswerUsecase.execute(commentId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -107,15 +103,13 @@ export class AnswerController {
   @Put('/video/adoption/:videoId')
   @HttpCode(HttpStatus.OK)
   async videoAnswerAdoption(@Param('videoId', ParseIntPipe) videoId: number) {
-    const userId = this.request.user.sub;
-    await this.videoAdoptionUsecase.execute(videoId, userId);
+    await this.videoAdoptionUsecase.execute(videoId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Put('/adoption/:commentId')
   @HttpCode(HttpStatus.OK)
   async textAnswerAdoption(@Param('commentId', ParseIntPipe) commentId: number, @Body('videoId') videoId: number) {
-    const userId = this.request.user.sub;
-    await this.commentAdoptionUsecase.execute(commentId, userId, videoId);
+    await this.commentAdoptionUsecase.execute(commentId, this.request.user.sub, videoId);
   }
 }
