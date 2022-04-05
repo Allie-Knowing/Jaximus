@@ -1202,10 +1202,28 @@
 				{
 					"name": "/adoption/:commentId 글 답변 채택",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "{{BASE_URL}}/answer/adoption/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"answer",
+								"adoption",
+								"1"
+							]
 						}
 					},
 					"response": [
@@ -1416,7 +1434,49 @@
 							"raw": ""
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "/ - 좋아요 추가",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{accessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"videoId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/like",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"like"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "/ - 좋아요 취소",
@@ -1427,7 +1487,22 @@
 							"raw": ""
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "/ - 좋아요 취소",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		},
