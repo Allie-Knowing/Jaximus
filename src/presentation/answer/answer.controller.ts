@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { Video } from 'src/domain/model/video';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
-import { GetVideoAnswerListUseCase } from 'src/usecase/answer/get-video-answer-list';
+import { GetVideoAnswerListUsecase } from 'src/usecase/answer/get-video-answer-list';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
@@ -35,8 +35,8 @@ export class AnswerController {
     private readonly videoAdoptionUsecase: VideoAdoptionUsecase,
     @Inject(CommentAdoptionUsecase)
     private readonly commentAdoptionUsecase: CommentAdoptionUsecase,
-    @Inject(GetVideoAnswerListUseCase)
-    private readonly getVideoAnswerListUseCases: GetVideoAnswerListUseCase,
+    @Inject(GetVideoAnswerListUsecase)
+    private readonly getVideoAnswerListUsecase: GetVideoAnswerListUsecase,
     @Inject(CreateVideoAnswerUsecase)
     private readonly createVideoAnswerUsecase: CreateVideoAnswerUsecase,
     @Inject(DeleteTextAnswerUsecase)
@@ -65,7 +65,7 @@ export class AnswerController {
     @Query('page', ParseIntPipe) page: number,
     @Query('size', ParseIntPipe) size: number,
   ): Promise<Video[]> {
-    return this.getVideoAnswerListUseCases.execute(questionId, this.request.user.sub, page, size);
+    return this.getVideoAnswerListUsecase.execute(questionId, this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))

@@ -21,7 +21,7 @@ import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 import { GetQuestionHashtagListUsecase } from 'src/usecase/question/get-question-hashtag-list';
-import { GetQuestionListUseCase } from 'src/usecase/question/get-questions-list';
+import { GetQuestionListUsecase } from 'src/usecase/question/get-questions-list';
 import { CreateQuestionDto } from './question.dto';
 
 @Controller({ path: '/question', scope: Scope.REQUEST })
@@ -29,8 +29,8 @@ export class QuestionController {
   constructor(
     @Inject(CreateQuestionUsecase)
     private readonly createQuestionUsecase: CreateQuestionUsecase,
-    @Inject(GetQuestionListUseCase)
-    private readonly getQuestionListUsecase: GetQuestionListUseCase,
+    @Inject(GetQuestionListUsecase)
+    private readonly getQuestionListUsecase: GetQuestionListUsecase,
     @Inject(DeleteQuestionUsecase)
     private readonly deleteQuestionUsecase: DeleteQuestionUsecase,
     @Inject(GetQuestionHashtagListUsecase)
