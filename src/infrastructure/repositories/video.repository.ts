@@ -132,12 +132,24 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getOne();
   }
 
-  async userQuestionList(userId: number): Promise<Video[]> {
+  async userQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
+      .leftJoin('video.comments', 'comment')
+      .leftJoin('video.likes', 'like')
+      .innerJoin('video.user', 'user')
       .select('video.id', 'id')
+      .addSelect('video.title')
+      .addSelect('video.description')
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
+      .addSelect('video.created_at', 'createdAt')
+      .addSelect('user.id')
+      .addSelect('user.profile')
+      .addSelect('COUNT(comment.id)', 'commentCnt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .offset((page - 1) * size)
+      .limit(size)
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
       .getRawMany();

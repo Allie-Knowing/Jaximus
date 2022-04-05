@@ -8,7 +8,7 @@ export interface VideoRepository {
   findVideoAnswerList(questionId: number, page: number, size: number): Promise<Video[]>;
   createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: number): Promise<void>;
   videoAdoption(videoId: number): Promise<void>;
-  userQuestionList(userId: number): Promise<Video[]>;
+  userQuestionList(userId: number, page: number, size: number): Promise<Video[]>;
   deleteQuestion(videoId: number): Promise<void>;
   deleteVideoAnswer(questionId): Promise<void>;
   findOne(id: number): Promise<Video>;
