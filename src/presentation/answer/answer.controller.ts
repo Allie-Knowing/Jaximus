@@ -59,13 +59,14 @@ export class AnswerController {
     await this.createVideoAnswerUsecase.execute(userId, request, questionId);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/video/:questionId')
   videoAnswerList(
     @Param('questionId', ParseIntPipe) questionId: number,
     @Query('page', ParseIntPipe) page: number,
     @Query('size', ParseIntPipe) size: number,
   ): Promise<Video[]> {
-    return this.getVideoAnswerListUseCases.execute(questionId, page, size);
+    return this.getVideoAnswerListUseCases.execute(questionId, this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -92,13 +93,14 @@ export class AnswerController {
     await this.deleteCommentAnswerUsecase.execute(commentId, userId);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/text/:questionId')
   textAnswerList(
     @Param('questionId', ParseIntPipe) questionId: number,
     @Query('page', ParseIntPipe) page: number,
     @Query('size', ParseIntPipe) size: number,
   ) {
-    return this.getTextAnswerUsecase.execute(questionId, page, size);
+    return this.getTextAnswerUsecase.execute(questionId, this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))

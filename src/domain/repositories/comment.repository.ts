@@ -6,5 +6,5 @@ export interface CommentRepository {
   deleteCommentAnswer(commentId: number): Promise<void>;
   findComment(commentId: number, userId: number);
   createCommentAnswer(content: string, questionId: number, userId: number): Promise<void>;
-  findTextAnswer(questionId: number, page: number, size: number): Promise<Comment[]>;
+  findTextAnswer(questionId: number, userId: number, page: number, size: number): Promise<Comment[]>;
 }

@@ -20,7 +20,7 @@ export class DatabaseCommentRepository implements CommentRepository {
     private readonly videoTypeOrmEntity: Repository<VideoTypeOrmEntity>,
   ) {}
 
-  async findTextAnswer(questionId: number, page: number, size: number): Promise<Comment[]> {
+  async findTextAnswer(questionId: number, userId: number, page: number, size: number): Promise<Comment[]> {
     const textAnswers: any[] = await this.commentEntityRepository
       .createQueryBuilder('comment')
       .innerJoin('comment.video', 'video')
@@ -38,7 +38,10 @@ export class DatabaseCommentRepository implements CommentRepository {
       .where('video.id = :id', { id: questionId })
       .getMany();
 
-    return textAnswers.map((t) => new Comment(t));
+    return textAnswers.map((t) => {
+      t.isMine = t.user.id == userId ? true : false;
+      return new Comment(t);
+    });
   }
 
   async findOne(commentId: number): Promise<Comment> {
