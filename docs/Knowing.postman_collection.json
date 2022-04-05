@@ -1332,9 +1332,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_URL}}/user/info/1",
+							"raw": "{{BASE_URL}}/user/info/1",
 							"host": [
-								"{{LOCAL_URL}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"user",
@@ -1415,7 +1415,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/user/question/video/1",
+							"raw": "{{BASE_URL}}/user/question/video/1?page=1&size=1",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -1424,6 +1424,16 @@
 								"question",
 								"video",
 								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1434,7 +1444,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BASE_URL}}/user/question/video/1",
+									"raw": "{{BASE_URL}}/user/question/video/1?page=1&size=1",
 									"host": [
 										"{{BASE_URL}}"
 									],
@@ -1443,6 +1453,16 @@
 										"question",
 										"video",
 										"1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -1480,7 +1500,29 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": [\n        {\n            \"id\": 7,\n            \"video_url\": \"https://s3-zamong-1.s3.ap-northeast-2.amazonaws.com/video/f90d2907-62ef-480e-9a36-0540df7b2c6e.mp4\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/user/question/video/1\",\n    \"duration\": \"51ms\",\n    \"method\": \"GET\"\n}"
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"video_description\": \"설명\",\n            \"video_title\": \"제목\",\n            \"thumbnail\": null,\n            \"user_profile\": \"https://src.hidoc.co.kr/image/lib/2021/4/28/1619598179113_0.jpg\",\n            \"video_url\": \"https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/input.mp4\",\n            \"created_at\": \"2022-04-01T14:01:02.144Z\",\n            \"comment_cnt\": 68,\n            \"like_cnt\": 68\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/user/question/video/1\",\n    \"duration\": \"5ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/my - user_id 가져오기",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": [
+						{
+							"name": "/my - user_id 가져오기",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
 						}
 					]
 				}
@@ -1586,13 +1628,108 @@
 			"name": "search",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "/title - 검색 API",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "{{BASE_URL}}/search/title?q=ㅂ",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"title"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "ㅂ"
+								}
+							]
+						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "/title - 검색 API",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/search/title?q=ㅇ",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"search",
+										"title"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "ㅇ"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"158\",\n            \"title\": \"이런 갬성shir\"\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/title\",\n    \"duration\": \"26ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/hashtag - 해쉬태그 검색 API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/search/hashtag?q=a",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"search",
+								"hashtag"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/hashtag - 해쉬태그 검색 API",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/search/hashtag?q=a",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"search",
+										"hashtag"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"153\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:22.039Z\",\n                \"title\": \"asdasd\",\n                \"question_id\": 1\n            }\n        },\n        {\n            \"id\": \"25\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:21.879Z\",\n                \"title\": \"Yeah\",\n                \"question_id\": 1\n            }\n        },\n        {\n            \"id\": \"12\",\n            \"source\": {\n                \"@timestamp\": \"2022-04-05T01:43:21.857Z\",\n                \"title\": \"album\",\n                \"question_id\": 4\n            }\n        }\n    ],\n    \"isArray\": true,\n    \"path\": \"/search/hashtag\",\n    \"duration\": \"2ms\",\n    \"method\": \"GET\"\n}"
+						}
+					]
 				}
 			]
 		}
