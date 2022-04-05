@@ -6,9 +6,9 @@ import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
-import { DeleteCommentAnswerUsecase } from 'src/usecase/answer/delte-comment-answer';
-import { GetQuestionListUseCases } from 'src/usecase/question/get-questions-list';
-import { GetVideoAnswerListUseCases } from 'src/usecase/answer/get-video-answer-list';
+import { DeleteTextAnswerUsecase } from 'src/usecase/answer/delte-text-answer';
+import { GetQuestionListUseCase } from 'src/usecase/question/get-questions-list';
+import { GetVideoAnswerListUseCase } from 'src/usecase/answer/get-video-answer-list';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { ExceptionsModule } from '../exceptions/exceptions.module';
 import { ExceptionsService } from '../exceptions/exceptions.service';
@@ -20,11 +20,11 @@ import { DatabaseUserRepository } from '../repositories/user.repository';
 import { DatabaseVideoRepository } from '../repositories/video.repository';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
-import { CreateCommentAnswerUsecase } from 'src/usecase/answer/create-comment-answer';
+import { CreateTextAnswerUsecase } from 'src/usecase/answer/create-text-answer';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
-import { GetTextAnswerUseCase } from 'src/usecase/comment/get-text-answer';
-import { GetQuestionHashtagListUseCase } from 'src/usecase/question/get-question-hashtag-list';
+import { GetTextAnswerUsecase } from 'src/usecase/answer/get-text-answer';
+import { GetQuestionHashtagListUsecase } from 'src/usecase/question/get-question-hashtag-list';
 import { DatabaseHashTagRepository } from '../repositories/hash-tag.repository';
 import { QueryTitleUsecase } from 'src/usecase/search/query-title';
 import { QueryHashtagUsecase } from 'src/usecase/search/query-hash-tag';
@@ -51,15 +51,15 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: GetQuestionListUseCases,
+          provide: GetQuestionListUseCase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new GetQuestionListUseCases(databaseVideoRepository, exceptionsService),
+            new GetQuestionListUseCase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
-          provide: GetVideoAnswerListUseCases,
+          provide: GetVideoAnswerListUseCase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new GetVideoAnswerListUseCases(databaseVideoRepository, exceptionsService),
+            new GetVideoAnswerListUseCase(databaseVideoRepository, exceptionsService),
         },
         {
           inject: [DatabaseLikeRepository, DatabaseUserRepository, DatabaseVideoRepository, ExceptionsService],
@@ -106,9 +106,9 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseCommentRepository, ExceptionsService],
-          provide: DeleteCommentAnswerUsecase,
+          provide: DeleteTextAnswerUsecase,
           useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
-            new DeleteCommentAnswerUsecase(databaseCommentRepository, exceptionsService),
+            new DeleteTextAnswerUsecase(databaseCommentRepository, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
@@ -124,12 +124,12 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
-          provide: CreateCommentAnswerUsecase,
+          provide: CreateTextAnswerUsecase,
           useFactory: (
             databaseCommentRepository: DatabaseCommentRepository,
             databaseVideoRepository: DatabaseVideoRepository,
             exceptionsService: ExceptionsService,
-          ) => new CreateCommentAnswerUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
+          ) => new CreateTextAnswerUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
         },
         {
           inject: [ElasticsearchService],
@@ -143,15 +143,15 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseCommentRepository, ExceptionsService],
-          provide: GetTextAnswerUseCase,
+          provide: GetTextAnswerUsecase,
           useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
-            new GetTextAnswerUseCase(databaseCommentRepository, exceptionsService),
+            new GetTextAnswerUsecase(databaseCommentRepository, exceptionsService),
         },
         {
           inject: [DatabaseHashTagRepository, ExceptionsService],
-          provide: GetQuestionHashtagListUseCase,
+          provide: GetQuestionHashtagListUsecase,
           useFactory: (databaseHashTagRepository: DatabaseHashTagRepository, exceptionService: ExceptionsService) =>
-            new GetQuestionHashtagListUseCase(databaseHashTagRepository, exceptionService),
+            new GetQuestionHashtagListUsecase(databaseHashTagRepository, exceptionService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
@@ -163,22 +163,22 @@ export class UsecasesProxyDynamicModule {
       exports: [
         CreateQuestionUsecase,
         CreateVideoAnswerUsecase,
-        GetQuestionListUseCases,
-        GetVideoAnswerListUseCases,
+        GetQuestionListUseCase,
+        GetVideoAnswerListUseCase,
         CreateLikeUsecase,
         VideoAdoptionUsecase,
         CommentAdoptionUsecase,
         DeleteLikeUsecase,
         UserInfoUsecase,
         UserQuestionListUsecase,
-        DeleteCommentAnswerUsecase,
+        DeleteTextAnswerUsecase,
         DeleteQuestionUsecase,
         DeleteVideoAnswerUsecase,
-        CreateCommentAnswerUsecase,
+        CreateTextAnswerUsecase,
         QueryTitleUsecase,
         QueryHashtagUsecase,
-        GetTextAnswerUseCase,
-        GetQuestionHashtagListUseCase,
+        GetTextAnswerUsecase,
+        GetQuestionHashtagListUsecase,
         GetQuestionDetailUsecase,
       ],
     };
