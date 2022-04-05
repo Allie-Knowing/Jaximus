@@ -22,11 +22,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,
   ) {}
 
-  findOne(videoId: number) {
-    return this.videoEntityRepository.findOne(videoId);
-  }
-
-  async findQuestionList(page: number, size: number): Promise<Video[]> {
+  async findQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
