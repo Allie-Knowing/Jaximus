@@ -128,7 +128,7 @@ export class DatabaseVideoRepository implements VideoRepository {
 
     video.isMine = video.userId == userId ? true : false;
     video.isLike = !!(await this.findLike(userId, video.id));
-    return video;
+    return new Video(video);
   }
 
   async createVideoAnswer(request: CreateVideoAnswerDto, userId: number, questionId: number): Promise<void> {
