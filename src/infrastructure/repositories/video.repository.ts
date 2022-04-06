@@ -167,7 +167,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select()
       .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
-      .andWhere('video.question IS NULL')
+      .andWhere('video.question IS NOT NULL')
       .getOne();
   }
 
