@@ -95,10 +95,15 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
+      .andWhere('video.isAdoption = 0')
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
       .getRawMany();
+
+    const adoptionVideoAnswer = await this.findAdoptionVideoAnswer(questionId, userId);
+
+    if (adoptionVideoAnswer) videos.unshift(adoptionVideoAnswer);
 
     return Promise.all(
       videos.map(async (video) => {
@@ -220,5 +225,28 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('like.user_id = :user_id', { user_id: userId })
       .andWhere('like.video_id = :video_id', { video_id: videoId })
       .getOne();
+  }
+
+  async findAdoptionVideoAnswer(questionId: number, userId: number): Promise<Video> {
+    const videoAnswer: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id', 'id')
+      .addSelect('video.video_url', 'videoUrl')
+      .addSelect('video.title', 'title')
+      .addSelect('SUBSTR(video.created_at, 1, 10)', 'createdAt')
+      .addSelect('COUNT(like.id)', 'likeCnt')
+      .addSelect('user.profile', 'profile')
+      .addSelect('video.is_adoption', 'isAdoption')
+      .addSelect('user.id', 'userId')
+      .where('video.question = :question_id', { question_id: questionId })
+      .andWhere('video.isAdoption = 1')
+      .leftJoin('video.user', 'user')
+      .leftJoin('video.likes', 'like')
+      .groupBy('video.id')
+      .getRawOne();
+
+    if (!videoAnswer) return;
+    videoAnswer.isMine = videoAnswer.userId == userId ? true : false;
+    return new Video(videoAnswer);
   }
 }
