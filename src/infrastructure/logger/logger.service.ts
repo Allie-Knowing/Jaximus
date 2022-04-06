@@ -6,8 +6,8 @@ export class LoggerService extends Logger implements ILogger {
   debug(context: string, message: string) {
     if (process.env.NODE_ENV !== 'production') super.debug(`[DEBUG] ${message}`, context);
   }
-  log(context: string, message: string) {
-    super.log(`[INFO] ${message}`, context);
+  log(message: string) {
+    super.log(`[INFO] ${message}`);
   }
   error(context: string, message: string, trace?: string) {
     super.error(`[ERROR] ${message}`, trace, context);
