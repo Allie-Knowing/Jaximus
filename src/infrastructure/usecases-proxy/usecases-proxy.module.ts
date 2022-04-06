@@ -23,7 +23,7 @@ import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer
 import { CreateTextAnswerUsecase } from 'src/usecase/answer/create-text-answer';
 import { ElasticsearchService } from '../config/elasticsearch/elasticsearch.service';
 import { ElasticsearchModule } from '../config/elasticsearch/elasticsearch.module';
-import { GetTextAnswerUsecase } from 'src/usecase/answer/get-text-answer';
+import { GetTextAnswerListUsecase } from 'src/usecase/answer/get-text-answer-list';
 import { GetQuestionHashtagListUsecase } from 'src/usecase/question/get-question-hashtag-list';
 import { DatabaseHashTagRepository } from '../repositories/hash-tag.repository';
 import { QueryTitleUsecase } from 'src/usecase/search/query-title';
@@ -143,9 +143,9 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [DatabaseCommentRepository, ExceptionsService],
-          provide: GetTextAnswerUsecase,
+          provide: GetTextAnswerListUsecase,
           useFactory: (databaseCommentRepository: DatabaseCommentRepository, exceptionsService: ExceptionsService) =>
-            new GetTextAnswerUsecase(databaseCommentRepository, exceptionsService),
+            new GetTextAnswerListUsecase(databaseCommentRepository, exceptionsService),
         },
         {
           inject: [DatabaseHashTagRepository, ExceptionsService],
@@ -177,7 +177,7 @@ export class UsecasesProxyDynamicModule {
         CreateTextAnswerUsecase,
         QueryTitleUsecase,
         QueryHashtagUsecase,
-        GetTextAnswerUsecase,
+        GetTextAnswerListUsecase,
         GetQuestionHashtagListUsecase,
         GetQuestionDetailUsecase,
       ],

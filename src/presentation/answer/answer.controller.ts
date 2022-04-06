@@ -23,7 +23,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { DeleteTextAnswerUsecase } from 'src/usecase/answer/delte-text-answer';
 import { DeleteVideoAnswerUsecase } from 'src/usecase/answer/delete-video-answer';
 import { CreateTextAnswerUsecase } from 'src/usecase/answer/create-text-answer';
-import { GetTextAnswerUsecase } from 'src/usecase/answer/get-text-answer';
+import { GetTextAnswerListUsecase } from 'src/usecase/answer/get-text-answer-list';
 import { CreateVideoAnswerDto } from './answer.dto';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
@@ -45,8 +45,8 @@ export class AnswerController {
     private readonly deleteVideoAnswerUsecase: DeleteVideoAnswerUsecase,
     @Inject(CreateTextAnswerUsecase)
     private readonly createTextAnswerUsecase: CreateTextAnswerUsecase,
-    @Inject(GetTextAnswerUsecase)
-    private readonly getTextAnswerUsecase: GetTextAnswerUsecase,
+    @Inject(GetTextAnswerListUsecase)
+    private readonly getTextAnswerListUsecase: GetTextAnswerListUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -96,7 +96,7 @@ export class AnswerController {
     @Query('page', ParseIntPipe) page: number,
     @Query('size', ParseIntPipe) size: number,
   ) {
-    return this.getTextAnswerUsecase.execute(questionId, this.request.user.sub, page, size);
+    return this.getTextAnswerListUsecase.execute(questionId, this.request.user.sub, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
