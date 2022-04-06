@@ -41,7 +41,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('user.id', 'userId')
       .addSelect('user.profile', 'profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
-      .addSelect('COUNT(distinctlike.id)', 'likeCnt')
+      .addSelect('COUNT(distinct like.id)', 'likeCnt')
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question IS NULL')
