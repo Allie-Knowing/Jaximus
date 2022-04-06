@@ -1,4 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { utilities as nestWinstonModuleUtilities } from 'nest-winston';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoggerService } from 'src/infrastructure/logger/logger.service';
@@ -8,17 +10,20 @@ export class LoggingInterceptor implements NestInterceptor {
   constructor(private readonly logger: LoggerService) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const now = Date.now();
+    const now = new Date();
     const httpContext = context.switchToHttp();
     const request = httpContext.getRequest();
+    const response = httpContext.getResponse();
 
     const ip = this.getIP(request);
 
-    this.logger.log(`Incoming Request on ${request.path}`, `method=${request.method} ip=${ip}`);
-
     return next.handle().pipe(
       tap(() => {
-        this.logger.log(`End Request for ${request.path}`, `method=${request.method} ip=${ip} duration=${Date.now() - now}ms`);
+        console.log(
+          `[INFO] ${moment(now).utc().format('yyyy-MM-DD HH:mm:ss.SSS')} ${ip} ${request.method} ${request.url} ${
+            response.statusCode
+          } ${JSON.stringify(request.body)}`,
+        );
       }),
     );
   }
