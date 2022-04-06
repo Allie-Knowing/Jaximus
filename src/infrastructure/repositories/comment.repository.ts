@@ -36,8 +36,13 @@ export class DatabaseCommentRepository implements CommentRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.id = :id', { id: questionId })
+      .andWhere('comment.isAdoption = 0')
       .orderBy('comment.createdAt', 'DESC')
       .getMany();
+
+    const adoptionTextAnswer = await this.findAdoptionTextAnswer(questionId, userId);
+
+    if (adoptionTextAnswer) textAnswers.unshift(adoptionTextAnswer);
 
     return Promise.all(
       textAnswers.map(async (t) => {
@@ -83,5 +88,28 @@ export class DatabaseCommentRepository implements CommentRepository {
       video: question,
       user,
     });
+  }
+
+  async findAdoptionTextAnswer(questionId: number, userId: number): Promise<Comment> {
+    const textAnswer: any = await this.commentEntityRepository
+      .createQueryBuilder('comment')
+      .innerJoin('comment.video', 'video')
+      .innerJoin('comment.user', 'user')
+      .select('comment.id')
+      .addSelect('comment.content')
+      .addSelect('comment.createdAt')
+      .addSelect('comment.updatedAt')
+      .addSelect('comment.isAdoption')
+      .addSelect('user.id')
+      .addSelect('user.profile')
+      .addSelect('user.name')
+      .where('video.id = :id', { id: questionId })
+      .andWhere('comment.isAdoption = 1')
+      .orderBy('comment.createdAt', 'DESC')
+      .getOne();
+
+    if (!textAnswer) return;
+    textAnswer.isMine = textAnswer.userId == userId ? true : false;
+    return new Comment(textAnswer);
   }
 }
