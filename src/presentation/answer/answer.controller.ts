@@ -27,6 +27,7 @@ import { GetTextAnswerListUsecase } from 'src/usecase/answer/get-text-answer-lis
 import { CreateVideoAnswerDto } from './answer.dto';
 import { VideoAdoptionUsecase } from 'src/usecase/video/video-adoption';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
+import { GetVideoAnswerDetailUsecase } from 'src/usecase/answer/get-video-answer-detail';
 
 @Controller({ path: '/answer', scope: Scope.REQUEST })
 export class AnswerController {
@@ -47,6 +48,8 @@ export class AnswerController {
     private readonly createTextAnswerUsecase: CreateTextAnswerUsecase,
     @Inject(GetTextAnswerListUsecase)
     private readonly getTextAnswerListUsecase: GetTextAnswerListUsecase,
+    @Inject(GetVideoAnswerDetailUsecase)
+    private readonly getVideoAnswerDetailUsecase: GetVideoAnswerDetailUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -66,6 +69,12 @@ export class AnswerController {
     @Query('size', ParseIntPipe) size: number,
   ): Promise<Video[]> {
     return this.getVideoAnswerListUsecase.execute(questionId, this.request.user.sub, page, size);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/video/detail/:videoId')
+  videoAnswerDetail(@Param('videoId', ParseIntPipe) videoId: number): Promise<Video> {
+    return this.getVideoAnswerDetailUsecase.execute(videoId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))

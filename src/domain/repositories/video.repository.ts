@@ -15,4 +15,5 @@ export interface VideoRepository {
   findOne(id: number): Promise<Video>;
   findUsersQuestion(videoId: number, userId: number);
   findUsersVideo(videoId: number, userId: number);
+  findVideoAnswerDetail(videoId: number, userId: number): Promise<Video>;
 }
