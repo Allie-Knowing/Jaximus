@@ -1570,10 +1570,27 @@
 				{
 					"name": "/my - user_id 가져오기",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "{{BASE_URL}}/user/my",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"my"
+							]
 						}
 					},
 					"response": [
@@ -1583,13 +1600,51 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": ""
+									"raw": "{{BASE_URL}}/user/my",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"user",
+										"my"
+									]
 								}
 							},
-							"_postman_previewlanguage": "Text",
-							"header": [],
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0 (Ubuntu)"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 06 Apr 2022 07:45:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4e-+aKIifcey4DfE2SIwCqQGKTcNpA\""
+								}
+							],
 							"cookie": [],
-							"body": ""
+							"body": "{\n    \"data\": \"1\",\n    \"isArray\": false,\n    \"path\": \"/user/my\",\n    \"duration\": \"0ms\",\n    \"method\": \"GET\"\n}"
 						}
 					]
 				}
@@ -1682,7 +1737,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "{{BASE_URL}}/like",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"like"
+							]
 						}
 					},
 					"response": [
