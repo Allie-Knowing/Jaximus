@@ -10,6 +10,7 @@ export class VideoController {
   @Post('/file')
   @UseInterceptors(FileInterceptor('file'))
   videoFile(@UploadedFile() file) {
+    console.timeEnd();
     return { url: file ? file.location : null };
   }
 }
