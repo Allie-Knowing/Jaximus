@@ -38,6 +38,7 @@ export class DatabaseVideoRepository implements VideoRepository {
           .select('video.id', 'id')
           .addSelect('video.videoUrl', 'videoUrl')
           .addSelect('video.title', 'title')
+          .addSelect('video.is_adoption', 'isAdoption')
           .addSelect('video.description', 'description')
           .addSelect('video.createdAt', 'createdAt')
           .addSelect('user.id', 'userId')
@@ -46,6 +47,7 @@ export class DatabaseVideoRepository implements VideoRepository {
           .addSelect('COUNT(distinct like.id)', 'likeCnt')
           .where('video.question IS NULL')
           .andWhere('video.id = :video_id', { video_id: videoId })
+          .orderBy('video.createdAt', 'DESC')
           .groupBy('video.id')
           .getRawOne();
 
@@ -68,6 +70,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
       .addSelect('video.title', 'title')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('video.description', 'description')
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
@@ -77,8 +80,11 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question IS NULL')
+      .orderBy('video.createdAt', 'DESC')
       .groupBy('video.id')
       .getRawMany();
+
+    if (!videos) return;
 
     return Promise.all(
       videos.map(async (video) => {
@@ -124,10 +130,13 @@ export class DatabaseVideoRepository implements VideoRepository {
       .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
       .andWhere('video.isAdoption = 0')
+      .orderBy('video.createdAt', 'DESC')
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
       .getRawMany();
+
+    if (!videos) return;
 
     const adoptionVideoAnswer = await this.findAdoptionVideoAnswer(questionId, userId);
 
@@ -151,6 +160,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
       .addSelect('video.title', 'title')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('video.description', 'description')
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
@@ -161,6 +171,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .andWhere('video.id = :video_id', { video_id: videoId })
       .groupBy('video.id')
       .getRawOne();
+
+    if (!video) return;
 
     video.isMine = video.userId == userId ? true : false;
     video.isLike = !!(await this.findLike(userId, video.id));
@@ -221,6 +233,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .innerJoin('video.user', 'user')
       .select('video.id', 'id')
       .addSelect('video.title')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('video.description')
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
@@ -234,8 +247,11 @@ export class DatabaseVideoRepository implements VideoRepository {
       .limit(size)
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
+      .orderBy('video.createdAt', 'DESC')
       .groupBy('video.id')
       .getRawMany();
+
+    if (!videos) return;
 
     return Promise.all(
       videos.map(async (video) => {
