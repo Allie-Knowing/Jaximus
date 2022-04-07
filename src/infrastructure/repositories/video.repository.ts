@@ -264,6 +264,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawOne();
 
+    if (!videoAnswer) return;
     videoAnswer.isMine = videoAnswer.userId == userId ? true : false;
     videoAnswer.isLike = !!(await this.findLike(userId, videoAnswer.id));
 
