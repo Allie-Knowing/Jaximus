@@ -38,6 +38,7 @@ export class DatabaseVideoRepository implements VideoRepository {
           .select('video.id', 'id')
           .addSelect('video.videoUrl', 'videoUrl')
           .addSelect('video.title', 'title')
+          .addSelect('video.is_adoption', 'isAdoption')
           .addSelect('video.description', 'description')
           .addSelect('video.createdAt', 'createdAt')
           .addSelect('user.id', 'userId')
@@ -68,6 +69,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
       .addSelect('video.title', 'title')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('video.description', 'description')
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
@@ -79,6 +81,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('video.question IS NULL')
       .groupBy('video.id')
       .getRawMany();
+
+    if (!videos) return;
 
     return Promise.all(
       videos.map(async (video) => {
@@ -129,6 +133,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawMany();
 
+    if (!videos) return;
+
     const adoptionVideoAnswer = await this.findAdoptionVideoAnswer(questionId, userId);
 
     if (adoptionVideoAnswer) videos.unshift(adoptionVideoAnswer);
@@ -151,6 +157,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'id')
       .addSelect('video.videoUrl', 'videoUrl')
       .addSelect('video.title', 'title')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('video.description', 'description')
       .addSelect('video.createdAt', 'createdAt')
       .addSelect('user.id', 'userId')
@@ -161,6 +168,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .andWhere('video.id = :video_id', { video_id: videoId })
       .groupBy('video.id')
       .getRawOne();
+
+    if (!video) return;
 
     video.isMine = video.userId == userId ? true : false;
     video.isLike = !!(await this.findLike(userId, video.id));
@@ -221,6 +230,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .innerJoin('video.user', 'user')
       .select('video.id', 'id')
       .addSelect('video.title')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('video.description')
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
@@ -236,6 +246,8 @@ export class DatabaseVideoRepository implements VideoRepository {
       .andWhere('video.question IS NULL')
       .groupBy('video.id')
       .getRawMany();
+
+    if (!videos) return;
 
     return Promise.all(
       videos.map(async (video) => {
