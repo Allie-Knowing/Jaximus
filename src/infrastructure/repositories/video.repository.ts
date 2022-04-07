@@ -193,6 +193,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
       .addSelect('video.created_at', 'createdAt')
+      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id')
       .addSelect('user.profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
