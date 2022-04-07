@@ -37,7 +37,7 @@ export class DatabaseCommentRepository implements CommentRepository {
       .limit(size)
       .where('video.id = :id', { id: questionId })
       .andWhere('comment.isAdoption = 0')
-      .orderBy('comment.createdAt', 'DESC')
+      .orderBy('comment.createdAt')
       .getMany();
 
     const adoptionTextAnswer = await this.findAdoptionTextAnswer(questionId, userId);
@@ -105,7 +105,7 @@ export class DatabaseCommentRepository implements CommentRepository {
       .addSelect('user.name')
       .where('video.id = :id', { id: questionId })
       .andWhere('comment.isAdoption = 1')
-      .orderBy('comment.createdAt', 'DESC')
+      .orderBy('comment.createdAt')
       .getOne();
 
     if (!textAnswer) return;
