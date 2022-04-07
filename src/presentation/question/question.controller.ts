@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Inject,
   Param,
+  ParseArrayPipe,
   ParseIntPipe,
   Post,
   Query,
@@ -21,6 +22,7 @@ import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
 import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 import { GetQuestionHashtagListUsecase } from 'src/usecase/question/get-question-hashtag-list';
+import { GetQuestionVideoListUsecase } from 'src/usecase/question/get-question-video-list';
 import { GetQuestionListUsecase } from 'src/usecase/question/get-questions-list';
 import { CreateQuestionDto } from './question.dto';
 
@@ -37,6 +39,8 @@ export class QuestionController {
     private readonly getQuestionHashtagListUsecase: GetQuestionHashtagListUsecase,
     @Inject(GetQuestionDetailUsecase)
     private readonly getQuestionDetailUsecase: GetQuestionDetailUsecase,
+    @Inject(GetQuestionVideoListUsecase)
+    private readonly getQuestionVideoListUsecase: GetQuestionVideoListUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -52,6 +56,12 @@ export class QuestionController {
   @Get('/')
   questionList(@Query('page', ParseIntPipe) page: number, @Query('size', ParseIntPipe) size: number): Promise<Video[]> {
     return this.getQuestionListUsecase.execute(this.request.user.sub, page, size);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/video')
+  questionVideoList(@Body('videoIds', ParseArrayPipe) videoIds: number[]) {
+    return this.getQuestionVideoListUsecase.execute(videoIds, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
