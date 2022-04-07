@@ -64,7 +64,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       description: video.description,
       title: video.title,
       videoUrl: video.videoUrl,
-      thumbnail: video.videoUrl.replace(/(mp4|mov)$/, 'png'),
       user,
     });
 
