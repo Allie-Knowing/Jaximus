@@ -204,7 +204,14 @@ export class DatabaseVideoRepository implements VideoRepository {
       .andWhere('video.question IS NULL')
       .groupBy('video.id')
       .getRawMany();
-    return videos.map((video) => new Video(video));
+
+    return Promise.all(
+      videos.map(async (video) => {
+        video.isMine = video.userId == userId ? true : false;
+        video.isLike = !!(await this.findLike(userId, video.id));
+        return new Video(video);
+      }),
+    );
   }
 
   async deleteQuestion(videoId: number): Promise<void> {
