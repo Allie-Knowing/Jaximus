@@ -60,7 +60,7 @@ export class QuestionController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/video')
-  questionVideoList(@Body('videoIds', ParseArrayPipe) videoIds: number[]) {
+  questionVideoList(@Query('videoIds', ParseArrayPipe) videoIds: number[]) {
     return this.getQuestionVideoListUsecase.execute(videoIds, this.request.user.sub);
   }
 
