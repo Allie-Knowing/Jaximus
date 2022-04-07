@@ -59,15 +59,12 @@ export class DatabaseVideoRepository implements VideoRepository {
 
   async save(video: CreateQuestionDto, userId: number): Promise<void> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
-    const thumbnail = video.videoUrl;
-    thumbnail.replace('mov', 'png');
-    thumbnail.replace('mp4', 'png');
 
     const videoEntity: VideoTypeOrmEntity = await this.videoEntityRepository.save({
       description: video.description,
       title: video.title,
       videoUrl: video.videoUrl,
-      thumbnail,
+      thumbnail: video.videoUrl.replace(/(mp4|mov)$/, 'png'),
       user,
     });
 
