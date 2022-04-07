@@ -26,6 +26,38 @@ export class DatabaseVideoRepository implements VideoRepository {
     private readonly likeEntityRepository: Repository<LikeTypeOrmEntity>,
   ) {}
 
+  async findQuestionVideoList(videoIds: number[], userId: number): Promise<Video[]> {
+    return Promise.all(
+      videoIds.map(async (videoId) => {
+        const video: any = await this.videoEntityRepository
+          .createQueryBuilder('video')
+          .leftJoin('video.comments', 'comment')
+          .leftJoin('video.likes', 'like')
+          .leftJoin('video.hashTags', 'hash_tag')
+          .innerJoin('video.user', 'user')
+          .select('video.id', 'id')
+          .addSelect('video.videoUrl', 'videoUrl')
+          .addSelect('video.title', 'title')
+          .addSelect('video.description', 'description')
+          .addSelect('video.createdAt', 'createdAt')
+          .addSelect('user.id', 'userId')
+          .addSelect('user.profile', 'profile')
+          .addSelect('COUNT(distinct comment.id)', 'commentCnt')
+          .addSelect('COUNT(distinct like.id)', 'likeCnt')
+          .where('video.question IS NULL')
+          .andWhere('video.id = :video_id', { video_id: videoId })
+          .groupBy('video.id')
+          .getRawOne();
+
+        if (!video) return;
+
+        video.isMine = video.userId == userId ? true : false;
+        video.isLike = !!(await this.findLike(userId, video.id));
+        return new Video(video);
+      }),
+    );
+  }
+
   async findQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
