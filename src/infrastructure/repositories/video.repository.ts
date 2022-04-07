@@ -194,7 +194,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.thumbnail', 'thumbnail')
       .addSelect('video.created_at', 'createdAt')
       .addSelect('video.is_adoption', 'isAdoption')
-      .addSelect('user.id')
+      .addSelect('user.id', 'userId')
       .addSelect('user.profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
       .addSelect('COUNT(distinct like.id)', 'likeCnt')
