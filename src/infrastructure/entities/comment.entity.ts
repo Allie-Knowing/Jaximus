@@ -16,7 +16,7 @@ export class CommentTypeOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 200 })
+  @Column({ length: 500 })
   content: string;
 
   @Column({ default: false })
