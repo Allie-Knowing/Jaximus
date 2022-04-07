@@ -47,6 +47,7 @@ export class DatabaseVideoRepository implements VideoRepository {
           .addSelect('COUNT(distinct like.id)', 'likeCnt')
           .where('video.question IS NULL')
           .andWhere('video.id = :video_id', { video_id: videoId })
+          .orderBy('video.createdAt', 'DESC')
           .groupBy('video.id')
           .getRawOne();
 
@@ -79,6 +80,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question IS NULL')
+      .orderBy('video.createdAt', 'DESC')
       .groupBy('video.id')
       .getRawMany();
 
@@ -128,6 +130,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .limit(size)
       .where('video.question = :question_id', { question_id: questionId })
       .andWhere('video.isAdoption = 0')
+      .orderBy('video.createdAt', 'DESC')
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
@@ -244,6 +247,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .limit(size)
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
+      .orderBy('video.createdAt', 'DESC')
       .groupBy('video.id')
       .getRawMany();
 
