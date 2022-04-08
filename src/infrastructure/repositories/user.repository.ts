@@ -21,6 +21,7 @@ export class DatabaseUserRepository implements UserRepository {
       .createQueryBuilder('user')
       .select('user.name', 'name')
       .addSelect('user.profile', 'profile')
+      .addSelect('user.email', 'email')
       .addSelect('COUNT(video.id)', 'videoCnt')
       .where('user.id = :user_id', { user_id: userId })
       .leftJoin('user.videos', 'video')
