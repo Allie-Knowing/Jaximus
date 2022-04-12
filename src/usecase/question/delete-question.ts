@@ -8,6 +8,6 @@ export class DeleteQuestionUsecase {
     const video = await this.videoRepository.findUsersQuestion(videoId, userId);
     if (!video) this.exceptionsService.videoNotFoundException();
 
-    this.videoRepository.deleteQuestion(videoId);
+    this.videoRepository.deleteVideo(videoId);
   }
 }

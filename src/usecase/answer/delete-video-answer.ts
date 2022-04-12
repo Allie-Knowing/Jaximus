@@ -4,10 +4,11 @@ import { VideoRepository } from 'src/domain/repositories/video.repository';
 export class DeleteVideoAnswerUsecase {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
-  async execute(questionId: number, userId: number) {
-    const question = await this.videoRepository.findUsersQuestion(questionId, userId);
+  async execute(videoId: number, userId: number) {
+    const question = await this.videoRepository.findUsersVideo(videoId, userId);
+
     if (!question) this.exceptionsService.questionNotFoundException();
 
-    this.videoRepository.deleteVideoAnswer(questionId);
+    this.videoRepository.deleteVideo(videoId);
   }
 }

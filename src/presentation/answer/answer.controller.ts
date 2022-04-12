@@ -78,10 +78,10 @@ export class AnswerController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('/video/:questionId')
+  @Delete('/video/:videoId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteVideoAnswer(@Param('questionId', ParseIntPipe) questionId: number) {
-    await this.deleteVideoAnswerUsecase.execute(questionId, this.request.user.sub);
+  async deleteVideoAnswer(@Param('videoId', ParseIntPipe) videoId: number) {
+    await this.deleteVideoAnswerUsecase.execute(videoId, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))

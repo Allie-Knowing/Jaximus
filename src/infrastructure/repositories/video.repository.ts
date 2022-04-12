@@ -218,13 +218,17 @@ export class DatabaseVideoRepository implements VideoRepository {
       .getOne();
   }
 
-  findUsersVideo(videoId: number, userId: number) {
-    return this.videoEntityRepository
+  async findUsersVideo(videoId: number, userId: number) {
+    const video: any = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
       .where('video.id = :id', { id: videoId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
       .getOne();
+
+    if (!video) return;
+
+    return new Video(video);
   }
 
   async userQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
@@ -264,12 +268,8 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async deleteQuestion(videoId: number): Promise<void> {
+  async deleteVideo(videoId: number): Promise<void> {
     await this.videoEntityRepository.softDelete(videoId);
-  }
-
-  async deleteVideoAnswer(questionId: any): Promise<void> {
-    await this.videoEntityRepository.softDelete({ question: questionId });
   }
 
   private findLike(userId: number, videoId: number) {
