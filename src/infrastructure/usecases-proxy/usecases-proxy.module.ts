@@ -41,9 +41,10 @@ export class UsecasesProxyDynamicModule {
       module: UsecasesProxyDynamicModule,
       providers: [
         {
-          inject: [DatabaseVideoRepository],
+          inject: [DatabaseVideoRepository, ElasticsearchService],
           provide: CreateQuestionUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new CreateQuestionUsecase(databaseVideoRepository),
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, elasticsearchService: ElasticsearchService) =>
+            new CreateQuestionUsecase(databaseVideoRepository, elasticsearchService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
