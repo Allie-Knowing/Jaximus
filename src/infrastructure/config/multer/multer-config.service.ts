@@ -31,7 +31,7 @@ export class MulterConfigService implements MulterOptionsFactory {
           const splitFilename = file.originalname.split('.');
           cb(
             null,
-            `pre-process/${req.query.type}/${splitFilename[splitFilename.length - 1]}^${v4()}.${splitFilename[splitFilename.length - 1]}`,
+            `pre-process/${req.query.type}/${splitFilename[splitFilename.length - 1]}_${v4()}.${splitFilename[splitFilename.length - 1]}`,
           );
         },
       }),
