@@ -17,13 +17,15 @@ export class CreateQuestionUsecase {
     const splitVideoUrl = video.videoUrl.split('/');
     const videoFilename = splitVideoUrl[splitVideoUrl.length - 1];
     const splitVideoFilename = videoFilename.split('.');
-    this.client.update(
+    this.client.index(
       {
         index: 'videosearch',
         id: savedVideo.id.toString(),
         type: '_doc',
         body: {
           doc: {
+            title: video.title,
+            description: video.description,
             thumbnail: `https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/${splitVideoFilename[0] + 'knowing'}.${
               splitVideoFilename[1]
             }`,
