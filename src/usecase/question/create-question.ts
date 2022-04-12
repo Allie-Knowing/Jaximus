@@ -14,13 +14,18 @@ export class CreateQuestionUsecase {
     }
 
     const savedVideo = await this.videoRepository.save(video, userId);
+    const splitVideoUrl = video.videoUrl.split('/');
+    const videoFilename = splitVideoUrl[splitVideoUrl.length - 1];
+    const splitVideoFilename = videoFilename.split('.');
     await this.client.update({
       index: 'videosearch',
       id: savedVideo.id.toString(),
       type: '_doc',
       body: {
         doc: {
-          thumbnail: savedVideo.thumbnail,
+          thumbnail: `https://test-knowing.s3.ap-northeast-2.amazonaws.com/processed/${splitVideoFilename[0] + 'knowing'}.${
+            splitVideoFilename[1]
+          }`,
         },
       },
     });
