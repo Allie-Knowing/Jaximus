@@ -95,7 +95,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
-  async save(video: CreateQuestionDto, userId: number): Promise<void> {
+  async save(video: CreateQuestionDto, userId: number): Promise<VideoTypeOrmEntity> {
     const user: UserTypeOrmEntity = await this.userEntityRepository.findOne(userId);
 
     const videoEntity: VideoTypeOrmEntity = await this.videoEntityRepository.save({
@@ -113,6 +113,8 @@ export class DatabaseVideoRepository implements VideoRepository {
         }),
       ),
     );
+
+    return videoEntity;
   }
 
   async findVideoAnswerList(questionId: number, userId: number, page: number, size: number): Promise<Video[]> {

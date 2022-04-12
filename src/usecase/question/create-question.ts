@@ -1,10 +1,28 @@
+import { Client } from '@elastic/elasticsearch';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
+import { ElasticsearchService } from 'src/infrastructure/config/elasticsearch/elasticsearch.service';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 
 export class CreateQuestionUsecase {
-  constructor(private readonly videoRepository: VideoRepository) {}
+  client: Client;
+
+  constructor(private readonly videoRepository: VideoRepository, private readonly elasticsearchService: ElasticsearchService) {}
 
   async execute(video: CreateQuestionDto, userId: number) {
-    this.videoRepository.save(video, userId);
+    if (this.client === undefined) {
+      this.client = this.elasticsearchService.getESClient();
+    }
+
+    const savedVideo = await this.videoRepository.save(video, userId);
+    await this.client.update({
+      index: 'videosearch',
+      id: savedVideo.id.toString(),
+      type: '_doc',
+      body: {
+        doc: {
+          thumbnail: savedVideo.thumbnail,
+        },
+      },
+    });
   }
 }

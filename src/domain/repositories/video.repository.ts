@@ -1,9 +1,10 @@
+import { VideoTypeOrmEntity } from 'src/infrastructure/entities/video.entity';
 import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Video } from '../model/video';
 
 export interface VideoRepository {
-  save(video: CreateQuestionDto, userId: number): Promise<void>;
+  save(video: CreateQuestionDto, userId: number): Promise<VideoTypeOrmEntity>;
   findQuestionList(userId: number, page: number, size: number): Promise<Video[]>;
   findVideoAnswerList(questionId: number, userId: number, page: number, size: number): Promise<Video[]>;
   findQuestionDetail(userId: number, videoId: number): Promise<Video>;
