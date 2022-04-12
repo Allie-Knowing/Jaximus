@@ -21,7 +21,6 @@ export class MulterConfigService implements MulterOptionsFactory {
     });
 
     const s3 = new AWS.S3();
-
     return {
       storage: multerS3({
         s3: s3,
@@ -29,7 +28,11 @@ export class MulterConfigService implements MulterOptionsFactory {
         acl: 'public-read',
         key: (req, file: Express.Multer.File, cb) => {
           console.time();
-          cb(null, `pre-process/${req.query.type}/${v4()}.${file.originalname.split('.')[file.originalname.split('.').length - 1]}`);
+          const splitFilename = file.originalname.split('.');
+          cb(
+            null,
+            `pre-process/${req.query.type}/${splitFilename[splitFilename.length - 1]}^${v4()}.${splitFilename[splitFilename.length - 1]}`,
+          );
         },
       }),
       limits: { fieldSize: 50 * 1024 * 1024 },
