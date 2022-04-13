@@ -208,14 +208,18 @@ export class DatabaseVideoRepository implements VideoRepository {
     return question ? new Video(question) : null;
   }
 
-  findUsersQuestion(questionId: number, userId: number) {
-    return this.videoEntityRepository
+  async findUsersQuestion(questionId: number, userId: number) {
+    const question: any = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
       .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NOT NULL')
       .getOne();
+
+    if (!question) return;
+
+    return new Video(question);
   }
 
   async findUsersVideo(videoId: number, userId: number) {
