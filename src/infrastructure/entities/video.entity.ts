@@ -31,6 +31,9 @@ export class VideoTypeOrmEntity {
   @Column({ length: 2000 })
   thumbnail: string;
 
+  @Column({ nullable: true, default: 0 })
+  compensation: number;
+
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
 
