@@ -5,9 +5,9 @@ export class DeleteVideoAnswerUsecase {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
   async execute(videoId: number, userId: number) {
-    const question = await this.videoRepository.findUsersVideo(videoId, userId);
+    const video = await this.videoRepository.findUsersVideo(videoId, userId);
 
-    if (!question) this.exceptionsService.questionNotFoundException();
+    if (!video) this.exceptionsService.videoAnswerNotFoundException();
 
     this.videoRepository.deleteVideo(videoId);
   }

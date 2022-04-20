@@ -208,13 +208,13 @@ export class DatabaseVideoRepository implements VideoRepository {
     return question ? new Video(question) : null;
   }
 
-  async findUsersQuestion(questionId: number, userId: number) {
+  async findUsersQuestion(questionId: number, userId: number): Promise<Video> {
     const question: any = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
       .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
-      .andWhere('video.question IS NOT NULL')
+      .andWhere('video.question IS NULL')
       .getOne();
 
     if (!question) return;
@@ -222,7 +222,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return new Video(question);
   }
 
-  async findUsersVideo(videoId: number, userId: number) {
+  async findUsersVideo(videoId: number, userId: number): Promise<Video> {
     const video: any = await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()
