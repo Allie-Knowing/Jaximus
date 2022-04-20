@@ -16,6 +16,8 @@ export class Video {
 
   thumbnail: string;
 
+  compensation: number;
+
   @IsString()
   @Expose({ name: 'video_url' })
   videoUrl: string;
