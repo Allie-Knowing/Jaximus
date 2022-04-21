@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class CreateQuestionDto {
   @IsString()
@@ -7,6 +7,9 @@ export class CreateQuestionDto {
 
   @IsString()
   description: string;
+
+  @IsNumber()
+  compensation?: number;
 
   @IsArray()
   @Expose({ name: 'hash_tag' })
