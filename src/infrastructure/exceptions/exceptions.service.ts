@@ -47,6 +47,10 @@ export class ExceptionsService implements IException {
   adoptionAlreadyExistException(): void {
     throw new BadRequestException('Adoption already exist exception');
   }
+  notEnoughIqException(): void {
+    throw new BadRequestException('Not enough iq exception');
+  }
+
   badRequestException(data: IFormatExceptionMessage): void {
     throw new BadRequestException(data);
   }

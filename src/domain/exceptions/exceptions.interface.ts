@@ -17,6 +17,7 @@ export interface IException {
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
   itIsNotQuestionException(): void;
+  notEnoughIqException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
   expiredTokenException(): void;
   forbiddenException(data?: IFormatExceptionMessage): void;
