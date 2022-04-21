@@ -1,9 +1,9 @@
 import { IException } from 'src/domain/exceptions/exceptions.interface';
 import { HashTag } from 'src/domain/model/hash-tag';
-import { hashTagRepository } from 'src/domain/repositories/hash-tag.repository';
+import { HashTagRepository } from 'src/domain/repositories/hash-tag.repository';
 
 export class GetQuestionHashtagListUsecase {
-  constructor(private readonly hashtagRepository: hashTagRepository, private readonly exceptionsService: IException) {}
+  constructor(private readonly hashtagRepository: HashTagRepository, private readonly exceptionsService: IException) {}
 
   async execute(videoId: number): Promise<HashTag[]> {
     const hashtags = await this.hashtagRepository.findQuestionHashtagList(videoId);
