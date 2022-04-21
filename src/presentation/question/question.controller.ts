@@ -48,8 +48,8 @@ export class QuestionController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() video: CreateQuestionDto) {
-    this.createQuestionUsecase.execute(video, this.request.user.sub);
+  async create(@Body() video: CreateQuestionDto) {
+    await this.createQuestionUsecase.execute(video, this.request.user.sub);
   }
 
   @UseGuards(AuthGuard('jwt'))
