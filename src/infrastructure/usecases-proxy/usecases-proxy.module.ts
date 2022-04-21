@@ -31,6 +31,7 @@ import { QueryHashtagUsecase } from 'src/usecase/search/query-hash-tag';
 import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 import { GetVideoAnswerDetailUsecase } from 'src/usecase/answer/get-video-answer-detail';
 import { GetQuestionVideoListUsecase } from 'src/usecase/question/get-question-video-list';
+import { DatabaseIqRepository } from '../repositories/iq.repository';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -41,10 +42,14 @@ export class UsecasesProxyDynamicModule {
       module: UsecasesProxyDynamicModule,
       providers: [
         {
-          inject: [DatabaseVideoRepository, ElasticsearchService],
+          inject: [DatabaseVideoRepository, DatabaseIqRepository, ElasticsearchService, ExceptionsService],
           provide: CreateQuestionUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository, elasticsearchService: ElasticsearchService) =>
-            new CreateQuestionUsecase(databaseVideoRepository, elasticsearchService),
+          useFactory: (
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseIqRepository: DatabaseIqRepository,
+            elasticsearchService: ElasticsearchService,
+            exceptionsService: ExceptionsService,
+          ) => new CreateQuestionUsecase(databaseVideoRepository, databaseIqRepository, elasticsearchService, exceptionsService),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
