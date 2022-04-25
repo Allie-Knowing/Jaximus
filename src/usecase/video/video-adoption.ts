@@ -5,10 +5,18 @@ export class VideoAdoptionUsecase {
   constructor(private readonly videoRepository: VideoRepository, private readonly exceptionsService: IException) {}
 
   async execute(videoId: number, userId: number) {
-    const video = await this.videoRepository.findUsersVideo(videoId, userId);
+    const videoAnswer = await this.videoRepository.checkVideoAnswer(videoId);
 
-    if (!video) this.exceptionsService.videoNotFoundException();
-    if (video.isAdoption) this.exceptionsService.adoptionAlreadyExistException();
+    if (!videoAnswer) this.exceptionsService.videoNotFoundException();
+    if (videoAnswer.isAdoption) this.exceptionsService.adoptionAlreadyExistException();
+
+    const isOwnerQuestion = await this.videoRepository.isMine(videoAnswer.questionId, userId);
+
+    if (!isOwnerQuestion) this.exceptionsService.videoIsNotYoursException();
+
+    const checkAdoption = await this.videoRepository.checkVideoAnswerAdoption(videoAnswer.questionId);
+
+    if (checkAdoption !== 0) this.exceptionsService.questionIsAlreadyAdoptedException();
 
     this.videoRepository.videoAdoption(videoId);
   }
