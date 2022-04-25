@@ -16,10 +16,12 @@ export interface IException {
   userQuestionNotFoundException(): void;
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
+  videoIsNotYoursException(): void;
   itIsNotQuestionException(): void;
   notEnoughIqException(): void;
   unauthorizedException(data?: IFormatExceptionMessage): void;
   expiredTokenException(): void;
+  questionIsAlreadyAdoptedException(): void;
   forbiddenException(data?: IFormatExceptionMessage): void;
   internalServerErrorException(data?: IFormatExceptionMessage): void;
 }
