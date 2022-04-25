@@ -28,7 +28,7 @@ export class VideoTypeOrmEntity {
   @DeleteDateColumn()
   deletedAt?: Date;
 
-  @Column({ length: 2000 })
+  @Column({ length: 2000, nullable: true })
   thumbnail: string;
 
   @Column({ nullable: true, default: 0 })

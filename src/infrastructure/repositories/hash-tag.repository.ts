@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HashTag } from 'src/domain/model/hash-tag';
-import { hashTagRepository } from 'src/domain/repositories/hash-tag.repository';
+import { HashTagRepository } from 'src/domain/repositories/hash-tag.repository';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 
 @Injectable()
-export class DatabaseHashTagRepository implements hashTagRepository {
+export class DatabaseHashTagRepository implements HashTagRepository {
   constructor(
     @InjectRepository(HashTagTypeOrmEntity)
     private readonly hashTagEntityRepository: Repository<HashTagTypeOrmEntity>,

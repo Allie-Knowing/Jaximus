@@ -17,4 +17,7 @@ export interface VideoRepository {
   findUsersQuestion(videoId: number, userId: number): Promise<Video>;
   findUsersVideo(videoId: number, userId: number): Promise<Video>;
   findVideoAnswerDetail(videoId: number, userId: number): Promise<Video>;
+  checkVideoAnswer(videoId: number): Promise<Video>;
+  checkVideoAnswerAdoption(questionId: number);
+  isMine(questionId: number, userId: number);
 }

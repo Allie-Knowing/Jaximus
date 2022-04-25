@@ -1,4 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
+import { IException } from 'src/domain/exceptions/exceptions.interface';
+import { IqRepository } from 'src/domain/repositories/iq.repository';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { ElasticsearchService } from 'src/infrastructure/config/elasticsearch/elasticsearch.service';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
@@ -6,12 +8,23 @@ import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 export class CreateQuestionUsecase {
   client: Client;
 
-  constructor(private readonly videoRepository: VideoRepository, private readonly elasticsearchService: ElasticsearchService) {}
+  constructor(
+    private readonly videoRepository: VideoRepository,
+    private readonly iqRepository: IqRepository,
+    private readonly elasticsearchService: ElasticsearchService,
+    private readonly exceptionsService: IException,
+  ) {}
 
   async execute(video: CreateQuestionDto, userId: number) {
     if (this.client === undefined) {
       this.client = this.elasticsearchService.getESClient();
     }
+
+    const userIq = await this.iqRepository.getIq(userId);
+
+    if (userIq.curCnt < video.compensation) this.exceptionsService.notEnoughIqException();
+
+    await this.iqRepository.iqExpenditure(userId, video.compensation);
 
     const savedVideo = await this.videoRepository.save(video, userId);
     const splitVideoUrl = video.videoUrl.split('/');
