@@ -6,6 +6,7 @@ import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
+import { IqTypeOrmEntity } from '../entities/iq.entity';
 import { LikeTypeOrmEntity } from '../entities/like.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
@@ -24,6 +25,9 @@ export class DatabaseVideoRepository implements VideoRepository {
 
     @InjectRepository(LikeTypeOrmEntity)
     private readonly likeEntityRepository: Repository<LikeTypeOrmEntity>,
+
+    @InjectRepository(IqTypeOrmEntity)
+    private readonly iqEntityRepository: Repository<IqTypeOrmEntity>,
   ) {}
 
   async findQuestionVideoList(videoIds: number[], userId: number): Promise<Video[]> {
@@ -202,6 +206,24 @@ export class DatabaseVideoRepository implements VideoRepository {
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
       .execute();
+
+    await this.compensation(videoId);
+  }
+
+  private async compensation(videoId: number) {
+    const video: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.compensation', 'compensation')
+      .addSelect('video.user_id', 'userId')
+      .andWhere('video.id = :id', { id: videoId })
+      .getRawOne();
+
+    await this.iqEntityRepository
+      .createQueryBuilder('iq')
+      .update(IqTypeOrmEntity)
+      .set({ curCnt: () => `cur_cnt + ${video.compensation}`, totCnt: () => `tot_cnt + ${video.compensation}` })
+      .where('user_id = :user_id', { user_id: video.userId })
+      .execute();
   }
 
   async findOne(id: number): Promise<Video> {
@@ -249,7 +271,6 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
       .addSelect('video.created_at', 'createdAt')
-      .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
@@ -258,7 +279,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .limit(size)
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NULL')
-      .orderBy('video.createdAt', 'DESC')
+      .orderBy('video.created_at', 'DESC')
       .groupBy('video.id')
       .getRawMany();
 
@@ -298,7 +319,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
       .where('video.question = :question_id', { question_id: questionId })
-      .andWhere('video.isAdoption = 1')
+      .andWhere('video.is_adoption = 1')
       .leftJoin('video.user', 'user')
       .leftJoin('video.likes', 'like')
       .groupBy('video.id')
@@ -331,5 +352,39 @@ export class DatabaseVideoRepository implements VideoRepository {
     videoAnswer.isLike = !!(await this.findLike(userId, videoAnswer.id));
 
     return new Video(videoAnswer);
+  }
+
+  async checkVideoAnswer(videoId: number): Promise<Video> {
+    const videoAnswer: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id', 'id')
+      .addSelect('video.question_id', 'questionId')
+      .addSelect('video.is_adoption', 'isAdoption')
+      .where('video.id = :id', { id: videoId })
+      .andWhere('video.question IS NOT NULL')
+      .getRawOne();
+
+    if (!videoAnswer) return;
+
+    return new Video(videoAnswer);
+  }
+
+  async checkVideoAnswerAdoption(questionId: number) {
+    return await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select()
+      .where('video.question_id = :question_id', { question_id: questionId })
+      .andWhere('video.is_adoption = 1 OR comment.is_adoption = 1 AND comment.video_id = :question_id', { question_id: questionId })
+      .leftJoin('video.comments', 'comment')
+      .getCount();
+  }
+
+  async isMine(questionId: number, userId: number) {
+    return await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select()
+      .where('video.id = :question_id', { question_id: questionId })
+      .andWhere('video.user_id = :user_id', { user_id: userId })
+      .getOne();
   }
 }
