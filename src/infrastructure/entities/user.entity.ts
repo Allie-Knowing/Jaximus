@@ -1,5 +1,6 @@
 import { User } from 'src/domain/model/user';
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { ActionPointTypeOrmEntity } from './action_point.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -40,7 +41,10 @@ export class UserTypeOrmEntity {
   @OneToOne(() => IqTypeOrmEntity, (iq) => iq.userId)
   iq: IqTypeOrmEntity;
 
+  @OneToMany(() => ActionPointTypeOrmEntity, (actionPoint) => actionPoint.user)
+  actionPoint: ActionPointTypeOrmEntity[];
+
   public static of(user: User): UserTypeOrmEntity {
-    return { ...user, likes: [], videos: [], comments: [], iq: null };
+    return { ...user, likes: [], videos: [], comments: [], iq: null, actionPoint: null };
   }
 }
