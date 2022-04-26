@@ -9,7 +9,7 @@ export class ActionPointCategoryTypeOrmEntity {
   @Column({ length: 20 })
   name: string;
 
-  @Column({ nullable: true })
+  @Column()
   score: number;
 
   @OneToMany(() => ActionPointTypeOrmEntity, (actionPoint) => actionPoint.actionPointCategory)
