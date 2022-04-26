@@ -45,6 +45,6 @@ export class UserTypeOrmEntity {
   actionPoint: ActionPointTypeOrmEntity[];
 
   public static of(user: User): UserTypeOrmEntity {
-    return { ...user, likes: [], videos: [], comments: [], iq: null, actionPoint: null };
+    return { ...user, likes: [], videos: [], comments: [], iq: null, actionPoint: [] };
   }
 }
