@@ -106,7 +106,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       description: video.description,
       title: video.title,
       videoUrl: video.videoUrl,
-      compensation: 0,
+      //compensation: video.compensation,
       user,
     });
 
