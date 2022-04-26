@@ -22,9 +22,9 @@ export class CreateQuestionUsecase {
 
     const userIq = await this.iqRepository.getIq(userId);
 
-    if (userIq.curCnt < video.compensation) this.exceptionsService.notEnoughIqException();
+    //if (userIq.curCnt < video.compensation) this.exceptionsService.notEnoughIqException();
 
-    await this.iqRepository.iqExpenditure(userId, video.compensation);
+    //await this.iqRepository.iqExpenditure(userId, video.compensation);
 
     const savedVideo = await this.videoRepository.save(video, userId);
     const splitVideoUrl = video.videoUrl.split('/');

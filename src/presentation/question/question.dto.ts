@@ -8,7 +8,7 @@ export class CreateQuestionDto {
   @IsString()
   description: string;
 
-  compensation: 0;
+  //compensation: 0;
 
   @IsArray()
   @Expose({ name: 'hash_tag' })
