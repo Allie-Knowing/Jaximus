@@ -1,4 +1,4 @@
-import { ActionPoint } from './action_point';
+import { ActionPoint } from './action-point';
 
 export class ActionPointCategory {
   id: number;
