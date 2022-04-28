@@ -53,16 +53,31 @@ export class DatabaseCommentRepository implements CommentRepository {
   }
 
   async findOne(commentId: number): Promise<Comment> {
-    const comment = await this.commentEntityRepository.findOne(commentId);
+    const comment: any = await this.commentEntityRepository
+      .createQueryBuilder('comment')
+      .select('comment.id', 'commentId')
+      .addSelect('comment.is_adoption', 'isAdoption')
+      .addSelect('user.id', 'userId')
+      .where('comment.id = :id', { id: commentId })
+      .leftJoin('comment.user', 'user')
+      .getRawOne();
+
     return comment ? new Comment(comment) : null;
   }
 
-  async commentAdoption(commentId: number): Promise<void> {
+  async commentAdoption(commentId: number, userId: number): Promise<void> {
     await this.commentEntityRepository
       .createQueryBuilder()
       .update(CommentTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: commentId })
+      .execute();
+
+    await this.userEntityRepository
+      .createQueryBuilder()
+      .update(UserTypeOrmEntity)
+      .set({ adoptionCnt: () => `adoption_cnt + 1` })
+      .where('id = :id', { id: userId })
       .execute();
   }
 

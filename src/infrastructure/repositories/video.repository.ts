@@ -199,12 +199,19 @@ export class DatabaseVideoRepository implements VideoRepository {
     });
   }
 
-  async videoAdoption(videoId: number): Promise<void> {
+  async videoAdoption(videoId: number, userId: number): Promise<void> {
     await this.videoEntityRepository
       .createQueryBuilder()
       .update(VideoTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
+      .execute();
+
+    await this.userEntityRepository
+      .createQueryBuilder()
+      .update(UserTypeOrmEntity)
+      .set({ adoptionCnt: () => `adoption_cnt + 1` })
+      .where('id = :id', { id: userId })
       .execute();
 
     await this.compensation(videoId);
@@ -360,6 +367,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .select('video.id', 'id')
       .addSelect('video.question_id', 'questionId')
       .addSelect('video.is_adoption', 'isAdoption')
+      .addSelect('video.user_id', 'userId')
       .where('video.id = :id', { id: videoId })
       .andWhere('video.question IS NOT NULL')
       .getRawOne();
