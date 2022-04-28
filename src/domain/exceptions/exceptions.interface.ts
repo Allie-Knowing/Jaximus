@@ -10,6 +10,7 @@ export interface IException {
   videoNotFoundException(): void;
   videoAnswerNotFoundException(): void;
   textAnswerNotFoundException(): void;
+  tierNotFoundException(): void;
   commentNotFoundException(): void;
   likeNotFoundException(): void;
   userNotFoundException(): void;
