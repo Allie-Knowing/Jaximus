@@ -23,6 +23,9 @@ export class UserTypeOrmEntity {
   @Column({ length: 30 })
   name: string;
 
+  @Column({ default: 0 })
+  adoptionCnt: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
