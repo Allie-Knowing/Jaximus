@@ -84,7 +84,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question IS NULL')
-      .orderBy('video.createdAt', 'DESC')
+      .orderBy('RAND()')
       .groupBy('video.id')
       .getRawMany();
 
