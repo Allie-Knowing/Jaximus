@@ -7,6 +7,7 @@ import { QuestionController } from 'src/presentation/question/question.controlle
 import { SearchController } from 'src/presentation/search/search.controller';
 import { UserController } from 'src/presentation/user/user.controller';
 import { VideoController } from 'src/presentation/video/video.controller';
+import { WalletController } from 'src/presentation/wallet/wallet.controller';
 import { EnvironmentConfigModule } from '../config/environment-config/environment-config.module';
 import { EnvironmentConfigService } from '../config/environment-config/environment-config.service';
 import { MulterConfigService } from '../config/multer/multer-config.service';
@@ -22,6 +23,6 @@ import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.mod
       inject: [EnvironmentConfigService],
     }),
   ],
-  controllers: [VideoController, LikeController, UserController, AnswerController, QuestionController, SearchController],
+  controllers: [VideoController, LikeController, UserController, AnswerController, QuestionController, SearchController, WalletController],
 })
 export class ControllersModule {}
