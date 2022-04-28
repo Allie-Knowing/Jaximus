@@ -18,6 +18,6 @@ export class VideoAdoptionUsecase {
 
     if (checkAdoption !== 0) this.exceptionsService.questionIsAlreadyAdoptedException();
 
-    this.videoRepository.videoAdoption(videoId);
+    this.videoRepository.videoAdoption(videoId, videoAnswer.userId);
   }
 }

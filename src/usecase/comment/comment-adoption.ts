@@ -20,6 +20,6 @@ export class CommentAdoptionUsecase {
     if (!comment) this.exceptionsService.commentNotFoundException();
     if (comment.isAdoption) this.exceptionsService.adoptionAlreadyExistException();
 
-    this.commentRepository.commentAdoption(commentId);
+    this.commentRepository.commentAdoption(commentId, comment.userId);
   }
 }
