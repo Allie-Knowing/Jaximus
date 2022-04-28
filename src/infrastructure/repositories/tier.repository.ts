@@ -25,7 +25,6 @@ export class DatabaseTierRepository implements TierRepository {
       .leftJoin('tier.tierCategory', 'tierCategory')
       .innerJoin('tier.userId', 'user')
       .innerJoin('user.iq', 'iq')
-      .innerJoin('user.')
       .getRawOne();
 
     if (!tier) return;

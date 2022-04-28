@@ -184,8 +184,8 @@ export class UsecasesProxyDynamicModule {
         {
           inject: [DatabaseTierRepository, ExceptionsService],
           provide: GetWalletInfoUsecase,
-          useFactory: (databaseWalletRepository: DatabaseTierRepository, exceptionsService: ExceptionsService) =>
-            new GetWalletInfoUsecase(databaseWalletRepository, exceptionsService),
+          useFactory: (databaseTierRepository: DatabaseTierRepository, exceptionsService: ExceptionsService) =>
+            new GetWalletInfoUsecase(databaseTierRepository, exceptionsService),
         },
       ],
       exports: [
