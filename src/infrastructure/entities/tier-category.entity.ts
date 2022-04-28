@@ -16,7 +16,7 @@ export class TierCategoryTypeOrmEntity {
   nextAdoptionCnt: number;
 
   @Column({ length: 2000 })
-  image_url: string;
+  imageUrl: string;
 
   @OneToMany(() => TierTypeOrmEntity, (tier) => tier.tierCategory)
   tier: TierTypeOrmEntity[];
