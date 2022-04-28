@@ -2,7 +2,7 @@ import { Comment } from '../model/comment';
 
 export interface CommentRepository {
   findOne(commentId: number);
-  commentAdoption(commentId: number): Promise<void>;
+  commentAdoption(commentId: number, userId: number): Promise<void>;
   deleteCommentAnswer(commentId: number): Promise<void>;
   findComment(commentId: number, userId: number);
   createCommentAnswer(content: string, questionId: number, userId: number): Promise<void>;
