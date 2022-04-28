@@ -5,7 +5,7 @@ import { UserTypeOrmEntity } from './user.entity';
 @Entity('tier')
 export class TierTypeOrmEntity {
   @PrimaryColumn()
-  @OneToOne(() => UserTypeOrmEntity, (user) => user.iq)
+  @OneToOne(() => UserTypeOrmEntity, (user) => user.tier)
   @JoinColumn({ name: 'user_id' })
   userId: number;
 

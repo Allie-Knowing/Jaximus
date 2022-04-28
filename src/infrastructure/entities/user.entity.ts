@@ -4,6 +4,7 @@ import { ActionPointTypeOrmEntity } from './action-point.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
+import { TierTypeOrmEntity } from './tier.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
 @Entity('user')
@@ -44,10 +45,13 @@ export class UserTypeOrmEntity {
   @OneToOne(() => IqTypeOrmEntity, (iq) => iq.userId)
   iq: IqTypeOrmEntity;
 
+  @OneToOne(() => TierTypeOrmEntity, (tier) => tier.userId)
+  tier: TierTypeOrmEntity;
+
   @OneToMany(() => ActionPointTypeOrmEntity, (actionPoint) => actionPoint.user)
   actionPoint: ActionPointTypeOrmEntity[];
 
   public static of(user: User): UserTypeOrmEntity {
-    return { ...user, likes: [], videos: [], comments: [], iq: null, actionPoint: [] };
+    return { ...user, likes: [], videos: [], comments: [], iq: null, tier: null, actionPoint: [] };
   }
 }
