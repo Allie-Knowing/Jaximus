@@ -35,7 +35,7 @@ export class MulterConfigService implements MulterOptionsFactory {
           );
         },
       }),
-      limits: { fieldSize: 200 * 1024 * 1024 },
+      limits: { fieldSize: 500 * 1024 * 1024 },
     };
   }
 }
