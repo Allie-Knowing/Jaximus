@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ActionPointTypeOrmEntity } from './action_point.entity';
+import { ActionPointTypeOrmEntity } from './action-point.entity';
 
 @Entity('action_point_category')
 export class ActionPointCategoryTypeOrmEntity {

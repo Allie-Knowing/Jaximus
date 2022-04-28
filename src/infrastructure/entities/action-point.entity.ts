@@ -1,5 +1,5 @@
 import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ActionPointCategoryTypeOrmEntity } from './action_point_category.entity';
+import { ActionPointCategoryTypeOrmEntity } from './action-point-category.entity';
 import { UserTypeOrmEntity } from './user.entity';
 
 @Entity('action_point')

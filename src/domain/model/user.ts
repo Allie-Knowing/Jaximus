@@ -29,6 +29,9 @@ export class User {
   @Expose({ name: 'video_cnt' })
   videoCnt: number;
 
+  @Expose({ name: 'adoption_cnt' })
+  adoptionCnt: number;
+
   constructor(obj) {
     return Object.assign(this, obj);
   }

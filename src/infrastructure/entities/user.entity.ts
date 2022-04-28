@@ -1,6 +1,6 @@
 import { User } from 'src/domain/model/user';
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { ActionPointTypeOrmEntity } from './action_point.entity';
+import { ActionPointTypeOrmEntity } from './action-point.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -22,6 +22,9 @@ export class UserTypeOrmEntity {
 
   @Column({ length: 30 })
   name: string;
+
+  @Column({ default: 0 })
+  adoptionCnt: number;
 
   @CreateDateColumn()
   createdAt: Date;
