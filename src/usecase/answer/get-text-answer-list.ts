@@ -7,6 +7,7 @@ export class GetTextAnswerListUsecase {
 
   async execute(questionId: number, userId: number, page: number, size: number): Promise<Comment[]> {
     const textAnswer = await this.commentRepository.findTextAnswer(questionId, userId, page, size);
+    if (!textAnswer) throw this.exceptionService.textAnswerNotFoundException();
     if (textAnswer.length === 0) throw this.exceptionService.textAnswerNotFoundException();
 
     return textAnswer;

@@ -7,6 +7,7 @@ export class GetVideoAnswerListUsecase {
 
   async execute(questionId: number, userId: number, page: number, size: number): Promise<Video[]> {
     const videoAnswerList = await this.videoRepository.findVideoAnswerList(questionId, userId, page, size);
+    if (!videoAnswerList) this.exceptionsService.videoAnswerNotFoundException();
     if (videoAnswerList.length === 0) this.exceptionsService.videoAnswerNotFoundException();
     return videoAnswerList;
   }

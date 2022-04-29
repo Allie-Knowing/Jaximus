@@ -40,7 +40,6 @@ export class DatabaseCommentRepository implements CommentRepository {
       .orderBy('comment.createdAt', 'DESC')
       .getMany();
 
-    console.log(textAnswers);
     if (!textAnswers) return;
 
     const adoptionTextAnswer = await this.findAdoptionTextAnswer(questionId, userId);
