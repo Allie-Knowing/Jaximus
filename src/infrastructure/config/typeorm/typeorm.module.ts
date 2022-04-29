@@ -6,7 +6,7 @@ import { EnvironmentConfigModule } from '../environment-config/environment-confi
 import { EnvironmentConfigService } from '../environment-config/environment-config.service';
 
 export const getTypeOrmModuleOptions = (config: DatabaseConfig): TypeOrmModuleOptions =>
-  ({
+  <TypeOrmModuleOptions>{
     type: 'mysql',
     host: config.getDatabaseHost(),
     port: config.getDatabasePort(),
@@ -17,7 +17,7 @@ export const getTypeOrmModuleOptions = (config: DatabaseConfig): TypeOrmModuleOp
     logging: process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'test' ? true : false,
     entities: [__dirname + './../../**/*.entity{.ts,.js}'],
     namingStrategy: new SnakeNamingStrategy(),
-  } as TypeOrmModuleOptions);
+  };
 
 @Module({
   imports: [
