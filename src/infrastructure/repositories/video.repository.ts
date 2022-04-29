@@ -84,11 +84,25 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question IS NULL')
-      .orderBy('RAND()')
+      .orderBy('video.createdAt', 'DESC')
       .groupBy('video.id')
       .getRawMany();
 
     if (!videos) return;
+    function shuffle(array) {
+      let currentIndex = array.length,
+        randomIndex;
+
+      while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+      }
+
+      return array;
+    }
+    shuffle(videos);
 
     return Promise.all(
       videos.map(async (video) => {
