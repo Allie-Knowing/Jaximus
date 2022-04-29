@@ -391,7 +391,7 @@ export class DatabaseVideoRepository implements VideoRepository {
     return new Video(videoAnswer);
   }
 
-  async checkVideoAnswerAdoption(questionId: number) {
+  async checkAdoption(questionId: number) {
     return await this.videoEntityRepository
       .createQueryBuilder('video')
       .select()

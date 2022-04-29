@@ -14,7 +14,7 @@ export class VideoAdoptionUsecase {
 
     if (!isOwnerQuestion) this.exceptionsService.videoIsNotYoursException();
 
-    const checkAdoption = await this.videoRepository.checkVideoAnswerAdoption(videoAnswer.questionId);
+    const checkAdoption = await this.videoRepository.checkAdoption(videoAnswer.questionId);
 
     if (checkAdoption !== 0) this.exceptionsService.questionIsAlreadyAdoptedException();
 
