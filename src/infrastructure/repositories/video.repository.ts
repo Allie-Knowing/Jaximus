@@ -157,7 +157,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .groupBy('video.id')
       .getRawMany();
 
-    if (!videos) return;
+    if (videos.length === 0) return;
 
     const adoptionVideoAnswer = await this.findAdoptionVideoAnswer(questionId, userId);
 
