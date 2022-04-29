@@ -20,6 +20,10 @@ export class CommentAdoptionUsecase {
     if (!comment) this.exceptionsService.commentNotFoundException();
     if (comment.isAdoption) this.exceptionsService.adoptionAlreadyExistException();
 
+    const checkAdoption = await this.videoRepository.checkAdoption(videoId);
+
+    if (checkAdoption !== 0) this.exceptionsService.questionIsAlreadyAdoptedException();
+
     this.commentRepository.commentAdoption(commentId, comment.userId);
   }
 }
