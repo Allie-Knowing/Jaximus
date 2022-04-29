@@ -18,6 +18,6 @@ export interface VideoRepository {
   findUsersVideo(videoId: number, userId: number): Promise<Video>;
   findVideoAnswerDetail(videoId: number, userId: number): Promise<Video>;
   checkVideoAnswer(videoId: number): Promise<Video>;
-  checkVideoAnswerAdoption(questionId: number);
+  checkAdoption(questionId: number);
   isMine(questionId: number, userId: number);
 }
