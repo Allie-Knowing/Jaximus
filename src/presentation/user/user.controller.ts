@@ -38,8 +38,8 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/block/:videoId')
   @HttpCode(HttpStatus.CREATED)
-  blockUser(@Param('videoId', ParseIntPipe) videoId: number): void {
-    this.userBlockUsecase.execute(this.request.user.sub, videoId);
+  async blockUser(@Param('videoId', ParseIntPipe) videoId: number): Promise<void> {
+    await this.userBlockUsecase.execute(this.request.user.sub, videoId);
   }
 
   @UseGuards(AuthGuard('jwt'))
