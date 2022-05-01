@@ -1,5 +1,5 @@
-import { UserTypeOrmEntity } from 'src/infrastructure/entities/user.entity';
+import { User } from '../model/user';
 
 export interface BlockRepository {
-  save(userId: UserTypeOrmEntity, blockUserId: UserTypeOrmEntity): void;
+  save(userId: User, blockUserId: User): void;
 }

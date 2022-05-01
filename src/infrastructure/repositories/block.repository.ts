@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/domain/model/user';
 import { BlockRepository } from 'src/domain/repositories/block.repository';
 import { Repository } from 'typeorm';
 import { BlockTypeOrmEntity } from '../entities/block.entity';
@@ -12,7 +13,7 @@ export class DatabaseBlockRepository implements BlockRepository {
     private readonly blockEntityRepository: Repository<BlockTypeOrmEntity>,
   ) {}
 
-  save(userId: UserTypeOrmEntity, blockUserId: UserTypeOrmEntity): void {
+  save(userId: User, blockUserId: User): void {
     const block: BlockTypeOrmEntity = this.blockEntityRepository.create({
       userId,
       blockUserId,
