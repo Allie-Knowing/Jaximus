@@ -1,6 +1,7 @@
 import { User } from 'src/domain/model/user';
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ActionPointTypeOrmEntity } from './action-point.entity';
+import { BlockTypeOrmEntity } from './block.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -42,16 +43,22 @@ export class UserTypeOrmEntity {
   @OneToMany(() => CommentTypeOrmEntity, (comment) => comment.user)
   comments: CommentTypeOrmEntity[];
 
+  @OneToMany(() => ActionPointTypeOrmEntity, (actionPoint) => actionPoint.user)
+  actionPoint: ActionPointTypeOrmEntity[];
+
+  @OneToMany(() => BlockTypeOrmEntity, (block) => block.userId)
+  blocker: BlockTypeOrmEntity[];
+
+  @OneToMany(() => BlockTypeOrmEntity, (block) => block.blockUserId)
+  blocking: BlockTypeOrmEntity[];
+
   @OneToOne(() => IqTypeOrmEntity, (iq) => iq.userId)
   iq: IqTypeOrmEntity;
 
   @OneToOne(() => TierTypeOrmEntity, (tier) => tier.userId)
   tier: TierTypeOrmEntity;
 
-  @OneToMany(() => ActionPointTypeOrmEntity, (actionPoint) => actionPoint.user)
-  actionPoint: ActionPointTypeOrmEntity[];
-
   public static of(user: User): UserTypeOrmEntity {
-    return { ...user, likes: [], videos: [], comments: [], iq: null, tier: null, actionPoint: [] };
+    return { ...user, likes: [], videos: [], comments: [], iq: null, tier: null, actionPoint: [], blocker: [], blocking: [] };
   }
 }
