@@ -5,6 +5,7 @@ import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
+import { BlockTypeOrmEntity } from '../entities/block.entity';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
 import { IqTypeOrmEntity } from '../entities/iq.entity';
 import { LikeTypeOrmEntity } from '../entities/like.entity';
@@ -28,7 +29,18 @@ export class DatabaseVideoRepository implements VideoRepository {
 
     @InjectRepository(IqTypeOrmEntity)
     private readonly iqEntityRepository: Repository<IqTypeOrmEntity>,
+
+    @InjectRepository(BlockTypeOrmEntity)
+    private readonly blockEntityRepository: Repository<BlockTypeOrmEntity>,
   ) {}
+  findVideoOwner(videoId: number): Promise<{ userId: number }> {
+    return this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('user.id', 'userId')
+      .innerJoin('video.user', 'user')
+      .where('video.id = :video_id', { video_id: videoId })
+      .getRawOne();
+  }
 
   async findQuestionVideoList(videoIds: number[], userId: number): Promise<Video[]> {
     return Promise.all(
@@ -65,6 +77,10 @@ export class DatabaseVideoRepository implements VideoRepository {
   }
 
   async findQuestionList(userId: number, page: number, size: number): Promise<Video[]> {
+    const subquery = this.blockEntityRepository
+      .createQueryBuilder('block')
+      .select('block.blockUserId', 'blockUserId')
+      .where('block.userId = :userId', { userId });
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
       .leftJoin('video.comments', 'comment')
@@ -84,6 +100,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .offset((page - 1) * size)
       .limit(size)
       .where('video.question IS NULL')
+      .andWhere('user.id NOT IN' + '(' + subquery.getQuery() + ')', { userId })
       .orderBy('video.createdAt', 'DESC')
       .groupBy('video.id')
       .getRawMany();

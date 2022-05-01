@@ -9,6 +9,7 @@ export interface VideoRepository {
   findVideoAnswerList(questionId: number, userId: number, page: number, size: number): Promise<Video[]>;
   findQuestionDetail(userId: number, videoId: number): Promise<Video>;
   findQuestionVideoList(videoIds: number[], userId: number): Promise<Video[]>;
+  findVideoOwner(videoId: number): Promise<{ userId: number }>;
   createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: number): Promise<void>;
   videoAdoption(videoId: number, userId: number): Promise<void>;
   userQuestionList(userId: number, page: number, size: number): Promise<Video[]>;
