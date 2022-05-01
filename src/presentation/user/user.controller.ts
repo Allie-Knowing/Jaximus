@@ -1,9 +1,10 @@
-import { Controller, Get, Inject, Param, ParseIntPipe, Query, Scope, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Post, Query, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
+import { UserBlockUsecase } from 'src/usecase/user/user-block';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 
@@ -14,6 +15,8 @@ export class UserController {
     private readonly userInfoUsecase: UserInfoUsecase,
     @Inject(UserQuestionListUsecase)
     private readonly userQuestionListUsecase: UserQuestionListUsecase,
+    @Inject(UserBlockUsecase)
+    private readonly userBlockUsecase: UserBlockUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -30,6 +33,13 @@ export class UserController {
     @Query('size', ParseIntPipe) size: number,
   ): Promise<Video[]> {
     return await this.userQuestionListUsecase.execute(userId, page, size);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/block/:videoId')
+  @HttpCode(HttpStatus.CREATED)
+  blockUser(@Param('videoId', ParseIntPipe) videoId: number): void {
+    this.userBlockUsecase.execute(this.request.user.sub, videoId);
   }
 
   @UseGuards(AuthGuard('jwt'))
