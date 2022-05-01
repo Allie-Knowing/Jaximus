@@ -34,6 +34,8 @@ import { GetQuestionVideoListUsecase } from 'src/usecase/question/get-question-v
 import { DatabaseIqRepository } from '../repositories/iq.repository';
 import { DatabaseTierRepository } from '../repositories/tier.repository';
 import { GetWalletInfoUsecase } from 'src/usecase/wallet/wallet-info';
+import { UserBlockUsecase } from 'src/usecase/user/user-block';
+import { DatabaseBlockRepository } from '../repositories/block.repository';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
@@ -187,6 +189,16 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseTierRepository: DatabaseTierRepository, exceptionsService: ExceptionsService) =>
             new GetWalletInfoUsecase(databaseTierRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseVideoRepository, DatabaseBlockRepository, DatabaseUserRepository, ExceptionsService],
+          provide: UserBlockUsecase,
+          useFactory: (
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseBlockRepository: DatabaseBlockRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            exceptionsService: ExceptionsService,
+          ) => new UserBlockUsecase(databaseVideoRepository, databaseBlockRepository, databaseUserRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -211,6 +223,7 @@ export class UsecasesProxyDynamicModule {
         GetVideoAnswerDetailUsecase,
         GetQuestionVideoListUsecase,
         GetWalletInfoUsecase,
+        UserBlockUsecase,
       ],
     };
   }
