@@ -11,6 +11,9 @@ import { IException, IFormatExceptionMessage } from 'src/domain/exceptions/excep
 
 @Injectable()
 export class ExceptionsService implements IException {
+  actionPointNotFoundException(): void {
+    throw new NotFoundException('Action point not found exception');
+  }
   tierNotFoundException(): void {
     throw new NotFoundException('Tier not found exception');
   }

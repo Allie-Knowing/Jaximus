@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigModule } from '../config/typeorm/typeorm.module';
+import { ActionPointTypeOrmEntity } from '../entities/action-point.entity';
 import { BlockTypeOrmEntity } from '../entities/block.entity';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { HashTagTypeOrmEntity } from '../entities/hash-tag.entity';
@@ -9,6 +10,7 @@ import { LikeTypeOrmEntity } from '../entities/like.entity';
 import { TierTypeOrmEntity } from '../entities/tier.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
+import { DatabaseActionPointRepository } from './action-point.repository';
 import { DatabaseBlockRepository } from './block.repository';
 import { DatabaseCommentRepository } from './comment.repository';
 import { DatabaseHashTagRepository } from './hash-tag.repository';
@@ -30,6 +32,7 @@ import { DatabaseVideoRepository } from './video.repository';
       IqTypeOrmEntity,
       TierTypeOrmEntity,
       BlockTypeOrmEntity,
+      ActionPointTypeOrmEntity,
     ]),
   ],
   providers: [
@@ -41,6 +44,7 @@ import { DatabaseVideoRepository } from './video.repository';
     DatabaseIqRepository,
     DatabaseTierRepository,
     DatabaseBlockRepository,
+    DatabaseActionPointRepository,
   ],
   exports: [
     DatabaseUserRepository,
@@ -51,6 +55,7 @@ import { DatabaseVideoRepository } from './video.repository';
     DatabaseIqRepository,
     DatabaseTierRepository,
     DatabaseBlockRepository,
+    DatabaseActionPointRepository,
   ],
 })
 export class RepositoriesModule {}
