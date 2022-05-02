@@ -5,7 +5,7 @@ import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { Tier } from 'src/domain/model/tier';
 import { GetActionPointUsecase } from 'src/usecase/wallet/action-point';
 import { GetWalletInfoUsecase } from 'src/usecase/wallet/wallet-info';
-import { GetActionPointDto } from './action-point.dto';
+import { GetActionPointPresenter } from './action-point.presenter';
 
 @Controller({ path: '/wallet', scope: Scope.REQUEST })
 export class WalletController {
@@ -26,7 +26,7 @@ export class WalletController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/action')
-  actionPointInfo(): Promise<GetActionPointDto> {
+  actionPointInfo(): Promise<GetActionPointPresenter> {
     return this.actionPointUsecase.execute(this.request.user.sub);
   }
 }

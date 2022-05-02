@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ActionPointRepository } from 'src/domain/repositories/action-point.repository';
-import { GetActionPointDto } from 'src/presentation/wallet/action-point.dto';
+import { GetActionPointPresenter } from 'src/presentation/wallet/action-point.presenter';
 import { Repository } from 'typeorm';
 import { ActionPointTypeOrmEntity } from '../entities/action-point.entity';
 
@@ -11,7 +11,7 @@ export class DatabaseActionPointRepository implements ActionPointRepository {
     @InjectRepository(ActionPointTypeOrmEntity)
     private readonly actionPointEntityRepository: Repository<ActionPointTypeOrmEntity>,
   ) {}
-  async actionPointCalc(userId: number): Promise<GetActionPointDto> {
+  async actionPointCalc(userId: number): Promise<GetActionPointPresenter> {
     return await this.actionPointEntityRepository
       .createQueryBuilder('action')
       .select('SUM(category.score)', 'actionPoint')

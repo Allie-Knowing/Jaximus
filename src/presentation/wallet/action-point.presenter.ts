@@ -1,6 +1,6 @@
 import { Expose, Transform } from 'class-transformer';
 
-export class GetActionPointDto {
+export class GetActionPointPresenter {
   @Transform(({ value }) => {
     if (value) return parseInt(value);
   })

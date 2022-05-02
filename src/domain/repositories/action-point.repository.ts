@@ -1,5 +1,5 @@
-import { GetActionPointDto } from 'src/presentation/wallet/action-point.dto';
+import { GetActionPointPresenter } from 'src/presentation/wallet/action-point.presenter';
 
 export interface ActionPointRepository {
-  actionPointCalc(userId: number): Promise<GetActionPointDto>;
+  actionPointCalc(userId: number): Promise<GetActionPointPresenter>;
 }
