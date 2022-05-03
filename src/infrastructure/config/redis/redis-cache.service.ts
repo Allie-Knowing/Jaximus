@@ -14,7 +14,7 @@ export class RedisCacheService {
   }
 
   async setTtl(key: string, value, ttl) {
-    await this.cache.set(key, value, ttl);
+    await this.cache.set(key, value, { ttl });
   }
 
   async reset() {
