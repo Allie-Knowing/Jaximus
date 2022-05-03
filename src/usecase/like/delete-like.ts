@@ -17,6 +17,10 @@ export class DeleteLikeUsecase {
     if (!like) this.exceptionsService.likeNotFoundException();
 
     this.likeRepository.deleteLike(videoId, userId);
-    this.cacheService.set(generateCacheTemplate(CacheTemplate.ACTION_LIKE, userId), -1);
+
+    // action point
+    const likeTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_LIKE, userId);
+    const cachedLikeCnt = await this.cacheService.get(likeTemplateKey);
+    this.cacheService.set(likeTemplateKey, cachedLikeCnt - 1);
   }
 }
