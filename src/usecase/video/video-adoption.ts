@@ -31,7 +31,7 @@ export class VideoAdoptionUsecase {
     this.videoRepository.videoAdoption(videoId, videoAnswer.userId);
 
     // action point
-    if (videoAnswer.userId === userId) return;
+    if (videoAnswer.userId == userId) return;
 
     const adopterTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_ADOPTER, userId);
     const actionAdoptor = await this.cacheService.get(adopterTemplateKey);
@@ -41,7 +41,7 @@ export class VideoAdoptionUsecase {
       await this.actionPointRepository.saveActionPoint(user, 8);
     }
 
-    const adoptedTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_ADOPTER, videoAnswer.userId);
+    const adoptedTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_ADOPTED, videoAnswer.userId);
     const actionAdopted = await this.cacheService.get(adoptedTemplateKey);
     if (!actionAdopted) {
       const user = await this.userRepository.findOne(videoAnswer.userId);

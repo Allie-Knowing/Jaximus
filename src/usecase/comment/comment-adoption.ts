@@ -34,7 +34,7 @@ export class CommentAdoptionUsecase {
     this.commentRepository.commentAdoption(commentId, comment.userId);
 
     // action point
-    if (comment.userId === userId) return;
+    if (comment.userId == userId) return;
 
     const adopterTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_ADOPTER, userId);
     const actionAdoptor = await this.cacheService.get(adopterTemplateKey);
@@ -44,7 +44,7 @@ export class CommentAdoptionUsecase {
       await this.actionPointRepository.saveActionPoint(user, 8);
     }
 
-    const adoptedTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_ADOPTER, comment.userId);
+    const adoptedTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_ADOPTED, comment.userId);
     const actionAdopted = await this.cacheService.get(adoptedTemplateKey);
     if (!actionAdopted) {
       const user = await this.userRepository.findOne(comment.userId);
