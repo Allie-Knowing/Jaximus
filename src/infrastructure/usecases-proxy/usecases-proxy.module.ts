@@ -38,9 +38,13 @@ import { DatabaseBlockRepository } from '../repositories/block.repository';
 import { DatabaseActionPointRepository } from '../repositories/action-point.repository';
 import { GetActionPointUsecase } from 'src/usecase/wallet/action-point';
 import { UserBlockUsecase } from 'src/usecase/user/user-block';
+import { RedisCacheModule } from '../config/redis/redis-cache.module';
+import { RedisCacheService } from '../config/redis/redis-cache.service';
+import { UserRepository } from 'src/domain/repositories/user.repository';
+import { ActionPointRepository } from 'src/domain/repositories/action-point.repository';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -48,20 +52,52 @@ export class UsecasesProxyDynamicModule {
       module: UsecasesProxyDynamicModule,
       providers: [
         {
-          inject: [DatabaseVideoRepository, DatabaseIqRepository, ElasticsearchService, ExceptionsService],
+          inject: [
+            RedisCacheService,
+            DatabaseVideoRepository,
+            DatabaseIqRepository,
+            ElasticsearchService,
+            DatabaseActionPointRepository,
+            DatabaseUserRepository,
+            ExceptionsService,
+          ],
           provide: CreateQuestionUsecase,
           useFactory: (
+            cacheService: RedisCacheService,
             databaseVideoRepository: DatabaseVideoRepository,
             databaseIqRepository: DatabaseIqRepository,
             elasticsearchService: ElasticsearchService,
+            actionPointRepository: ActionPointRepository,
+            userRepository: UserRepository,
             exceptionsService: ExceptionsService,
-          ) => new CreateQuestionUsecase(databaseVideoRepository, databaseIqRepository, elasticsearchService, exceptionsService),
+          ) =>
+            new CreateQuestionUsecase(
+              cacheService,
+              databaseVideoRepository,
+              databaseIqRepository,
+              elasticsearchService,
+              actionPointRepository,
+              userRepository,
+              exceptionsService,
+            ),
         },
         {
-          inject: [DatabaseVideoRepository, ExceptionsService],
+          inject: [RedisCacheService, DatabaseVideoRepository, DatabaseUserRepository, DatabaseActionPointRepository, ExceptionsService],
           provide: CreateVideoAnswerUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new CreateVideoAnswerUsecase(databaseVideoRepository, exceptionsService),
+          useFactory: (
+            cacheService: RedisCacheService,
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new CreateVideoAnswerUsecase(
+              cacheService,
+              databaseVideoRepository,
+              databaseUserRepository,
+              databaseActionPointRepository,
+              exceptionsService,
+            ),
         },
         {
           inject: [DatabaseVideoRepository, ExceptionsService],
@@ -76,35 +112,85 @@ export class UsecasesProxyDynamicModule {
             new GetVideoAnswerListUsecase(databaseVideoRepository, exceptionsService),
         },
         {
-          inject: [DatabaseLikeRepository, DatabaseUserRepository, DatabaseVideoRepository, ExceptionsService],
+          inject: [
+            RedisCacheService,
+            DatabaseLikeRepository,
+            DatabaseUserRepository,
+            DatabaseVideoRepository,
+            DatabaseActionPointRepository,
+            ExceptionsService,
+          ],
           provide: CreateLikeUsecase,
           useFactory: (
+            cacheService: RedisCacheService,
             databaseLikeRepository: DatabaseLikeRepository,
             databaseUserRepository: DatabaseUserRepository,
             databaseVideoRepository: DatabaseVideoRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
             exceptionsService: ExceptionsService,
-          ) => new CreateLikeUsecase(databaseLikeRepository, databaseUserRepository, databaseVideoRepository, exceptionsService),
+          ) =>
+            new CreateLikeUsecase(
+              cacheService,
+              databaseLikeRepository,
+              databaseUserRepository,
+              databaseVideoRepository,
+              databaseActionPointRepository,
+              exceptionsService,
+            ),
         },
         {
-          inject: [DatabaseVideoRepository, ExceptionsService],
+          inject: [RedisCacheService, DatabaseVideoRepository, DatabaseUserRepository, DatabaseActionPointRepository, ExceptionsService],
           provide: VideoAdoptionUsecase,
-          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
-            new VideoAdoptionUsecase(databaseVideoRepository, exceptionsService),
+          useFactory: (
+            cacheService: RedisCacheService,
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new VideoAdoptionUsecase(
+              cacheService,
+              databaseVideoRepository,
+              databaseUserRepository,
+              databaseActionPointRepository,
+              exceptionsService,
+            ),
         },
         {
-          inject: [DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
+          inject: [
+            RedisCacheService,
+            DatabaseCommentRepository,
+            DatabaseVideoRepository,
+            DatabaseUserRepository,
+            DatabaseActionPointRepository,
+            ExceptionsService,
+          ],
           provide: CommentAdoptionUsecase,
           useFactory: (
+            cacheService: RedisCacheService,
             databaseCommentRepository: DatabaseCommentRepository,
             databaseVideoRepository: DatabaseVideoRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
             exceptionsService: ExceptionsService,
-          ) => new CommentAdoptionUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
+          ) =>
+            new CommentAdoptionUsecase(
+              cacheService,
+              databaseCommentRepository,
+              databaseVideoRepository,
+              databaseUserRepository,
+              databaseActionPointRepository,
+              exceptionsService,
+            ),
         },
         {
-          inject: [DatabaseLikeRepository, ExceptionsService],
+          inject: [RedisCacheService, DatabaseLikeRepository, ExceptionsService],
           provide: DeleteLikeUsecase,
-          useFactory: (databaseLikeRepository: DatabaseLikeRepository, exceptionsService: ExceptionsService) =>
-            new DeleteLikeUsecase(databaseLikeRepository, exceptionsService),
+          useFactory: (
+            cacheService: RedisCacheService,
+            databaseLikeRepository: DatabaseLikeRepository,
+            exceptionsService: ExceptionsService,
+          ) => new DeleteLikeUsecase(cacheService, databaseLikeRepository, exceptionsService),
         },
         {
           inject: [DatabaseUserRepository, ExceptionsService],

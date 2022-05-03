@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigModule } from '../config/typeorm/typeorm.module';
+import { ActionPointCategoryTypeOrmEntity } from '../entities/action-point-category.entity';
 import { ActionPointTypeOrmEntity } from '../entities/action-point.entity';
 import { BlockTypeOrmEntity } from '../entities/block.entity';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
@@ -33,6 +34,7 @@ import { DatabaseVideoRepository } from './video.repository';
       TierTypeOrmEntity,
       BlockTypeOrmEntity,
       ActionPointTypeOrmEntity,
+      ActionPointCategoryTypeOrmEntity,
     ]),
   ],
   providers: [

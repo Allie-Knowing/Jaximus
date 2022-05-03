@@ -2,11 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseConfig } from 'src/domain/config/database.interface';
 import { ESConfig } from 'src/domain/config/es.interface';
+import { RedisConfig } from 'src/domain/config/redis.interface';
 import { S3Config } from 'src/domain/config/s3.interface';
 
 @Injectable()
-export class EnvironmentConfigService implements DatabaseConfig, S3Config, ESConfig {
+export class EnvironmentConfigService implements DatabaseConfig, S3Config, ESConfig, RedisConfig {
   constructor(private configService: ConfigService) {}
+  getRedisHost(): string {
+    return this.configService.get<string>('REDIS_HOST');
+  }
+  getRedisPort(): string {
+    return this.configService.get<string>('REDIS_PORT');
+  }
 
   getESNodeEndpoint(): string {
     return this.configService.get<string>('ES_NODE_ENDPOINT');
