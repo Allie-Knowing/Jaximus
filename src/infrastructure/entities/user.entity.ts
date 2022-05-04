@@ -1,8 +1,10 @@
+import { IqPaymentHistory } from 'src/domain/model/iq-payment-history';
 import { User } from 'src/domain/model/user';
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ActionPointTypeOrmEntity } from './action-point.entity';
 import { BlockTypeOrmEntity } from './block.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
+import { IqPaymentHistoryTypeOrmEntity } from './iq-payment-history.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
 import { TierTypeOrmEntity } from './tier.entity';
@@ -46,6 +48,9 @@ export class UserTypeOrmEntity {
   @OneToMany(() => ActionPointTypeOrmEntity, (actionPoint) => actionPoint.user)
   actionPoint: ActionPointTypeOrmEntity[];
 
+  @OneToMany(() => IqPaymentHistoryTypeOrmEntity, (iqPaymentHistory) => iqPaymentHistory.user)
+  iqPaymentHistory: IqPaymentHistoryTypeOrmEntity[];
+
   @OneToMany(() => BlockTypeOrmEntity, (block) => block.userId)
   blocker: BlockTypeOrmEntity[];
 
@@ -59,6 +64,17 @@ export class UserTypeOrmEntity {
   tier: TierTypeOrmEntity;
 
   public static of(user: User): UserTypeOrmEntity {
-    return { ...user, likes: [], videos: [], comments: [], iq: null, tier: null, actionPoint: [], blocker: [], blocking: [] };
+    return {
+      ...user,
+      likes: [],
+      videos: [],
+      comments: [],
+      iq: null,
+      tier: null,
+      actionPoint: [],
+      iqPaymentHistory: [],
+      blocker: [],
+      blocking: [],
+    };
   }
 }

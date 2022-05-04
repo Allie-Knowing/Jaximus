@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   ForbiddenException,
   Injectable,
   InternalServerErrorException,
@@ -11,6 +10,9 @@ import { IException, IFormatExceptionMessage } from 'src/domain/exceptions/excep
 
 @Injectable()
 export class ExceptionsService implements IException {
+  paymentHistoryNotFoundException(): void {
+    throw new NotFoundException('Payment history not found exception');
+  }
   actionPointNotFoundException(): void {
     throw new NotFoundException('Action point not found exception');
   }

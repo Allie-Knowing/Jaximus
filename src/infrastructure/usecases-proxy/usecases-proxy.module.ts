@@ -42,6 +42,8 @@ import { RedisCacheModule } from '../config/redis/redis-cache.module';
 import { RedisCacheService } from '../config/redis/redis-cache.service';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { ActionPointRepository } from 'src/domain/repositories/action-point.repository';
+import { DatabaseIqPaymentHistoryRepository } from '../repositories/iq-payment-history.repository';
+import { GetPaymentHistoryUsecase } from 'src/usecase/wallet/payment-history';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule],
@@ -293,6 +295,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseActionPointRepository: DatabaseActionPointRepository, exceptionsService: ExceptionsService) =>
             new GetActionPointUsecase(databaseActionPointRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseIqPaymentHistoryRepository, ExceptionsService],
+          provide: GetPaymentHistoryUsecase,
+          useFactory: (databaseIqPaymentHistoryRepository: DatabaseIqPaymentHistoryRepository, exceptionsService: ExceptionsService) =>
+            new GetPaymentHistoryUsecase(databaseIqPaymentHistoryRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -319,6 +327,7 @@ export class UsecasesProxyDynamicModule {
         GetWalletInfoUsecase,
         UserBlockUsecase,
         GetActionPointUsecase,
+        GetPaymentHistoryUsecase,
       ],
     };
   }

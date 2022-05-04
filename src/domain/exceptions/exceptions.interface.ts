@@ -9,6 +9,7 @@ export interface IException {
   hashtagNotFoundException(): void;
   videoNotFoundException(): void;
   videoAnswerNotFoundException(): void;
+  paymentHistoryNotFoundException(): void;
   actionPointNotFoundException(): void;
   textAnswerNotFoundException(): void;
   tierNotFoundException(): void;
