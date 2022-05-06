@@ -24,6 +24,7 @@ export class DatabaseUserRepository implements UserRepository {
       .addSelect('user.email', 'email')
       .addSelect('COUNT(video.id)', 'videoCnt')
       .where('user.id = :user_id', { user_id: userId })
+      .andWhere('video.question IS NULL')
       .leftJoin('user.videos', 'video')
       .groupBy('user.id')
       .getRawOne();
