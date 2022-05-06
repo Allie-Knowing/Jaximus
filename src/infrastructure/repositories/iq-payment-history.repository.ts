@@ -23,7 +23,7 @@ export class DatabaseIqPaymentHistoryRepository implements IqPaymentHistoryRepos
       .where('history.user = :userId', { userId })
       .offset((page - 1) * size)
       .limit(size)
-      .orderBy('history.createdAt', 'DESC')
+      .orderBy('history.id', 'DESC')
       .getRawMany();
 
     return Promise.all(
