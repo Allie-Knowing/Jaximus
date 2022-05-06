@@ -1,6 +1,8 @@
 import { Expose, Transform } from 'class-transformer';
 
 export class GetPaymentHistoryPresenter {
+  id: number;
+
   @Expose({ name: 'created_at' })
   createdAt: Date;
 

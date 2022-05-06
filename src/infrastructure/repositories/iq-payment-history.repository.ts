@@ -16,6 +16,7 @@ export class DatabaseIqPaymentHistoryRepository implements IqPaymentHistoryRepos
     const paymentHistories: any[] = await this.paymentHistoryTypeOrmEntity
       .createQueryBuilder('history')
       .select('history.createdAt', 'createdAt')
+      .addSelect('history.id', 'id')
       .addSelect('category.name', 'paymentType')
       .addSelect('history.amount', 'amount')
       .innerJoin('history.iqPaymentCategory', 'category')
