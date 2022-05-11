@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Video } from 'src/domain/model/video';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
+import { GetAnswerCountPresenter } from 'src/presentation/question/get-answer-count.presenter';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
 import { BlockTypeOrmEntity } from '../entities/block.entity';
@@ -33,6 +34,16 @@ export class DatabaseVideoRepository implements VideoRepository {
     @InjectRepository(BlockTypeOrmEntity)
     private readonly blockEntityRepository: Repository<BlockTypeOrmEntity>,
   ) {}
+  async findAnswerCount(videoId: number): Promise<GetAnswerCountPresenter> {
+    const count: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('COUNT(1)', 'videoAnswerCnt')
+      .where('video.question_id = :videoId', { videoId })
+      .getRawOne();
+
+    return new GetAnswerCountPresenter(count);
+  }
+
   findVideoOwner(videoId: number): Promise<{ userId: number }> {
     return this.videoEntityRepository
       .createQueryBuilder('video')
