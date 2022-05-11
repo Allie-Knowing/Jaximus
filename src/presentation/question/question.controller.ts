@@ -20,10 +20,12 @@ import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { Video } from 'src/domain/model/video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
+import { GetAnswerCountUsecase } from 'src/usecase/question/get-answer-count';
 import { GetQuestionDetailUsecase } from 'src/usecase/question/get-question-detail';
 import { GetQuestionHashtagListUsecase } from 'src/usecase/question/get-question-hashtag-list';
 import { GetQuestionVideoListUsecase } from 'src/usecase/question/get-question-video-list';
 import { GetQuestionListUsecase } from 'src/usecase/question/get-questions-list';
+import { GetAnswerCountPresenter } from './get-answer-count.presenter';
 import { CreateQuestionDto } from './question.dto';
 
 @Controller({ path: '/question', scope: Scope.REQUEST })
@@ -41,6 +43,8 @@ export class QuestionController {
     private readonly getQuestionDetailUsecase: GetQuestionDetailUsecase,
     @Inject(GetQuestionVideoListUsecase)
     private readonly getQuestionVideoListUsecase: GetQuestionVideoListUsecase,
+    @Inject(GetAnswerCountUsecase)
+    private readonly getAnswerCountUsecase: GetAnswerCountUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -80,5 +84,10 @@ export class QuestionController {
   @Get('/:videoId/hashtag')
   questionHashtagList(@Param('videoId', ParseIntPipe) videoId: number) {
     return this.getQuestionHashtagListUsecase.execute(videoId);
+  }
+
+  @Get('/:videoId/count')
+  answerCount(@Param('videoId', ParseIntPipe) videoId: number): Promise<GetAnswerCountPresenter> {
+    return this.getAnswerCountUsecase.execute(videoId);
   }
 }
