@@ -332,6 +332,42 @@ export class DatabaseVideoRepository implements VideoRepository {
     );
   }
 
+  async userAnswerList(userId: number, page: number, size: number): Promise<Video[]> {
+    const videos: any[] = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .leftJoin('video.comments', 'comment')
+      .leftJoin('video.likes', 'like')
+      .innerJoin('video.user', 'user')
+      .select('video.id', 'id')
+      .addSelect('video.title')
+      .addSelect('video.is_adoption', 'isAdoption')
+      .addSelect('video.description')
+      .addSelect('video.video_url', 'videoUrl')
+      .addSelect('video.thumbnail', 'thumbnail')
+      .addSelect('video.created_at', 'createdAt')
+      .addSelect('user.id', 'userId')
+      .addSelect('user.profile')
+      .addSelect('COUNT(distinct comment.id)', 'commentCnt')
+      .addSelect('COUNT(distinct like.id)', 'likeCnt')
+      .offset((page - 1) * size)
+      .limit(size)
+      .where('video.user_id = :user_id', { user_id: userId })
+      .andWhere('video.question IS NOT NULL')
+      .orderBy('video.created_at', 'DESC')
+      .groupBy('video.id')
+      .getRawMany();
+
+    if (!videos) return;
+
+    return Promise.all(
+      videos.map(async (video) => {
+        video.isMine = video.userId == userId ? true : false;
+        video.isLike = !!(await this.findLike(userId, video.id));
+        return new Video(video);
+      }),
+    );
+  }
+
   async deleteVideo(videoId: number): Promise<void> {
     await this.videoEntityRepository.softDelete(videoId);
   }

@@ -13,6 +13,7 @@ export interface VideoRepository {
   createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: number): Promise<void>;
   videoAdoption(videoId: number, userId: number): Promise<void>;
   userQuestionList(userId: number, page: number, size: number): Promise<Video[]>;
+  userAnswerList(userId: number, page: number, size: number): Promise<Video[]>;
   deleteVideo(videoId: number): Promise<void>;
   findOne(id: number): Promise<Video>;
   findUsersQuestion(videoId: number, userId: number): Promise<Video>;

@@ -17,6 +17,7 @@ export interface IException {
   likeNotFoundException(): void;
   userNotFoundException(): void;
   userQuestionNotFoundException(): void;
+  userAnswerNotFoundException(): void;
   likesAlreadyExistException(): void;
   adoptionAlreadyExistException(): void;
   videoIsNotYoursException(): void;

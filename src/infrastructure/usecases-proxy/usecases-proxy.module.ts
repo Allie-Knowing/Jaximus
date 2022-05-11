@@ -44,6 +44,7 @@ import { UserRepository } from 'src/domain/repositories/user.repository';
 import { ActionPointRepository } from 'src/domain/repositories/action-point.repository';
 import { DatabaseIqPaymentHistoryRepository } from '../repositories/iq-payment-history.repository';
 import { GetPaymentHistoryUsecase } from 'src/usecase/wallet/payment-history';
+import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule],
@@ -301,6 +302,12 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseIqPaymentHistoryRepository: DatabaseIqPaymentHistoryRepository, exceptionsService: ExceptionsService) =>
             new GetPaymentHistoryUsecase(databaseIqPaymentHistoryRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseVideoRepository, ExceptionsService],
+          provide: UserAnswerListUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository, exceptionsService: ExceptionsService) =>
+            new UserAnswerListUsecase(databaseVideoRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -328,6 +335,7 @@ export class UsecasesProxyDynamicModule {
         UserBlockUsecase,
         GetActionPointUsecase,
         GetPaymentHistoryUsecase,
+        UserAnswerListUsecase,
       ],
     };
   }

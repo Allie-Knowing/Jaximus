@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
+import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { UserBlockUsecase } from 'src/usecase/user/user-block';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
@@ -15,6 +16,8 @@ export class UserController {
     private readonly userInfoUsecase: UserInfoUsecase,
     @Inject(UserQuestionListUsecase)
     private readonly userQuestionListUsecase: UserQuestionListUsecase,
+    @Inject(UserAnswerListUsecase)
+    private readonly userAnswerListUsecase: UserAnswerListUsecase,
     @Inject(UserBlockUsecase)
     private readonly userBlockUsecase: UserBlockUsecase,
     @Inject(REQUEST)
@@ -33,6 +36,15 @@ export class UserController {
     @Query('size', ParseIntPipe) size: number,
   ): Promise<Video[]> {
     return await this.userQuestionListUsecase.execute(userId, page, size);
+  }
+
+  @Get('/answer/video/:userId')
+  async userAnswerList(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Query('page', ParseIntPipe) page: number,
+    @Query('size', ParseIntPipe) size: number,
+  ): Promise<Video[]> {
+    return await this.userAnswerListUsecase.execute(userId, page, size);
   }
 
   @UseGuards(AuthGuard('jwt'))
