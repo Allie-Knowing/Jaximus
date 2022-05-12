@@ -46,6 +46,7 @@ import { DatabaseIqPaymentHistoryRepository } from '../repositories/iq-payment-h
 import { GetPaymentHistoryUsecase } from 'src/usecase/wallet/payment-history';
 import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { GetAnswerCountUsecase } from 'src/usecase/question/get-answer-count';
+import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule],
@@ -314,6 +315,11 @@ export class UsecasesProxyDynamicModule {
           provide: GetAnswerCountUsecase,
           useFactory: (databaseVideoRepisitory: DatabaseVideoRepository) => new GetAnswerCountUsecase(databaseVideoRepisitory),
         },
+        {
+          inject: [DatabaseUserRepository],
+          provide: UpdateExpoTokenUsecase,
+          useFactory: (databaseUserRepository: DatabaseUserRepository) => new UpdateExpoTokenUsecase(databaseUserRepository),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -343,6 +349,7 @@ export class UsecasesProxyDynamicModule {
         GetPaymentHistoryUsecase,
         UserAnswerListUsecase,
         GetAnswerCountUsecase,
+        UpdateExpoTokenUsecase,
       ],
     };
   }
