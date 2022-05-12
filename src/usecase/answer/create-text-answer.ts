@@ -18,8 +18,9 @@ export class CreateTextAnswerUsecase {
 
   async execute(content: string, questionId: number, userId: number) {
     const question = await this.videoRepository.findOne(questionId);
+    const owner = await this.videoRepository.findVideoOwnerId(questionId);
     const user = await this.userRepository.findOne(userId);
-    const videoOwner = await this.userRepository.findOne(question.userId);
+    const videoOwner = await this.userRepository.findOne(owner.id);
     console.log(question);
     console.log('이건 유저');
     console.log(user);

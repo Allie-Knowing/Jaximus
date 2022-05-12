@@ -280,6 +280,15 @@ export class DatabaseVideoRepository implements VideoRepository {
     return question ? new Video(question) : null;
   }
 
+  async findVideoOwnerId(id: number): Promise<{ id: number }> {
+    return await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('user.id')
+      .innerJoin('video.user', 'user')
+      .where('video.id := id', { id })
+      .getOne();
+  }
+
   async findUsersQuestion(questionId: number, userId: number): Promise<Video> {
     const question: any = await this.videoEntityRepository
       .createQueryBuilder('video')
