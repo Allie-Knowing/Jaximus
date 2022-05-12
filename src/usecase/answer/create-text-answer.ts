@@ -19,6 +19,7 @@ export class CreateTextAnswerUsecase {
   async execute(content: string, questionId: number, userId: number) {
     const question = await this.videoRepository.findOne(questionId);
     const user = await this.userRepository.findOne(userId);
+    const videoOwner = await this.userRepository.findOne(question.userId);
     if (!question) this.exceptionsService.questionNotFoundException();
 
     this.commentRepository.createCommentAnswer(content, questionId, userId);
@@ -33,9 +34,10 @@ export class CreateTextAnswerUsecase {
     }
     let messages: ExpoPushMessage[] = [
       {
-        to: user.expoToken,
+        to: videoOwner.expoToken,
         sound: 'default',
-        body: 'This is a test notification',
+        title: `${user.name}님이 글 답변을 달았습니다!`,
+        body: `${content}`,
       },
     ];
     let chunks = this.client.chunkPushNotifications(messages);
