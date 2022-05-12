@@ -4,10 +4,15 @@ import { DatabaseConfig } from 'src/domain/config/database.interface';
 import { ESConfig } from 'src/domain/config/es.interface';
 import { RedisConfig } from 'src/domain/config/redis.interface';
 import { S3Config } from 'src/domain/config/s3.interface';
+import { ExpoConfig } from 'src/domain/config/expo.interface';
 
 @Injectable()
-export class EnvironmentConfigService implements DatabaseConfig, S3Config, ESConfig, RedisConfig {
+export class EnvironmentConfigService implements DatabaseConfig, S3Config, ESConfig, RedisConfig, ExpoConfig {
   constructor(private configService: ConfigService) {}
+  getExpoToken(): string {
+    return this.configService.get<string>('EXPO_TOKEN');
+  }
+
   getRedisHost(): string {
     return this.configService.get<string>('REDIS_HOST');
   }
