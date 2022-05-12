@@ -1,4 +1,3 @@
-import { IqPaymentHistory } from 'src/domain/model/iq-payment-history';
 import { User } from 'src/domain/model/user';
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ActionPointTypeOrmEntity } from './action-point.entity';
@@ -29,6 +28,9 @@ export class UserTypeOrmEntity {
 
   @Column({ default: 0 })
   adoptionCnt: number;
+
+  @Column({ nullable: true, length: 1024 })
+  expoToken: string;
 
   @CreateDateColumn()
   createdAt: Date;

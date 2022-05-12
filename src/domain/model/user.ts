@@ -11,6 +11,9 @@ export class User {
 
   name: string;
 
+  @Expose({ name: 'expo_token' })
+  expoToken: string;
+
   @Expose({ name: 'created_at' })
   createdAt: Date;
 
