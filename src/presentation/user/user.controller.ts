@@ -1,9 +1,24 @@
-import { Controller, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Post, Query, Scope, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+  Scope,
+  UseGuards,
+} from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserReqeust } from 'src/domain/interfaces/request.interface';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
+import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
 import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { UserBlockUsecase } from 'src/usecase/user/user-block';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
@@ -20,6 +35,8 @@ export class UserController {
     private readonly userAnswerListUsecase: UserAnswerListUsecase,
     @Inject(UserBlockUsecase)
     private readonly userBlockUsecase: UserBlockUsecase,
+    @Inject(UpdateExpoTokenUsecase)
+    private readonly updateExpoTokenUsecase: UpdateExpoTokenUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -52,6 +69,13 @@ export class UserController {
   @HttpCode(HttpStatus.CREATED)
   async blockUser(@Param('videoId', ParseIntPipe) videoId: number): Promise<void> {
     await this.userBlockUsecase.execute(this.request.user.sub, videoId);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/expo/token')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  psertExpoToken(@Body('token') expoToken: string): void {
+    return this.updateExpoTokenUsecase.execute(this.request.user.sub, expoToken);
   }
 
   @UseGuards(AuthGuard('jwt'))
