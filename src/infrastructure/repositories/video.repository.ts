@@ -276,17 +276,14 @@ export class DatabaseVideoRepository implements VideoRepository {
   }
 
   async findOne(id: number): Promise<Video> {
-    const question = await this.videoEntityRepository.createQueryBuilder('video').select().where('video.id = :id', { id }).getOne();
-    return question ? new Video(question) : null;
-  }
-
-  async findVideoOwnerId(id: number): Promise<{ id: number }> {
-    return await this.videoEntityRepository
+    const question = await this.videoEntityRepository
       .createQueryBuilder('video')
-      .select('user.id')
+      .select()
+      .addSelect('user.id', 'user_id')
       .innerJoin('video.user', 'user')
       .where('video.id = :id', { id })
       .getOne();
+    return question ? new Video(question) : null;
   }
 
   async findUsersQuestion(questionId: number, userId: number): Promise<Video> {
