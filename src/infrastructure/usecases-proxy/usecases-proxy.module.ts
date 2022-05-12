@@ -47,9 +47,11 @@ import { GetPaymentHistoryUsecase } from 'src/usecase/wallet/payment-history';
 import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { GetAnswerCountUsecase } from 'src/usecase/question/get-answer-count';
 import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
+import { ExpoModule } from '../config/expo/expo.module';
+import { ExpoService } from '../config/expo/expo.service';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -228,13 +230,22 @@ export class UsecasesProxyDynamicModule {
             new DeleteVideoAnswerUsecase(databaseVideoRepository, exceptionsService),
         },
         {
-          inject: [DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
+          inject: [ExpoService, DatabaseUserRepository, DatabaseCommentRepository, DatabaseVideoRepository, ExceptionsService],
           provide: CreateTextAnswerUsecase,
           useFactory: (
+            expoService: ExpoService,
+            databaseUserRepository: DatabaseUserRepository,
             databaseCommentRepository: DatabaseCommentRepository,
             databaseVideoRepository: DatabaseVideoRepository,
             exceptionsService: ExceptionsService,
-          ) => new CreateTextAnswerUsecase(databaseCommentRepository, databaseVideoRepository, exceptionsService),
+          ) =>
+            new CreateTextAnswerUsecase(
+              expoService,
+              databaseUserRepository,
+              databaseCommentRepository,
+              databaseVideoRepository,
+              exceptionsService,
+            ),
         },
         {
           inject: [ElasticsearchService],
