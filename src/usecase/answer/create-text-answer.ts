@@ -20,6 +20,10 @@ export class CreateTextAnswerUsecase {
     const question = await this.videoRepository.findOne(questionId);
     const user = await this.userRepository.findOne(userId);
     const videoOwner = await this.userRepository.findOne(question.userId);
+    console.log('이건 유저');
+    console.log(user);
+    console.log('이건 비디오 오너');
+    console.log(videoOwner);
     if (!question) this.exceptionsService.questionNotFoundException();
 
     this.commentRepository.createCommentAnswer(content, questionId, userId);
