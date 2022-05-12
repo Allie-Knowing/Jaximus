@@ -10,7 +10,7 @@ import { ExpoConfig } from 'src/domain/config/expo.interface';
 export class EnvironmentConfigService implements DatabaseConfig, S3Config, ESConfig, RedisConfig, ExpoConfig {
   constructor(private configService: ConfigService) {}
   getExpoToken(): string {
-    return this.configService.get<string>('EXPO_TOKEN');
+    return this.configService.get<string>('EXPO_ACCESS_TOKEN');
   }
 
   getRedisHost(): string {
