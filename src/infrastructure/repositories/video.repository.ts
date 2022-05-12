@@ -285,7 +285,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .createQueryBuilder('video')
       .select('user.id')
       .innerJoin('video.user', 'user')
-      .where('video.id := id', { id })
+      .where('video.id = :id', { id })
       .getOne();
   }
 
