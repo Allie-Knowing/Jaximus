@@ -56,7 +56,7 @@ export class CreateLikeUsecase {
       this.client = this.expoService.getExpoServerClient();
     }
 
-    const checkLikeNotification = generateCacheTemplate(CacheTemplate.LIKE_NOTIFICATION_CHECK, userId);
+    const checkLikeNotification = generateCacheTemplate(CacheTemplate.LIKE_NOTIFICATION_CHECK, videoOwner.id);
     const isExists = await this.cacheService.get(checkLikeNotification);
     if (isExists) return;
 
