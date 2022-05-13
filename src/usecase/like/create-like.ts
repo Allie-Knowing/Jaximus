@@ -1,4 +1,4 @@
-import Expo, { ExpoPushMessage } from 'expo-server-sdk';
+import { Expo, ExpoPushMessage } from 'expo-server-sdk';
 import { CacheTemplate, generateCacheTemplate } from 'src/domain/enums/cache.enum';
 import { IException } from 'src/domain/exceptions/exceptions.interface';
 import { Like } from 'src/domain/model/like';
