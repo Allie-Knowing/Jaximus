@@ -20,11 +20,6 @@ export class CreateTextAnswerUsecase {
     const question: any = await this.videoRepository.findOne(questionId);
     const user = await this.userRepository.findOne(userId);
     const videoOwner = await this.userRepository.findOne(question.user.id);
-    console.log(question);
-    console.log('이건 유저');
-    console.log(user);
-    console.log('이건 비디오 오너');
-    console.log(videoOwner);
     if (!question) this.exceptionsService.questionNotFoundException();
 
     this.commentRepository.createCommentAnswer(content, questionId, userId);
@@ -33,6 +28,7 @@ export class CreateTextAnswerUsecase {
       this.client = this.expoService.getExpoServerClient();
     }
 
+    // Notification
     if (!Expo.isExpoPushToken(user.expoToken)) {
       console.error(`Push token ${user.expoToken} is not a valid Expo push token`);
       return;
