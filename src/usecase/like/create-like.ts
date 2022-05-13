@@ -7,12 +7,14 @@ import { ActionPointRepository } from 'src/domain/repositories/action-point.repo
 import { LikeRepository } from 'src/domain/repositories/like.repository';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
+import { ExpoService } from 'src/infrastructure/config/expo/expo.service';
 import { RedisCacheService } from 'src/infrastructure/config/redis/redis-cache.service';
 
 export class CreateLikeUsecase {
   client: Expo;
 
   constructor(
+    private readonly expoService: ExpoService,
     private readonly cacheService: RedisCacheService,
     private readonly likeRepository: LikeRepository,
     private readonly userRepository: UserRepository,
@@ -50,6 +52,14 @@ export class CreateLikeUsecase {
     }
 
     // Notification
+    if (this.client === undefined) {
+      this.client = this.expoService.getExpoServerClient();
+    }
+
+    const checkLikeNotification = generateCacheTemplate(CacheTemplate.LIKE_NOTIFICATION_CHECK, userId);
+    const isExists = await this.cacheService.get(checkLikeNotification);
+    if (isExists) return;
+
     if (!Expo.isExpoPushToken(user.expoToken)) {
       console.error(`Push token ${user.expoToken} is not a valid Expo push token`);
       return;
@@ -71,5 +81,6 @@ export class CreateLikeUsecase {
         console.error(error);
       }
     }
+    this.cacheService.setTtl(checkLikeNotification, 'x', 3600);
   }
 }

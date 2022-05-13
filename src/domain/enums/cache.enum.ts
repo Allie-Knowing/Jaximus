@@ -5,6 +5,7 @@ export enum CacheTemplate {
   ACTION_CREATE_ANSWER = 'action.create.answer.user.',
   ACTION_ADOPTER = 'action.adoptor.user.',
   ACTION_ADOPTED = 'action.adopted.user.',
+  LIKE_NOTIFICATION_CHECK = 'like.notification.check.user.',
 }
 
 export function generateCacheTemplate(key: string, userId: number): string {
