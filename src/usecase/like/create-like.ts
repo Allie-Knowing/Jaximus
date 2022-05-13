@@ -52,18 +52,10 @@ export class CreateLikeUsecase {
     }
 
     // Notification
-    if (this.client === undefined) {
-      this.client = this.expoService.getExpoServerClient();
-    }
-
     const checkLikeNotification = generateCacheTemplate(CacheTemplate.LIKE_NOTIFICATION_CHECK, videoOwner.id);
     const isExists = await this.cacheService.get(checkLikeNotification);
     if (isExists) return;
 
-    if (!Expo.isExpoPushToken(user.expoToken)) {
-      console.error(`Push token ${user.expoToken} is not a valid Expo push token`);
-      return;
-    }
     let messages: ExpoPushMessage[] = [
       {
         to: videoOwner.expoToken,
@@ -72,15 +64,7 @@ export class CreateLikeUsecase {
         body: ` ${user.name}님이 좋아요를 눌렀습니다!`,
       },
     ];
-    let chunks = this.client.chunkPushNotifications(messages);
-    for (let chunk of chunks) {
-      try {
-        let ticketChunk = await this.client.sendPushNotificationsAsync(chunk);
-        console.log(ticketChunk);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    this.expoService.sendPushNotification(messages);
     this.cacheService.setTtl(checkLikeNotification, 'x', 3600);
   }
 }
