@@ -120,6 +120,7 @@ export class UsecasesProxyDynamicModule {
         },
         {
           inject: [
+            ExpoService,
             RedisCacheService,
             DatabaseLikeRepository,
             DatabaseUserRepository,
@@ -129,6 +130,7 @@ export class UsecasesProxyDynamicModule {
           ],
           provide: CreateLikeUsecase,
           useFactory: (
+            expoService: ExpoService,
             cacheService: RedisCacheService,
             databaseLikeRepository: DatabaseLikeRepository,
             databaseUserRepository: DatabaseUserRepository,
@@ -137,6 +139,7 @@ export class UsecasesProxyDynamicModule {
             exceptionsService: ExceptionsService,
           ) =>
             new CreateLikeUsecase(
+              expoService,
               cacheService,
               databaseLikeRepository,
               databaseUserRepository,
