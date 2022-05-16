@@ -1,4 +1,17 @@
-import { Controller, Inject, Param, ParseIntPipe, Patch, Post, Scope, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Scope,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { VideoViewsUsecase } from 'src/usecase/video/video-views';
@@ -18,6 +31,7 @@ export class VideoController {
   }
 
   @Patch('/views/:videoId')
+  @HttpCode(HttpStatus.NO_CONTENT)
   videoViews(@Param('videoId', ParseIntPipe) videoId: number): Promise<void> {
     return this.videoViewsUsecase.execute(videoId);
   }
