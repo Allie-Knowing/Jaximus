@@ -21,8 +21,10 @@ import { Video } from 'src/domain/model/video';
 import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
 import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { UserBlockUsecase } from 'src/usecase/user/user-block';
+import { UserCashExchangeUsecase } from 'src/usecase/user/user-cash-exchange';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
+import { UserCashExchangeDto } from './user.dto';
 
 @Controller({ path: '/user', scope: Scope.REQUEST })
 export class UserController {
@@ -37,6 +39,8 @@ export class UserController {
     private readonly userBlockUsecase: UserBlockUsecase,
     @Inject(UpdateExpoTokenUsecase)
     private readonly updateExpoTokenUsecase: UpdateExpoTokenUsecase,
+    @Inject(UserCashExchangeUsecase)
+    private readonly userCashExchangeUsecase: UserCashExchangeUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -82,5 +86,12 @@ export class UserController {
   @Get('/my')
   userId() {
     return this.request.user.sub;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/cash/exchange')
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() cashExchangeDto: UserCashExchangeDto) {
+    return this.userCashExchangeUsecase.execute(cashExchangeDto, this.request.user.sub);
   }
 }
