@@ -3,6 +3,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGenerated
 import { ActionPointTypeOrmEntity } from './action-point.entity';
 import { BlockTypeOrmEntity } from './block.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
+import { FollowTypeOrmEntity } from './follow.entity';
 import { IqPaymentHistoryTypeOrmEntity } from './iq-payment-history.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -59,6 +60,12 @@ export class UserTypeOrmEntity {
   @OneToMany(() => BlockTypeOrmEntity, (block) => block.blockUserId)
   blocking: BlockTypeOrmEntity[];
 
+  @OneToMany(() => FollowTypeOrmEntity, (follow) => follow.follower)
+  follower: FollowTypeOrmEntity[];
+
+  @OneToMany(() => FollowTypeOrmEntity, (follow) => follow.following)
+  following: FollowTypeOrmEntity[];
+
   @OneToOne(() => IqTypeOrmEntity, (iq) => iq.userId)
   iq: IqTypeOrmEntity;
 
@@ -77,6 +84,8 @@ export class UserTypeOrmEntity {
       iqPaymentHistory: [],
       blocker: [],
       blocking: [],
+      follower: [],
+      following: [],
     };
   }
 }
