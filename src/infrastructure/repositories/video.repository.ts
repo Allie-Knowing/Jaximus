@@ -326,6 +326,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
       .addSelect('video.created_at', 'createdAt')
+      .addSelect('video.views', 'views')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
@@ -362,6 +363,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .addSelect('video.video_url', 'videoUrl')
       .addSelect('video.thumbnail', 'thumbnail')
       .addSelect('video.created_at', 'createdAt')
+      .addSelect('video.views', 'views')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
@@ -478,5 +480,14 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('video.id = :question_id', { question_id: questionId })
       .andWhere('video.user_id = :user_id', { user_id: userId })
       .getOne();
+  }
+
+  async videoViews(videoId: number): Promise<void> {
+    await this.videoEntityRepository
+      .createQueryBuilder()
+      .update(VideoTypeOrmEntity)
+      .set({ views: () => `views + 1` })
+      .where('id = :id', { id: videoId })
+      .execute();
   }
 }
