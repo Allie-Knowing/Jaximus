@@ -24,4 +24,5 @@ export interface VideoRepository {
   checkVideoAnswer(videoId: number): Promise<Video>;
   checkAdoption(questionId: number);
   isMine(questionId: number, userId: number);
+  videoViews(videoId: number): Promise<void>;
 }
