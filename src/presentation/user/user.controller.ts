@@ -91,7 +91,7 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/cash/exchange')
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() cashExchangeDto: UserCashExchangeDto) {
+  cashExchange(@Body() cashExchangeDto: UserCashExchangeDto) {
     return this.userCashExchangeUsecase.execute(cashExchangeDto, this.request.user.sub);
   }
 }
