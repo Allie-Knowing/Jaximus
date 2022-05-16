@@ -34,6 +34,9 @@ export class VideoTypeOrmEntity {
   @Column({ nullable: true, default: 0 })
   compensation: number;
 
+  @Column({ type: 'bigint', nullable: true, default: 0 })
+  views: number;
+
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.video)
   likes: LikeTypeOrmEntity[];
 
