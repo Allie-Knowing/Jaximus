@@ -32,6 +32,24 @@ export class User {
   @Expose({ name: 'video_cnt' })
   videoCnt: number;
 
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
+  @Expose({ name: 'answer_video_cnt' })
+  answerVideoCnt: number;
+
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
+  @Expose({ name: 'follower_cnt' })
+  followerCnt: number;
+
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
+  @Expose({ name: 'following_cnt' })
+  followingCnt: number;
+
   @Expose({ name: 'adoption_cnt' })
   adoptionCnt: number;
 
