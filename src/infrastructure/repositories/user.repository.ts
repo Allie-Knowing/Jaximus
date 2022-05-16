@@ -25,10 +25,35 @@ export class DatabaseUserRepository implements UserRepository {
       .select('user.name', 'name')
       .addSelect('user.profile', 'profile')
       .addSelect('user.email', 'email')
-      .addSelect('COUNT(video.id)', 'videoCnt')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('COUNT(1)')
+          .from('video', 'video')
+          .where('video.user = :user_id', { user_id: userId })
+          .andWhere('video.question IS NULL');
+      }, 'videoCnt')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('COUNT(1)')
+          .from('video', 'video')
+          .where('video.user = :user_id', { user_id: userId })
+          .andWhere('video.question IS NOT NULL');
+      }, 'answerVideoCnt')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('COUNT(1)')
+          .from('user', 'user')
+          .innerJoin('user.follower', 'follower')
+          .where('user.id = :user_id', { user_id: userId });
+      }, 'followerCnt')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('COUNT(1)')
+          .from('user', 'user')
+          .innerJoin('user.following', 'following')
+          .where('user.id = :user_id', { user_id: userId });
+      }, 'followingCnt')
       .where('user.id = :user_id', { user_id: userId })
-      .andWhere('video.question IS NULL')
-      .leftJoin('user.videos', 'video')
       .groupBy('user.id')
       .getRawOne();
 
