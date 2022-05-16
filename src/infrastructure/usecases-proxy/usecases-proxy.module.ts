@@ -50,6 +50,8 @@ import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
 import { ExpoModule } from '../config/expo/expo.module';
 import { ExpoService } from '../config/expo/expo.service';
 import { VideoViewsUsecase } from 'src/usecase/video/video-views';
+import { DatabaseCashExchangeRepository } from '../repositories/cash_exchange.repository';
+import { UserCashExchangeUsecase } from 'src/usecase/user/user-cash-exchange';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -341,6 +343,15 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseVideoRepisitory: DatabaseVideoRepository, exceptionService: ExceptionsService) =>
             new VideoViewsUsecase(databaseVideoRepisitory, exceptionService),
         },
+        {
+          inject: [DatabaseCashExchangeRepository, DatabaseIqRepository, ExceptionsService],
+          provide: UserCashExchangeUsecase,
+          useFactory: (
+            databaseCashExchangeRepository: DatabaseCashExchangeRepository,
+            databaseIqRepository: DatabaseIqRepository,
+            exceptionsService: ExceptionsService,
+          ) => new UserCashExchangeUsecase(databaseCashExchangeRepository, databaseIqRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -372,6 +383,7 @@ export class UsecasesProxyDynamicModule {
         GetAnswerCountUsecase,
         UpdateExpoTokenUsecase,
         VideoViewsUsecase,
+        UserCashExchangeUsecase,
       ],
     };
   }
