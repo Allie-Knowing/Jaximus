@@ -11,6 +11,7 @@ export class DatabaseUserRepository implements UserRepository {
     @InjectRepository(UserTypeOrmEntity)
     private readonly userEntityRepository: Repository<UserTypeOrmEntity>,
   ) {}
+
   updateExpoToken(userId: number, expoToken: string): void {
     this.userEntityRepository.update(userId, { expoToken });
   }

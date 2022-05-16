@@ -2,6 +2,7 @@ import { User } from 'src/domain/model/user';
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ActionPointTypeOrmEntity } from './action-point.entity';
 import { BlockTypeOrmEntity } from './block.entity';
+import { CashExchangeTypeOrmEntity } from './cash_exchange.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { FollowTypeOrmEntity } from './follow.entity';
 import { IqPaymentHistoryTypeOrmEntity } from './iq-payment-history.entity';
@@ -72,6 +73,9 @@ export class UserTypeOrmEntity {
   @OneToOne(() => TierTypeOrmEntity, (tier) => tier.userId)
   tier: TierTypeOrmEntity;
 
+  @OneToMany(() => CashExchangeTypeOrmEntity, (cashExchange) => cashExchange.user)
+  cashExchange: CashExchangeTypeOrmEntity[];
+
   public static of(user: User): UserTypeOrmEntity {
     return {
       ...user,
@@ -86,6 +90,7 @@ export class UserTypeOrmEntity {
       blocking: [],
       follower: [],
       following: [],
+      cashExchange: [],
     };
   }
 }
