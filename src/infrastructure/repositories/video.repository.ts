@@ -353,17 +353,17 @@ export class DatabaseVideoRepository implements VideoRepository {
   async userAnswerList(userId: number, page: number, size: number): Promise<Video[]> {
     const videos: any[] = await this.videoEntityRepository
       .createQueryBuilder('video')
-      .leftJoin('video.comments', 'comment')
-      .leftJoin('video.likes', 'like')
-      .innerJoin('video.user', 'user')
-      .select('video.id', 'id')
-      .addSelect('video.title')
-      .addSelect('video.is_adoption', 'isAdoption')
-      .addSelect('video.description')
-      .addSelect('video.video_url', 'videoUrl')
-      .addSelect('video.thumbnail', 'thumbnail')
-      .addSelect('video.created_at', 'createdAt')
-      .addSelect('video.views', 'views')
+      .leftJoin('video.question', 'question')
+      .leftJoin('question.comments', 'comment')
+      .leftJoin('question.likes', 'like')
+      .leftJoin('question.user', 'user')
+      .select('question.id', 'id')
+      .addSelect('question.title')
+      .addSelect('question.is_adoption', 'isAdoption')
+      .addSelect('question.description')
+      .addSelect('question.video_url', 'videoUrl')
+      .addSelect('question.thumbnail', 'thumbnail')
+      .addSelect('question.created_at', 'createdAt')
       .addSelect('user.id', 'userId')
       .addSelect('user.profile')
       .addSelect('COUNT(distinct comment.id)', 'commentCnt')
@@ -373,7 +373,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('video.user_id = :user_id', { user_id: userId })
       .andWhere('video.question IS NOT NULL')
       .orderBy('video.created_at', 'DESC')
-      .groupBy('video.id')
+      .groupBy('question.id')
       .getRawMany();
 
     if (!videos) return;
