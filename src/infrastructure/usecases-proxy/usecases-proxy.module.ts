@@ -92,9 +92,17 @@ export class UsecasesProxyDynamicModule {
             ),
         },
         {
-          inject: [RedisCacheService, DatabaseVideoRepository, DatabaseUserRepository, DatabaseActionPointRepository, ExceptionsService],
+          inject: [
+            ExpoService,
+            RedisCacheService,
+            DatabaseVideoRepository,
+            DatabaseUserRepository,
+            DatabaseActionPointRepository,
+            ExceptionsService,
+          ],
           provide: CreateVideoAnswerUsecase,
           useFactory: (
+            expoService: ExpoService,
             cacheService: RedisCacheService,
             databaseVideoRepository: DatabaseVideoRepository,
             databaseUserRepository: DatabaseUserRepository,
@@ -102,6 +110,7 @@ export class UsecasesProxyDynamicModule {
             exceptionsService: ExceptionsService,
           ) =>
             new CreateVideoAnswerUsecase(
+              expoService,
               cacheService,
               databaseVideoRepository,
               databaseUserRepository,
