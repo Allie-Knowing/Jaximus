@@ -11,7 +11,7 @@ import { IException, IFormatExceptionMessage } from 'src/domain/exceptions/excep
 @Injectable()
 export class ExceptionsService implements IException {
   userAnswerNotFoundException(): void {
-    throw new Error('User answer not found exception');
+    throw new NotFoundException('User answer not found exception');
   }
   paymentHistoryNotFoundException(): void {
     throw new NotFoundException('Payment history not found exception');
