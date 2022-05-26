@@ -18,6 +18,9 @@ export class Video {
 
   compensation: number;
 
+  @Transform(({ value }) => {
+    if (value) return parseInt(value);
+  })
   views: number;
 
   @IsString()
