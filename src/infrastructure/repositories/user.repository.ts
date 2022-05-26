@@ -44,14 +44,14 @@ export class DatabaseUserRepository implements UserRepository {
         return subQuery
           .select('COUNT(1)')
           .from('user', 'user')
-          .innerJoin('user.follower', 'follower')
+          .innerJoin('user.follower', 'following')
           .where('user.id = :user_id', { user_id: userId });
       }, 'followerCnt')
       .addSelect((subQuery) => {
         return subQuery
           .select('COUNT(1)')
           .from('user', 'user')
-          .innerJoin('user.following', 'following')
+          .innerJoin('user.following', 'follower')
           .where('user.id = :user_id', { user_id: userId });
       }, 'followingCnt')
       .where('user.id = :user_id', { user_id: userId })
