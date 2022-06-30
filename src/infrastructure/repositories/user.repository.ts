@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { now } from 'moment';
 import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { Repository } from 'typeorm';
@@ -68,10 +69,21 @@ export class DatabaseUserRepository implements UserRepository {
   }
 
   async deleteUser(userId: number): Promise<void> {
-    const user: any = this.userEntityRepository.createQueryBuilder('user').select().where('user.id = :id', { id: userId }).getOne();
+    const now = new Date();
 
-    await this.videoEntityRepository.softDelete({ user: user });
-    await this.commentEntityRepository.softDelete({ user: user });
+    await this.videoEntityRepository
+      .createQueryBuilder()
+      .update(VideoTypeOrmEntity)
+      .set({ deletedAt: now })
+      .where('user_id = :user_id', { user_id: userId })
+      .execute();
+
+    await this.commentEntityRepository
+      .createQueryBuilder()
+      .update(CommentTypeOrmEntity)
+      .set({ deletedAt: now })
+      .where('user_id = :user_id', { user_id: userId })
+      .execute();
 
     await this.userEntityRepository.softDelete({ id: userId });
   }

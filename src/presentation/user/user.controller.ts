@@ -99,10 +99,10 @@ export class UserController {
     return this.userCashExchangeUsecase.execute(cashExchangeDto, this.request.user.sub);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  //@UseGuards(AuthGuard('jwt'))
   @Delete('/')
   @HttpCode(HttpStatus.NO_CONTENT)
   deleteUser() {
-    return this.userDeleteUsecase.execute(this.request.user.sub);
+    return this.userDeleteUsecase.execute(3);
   }
 }
