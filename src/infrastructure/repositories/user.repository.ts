@@ -68,20 +68,11 @@ export class DatabaseUserRepository implements UserRepository {
   }
 
   async deleteUser(userId: number): Promise<void> {
-    await this.videoEntityRepository
-      .createQueryBuilder()
-      .delete()
-      .from(VideoTypeOrmEntity)
-      .where('user_id = :user_id', { user_id: userId })
-      .execute();
+    const user: any = this.userEntityRepository.createQueryBuilder('user').select().where('user.id = :id', { id: userId }).getOne();
 
-    await this.commentEntityRepository
-      .createQueryBuilder()
-      .delete()
-      .from(CommentTypeOrmEntity)
-      .where('user_id = :user_id', { user_id: userId })
-      .execute();
+    await this.videoEntityRepository.softDelete({ user: user });
+    await this.commentEntityRepository.softDelete({ user: user });
 
-    await this.userEntityRepository.delete({ id: userId });
+    await this.userEntityRepository.softDelete({ id: userId });
   }
 }
