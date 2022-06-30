@@ -3,13 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { Repository } from 'typeorm';
+import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
+import { VideoTypeOrmEntity } from '../entities/video.entity';
 
 @Injectable()
 export class DatabaseUserRepository implements UserRepository {
   constructor(
     @InjectRepository(UserTypeOrmEntity)
     private readonly userEntityRepository: Repository<UserTypeOrmEntity>,
+    @InjectRepository(VideoTypeOrmEntity)
+    private readonly videoEntityRepository: Repository<VideoTypeOrmEntity>,
+    @InjectRepository(CommentTypeOrmEntity)
+    private readonly commentEntityRepository: Repository<CommentTypeOrmEntity>,
   ) {}
 
   updateExpoToken(userId: number, expoToken: string): void {
@@ -59,5 +65,23 @@ export class DatabaseUserRepository implements UserRepository {
       .getRawOne();
 
     return new User(user);
+  }
+
+  async deleteUser(userId: number): Promise<void> {
+    await this.videoEntityRepository
+      .createQueryBuilder()
+      .delete()
+      .from(VideoTypeOrmEntity)
+      .where('user_id = :user_id', { user_id: userId })
+      .execute();
+
+    await this.commentEntityRepository
+      .createQueryBuilder()
+      .delete()
+      .from(CommentTypeOrmEntity)
+      .where('user_id = :user_id', { user_id: userId })
+      .execute();
+
+    await this.userEntityRepository.delete({ id: userId });
   }
 }
