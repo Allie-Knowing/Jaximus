@@ -16,6 +16,7 @@ export interface IException {
   commentNotFoundException(): void;
   likeNotFoundException(): void;
   userNotFoundException(): void;
+  userIdNotMatchedException(): void;
   userQuestionNotFoundException(): void;
   userAnswerNotFoundException(): void;
   likesAlreadyExistException(): void;
