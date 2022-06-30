@@ -100,9 +100,9 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete('/:userId')
+  @Delete('/')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteUser(@Param('userId', ParseIntPipe) userId: number) {
-    return this.userDeleteUsecase.execute(userId, this.request.user.sub);
+  deleteUser() {
+    return this.userDeleteUsecase.execute(this.request.user.sub);
   }
 }
