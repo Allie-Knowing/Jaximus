@@ -1,5 +1,5 @@
 import { User } from 'src/domain/model/user';
-import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ActionPointTypeOrmEntity } from './action-point.entity';
 import { BlockTypeOrmEntity } from './block.entity';
 import { CashExchangeTypeOrmEntity } from './cash_exchange.entity';
@@ -39,6 +39,9 @@ export class UserTypeOrmEntity {
 
   @UpdateDateColumn()
   updatedAt?: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
   @OneToMany(() => LikeTypeOrmEntity, (like) => like.user)
   likes: LikeTypeOrmEntity[];
