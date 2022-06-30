@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -22,6 +23,7 @@ import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
 import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { UserBlockUsecase } from 'src/usecase/user/user-block';
 import { UserCashExchangeUsecase } from 'src/usecase/user/user-cash-exchange';
+import { UserDeleteUsecase } from 'src/usecase/user/user-delete';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 import { UserCashExchangeDto } from './user.dto';
@@ -41,6 +43,8 @@ export class UserController {
     private readonly updateExpoTokenUsecase: UpdateExpoTokenUsecase,
     @Inject(UserCashExchangeUsecase)
     private readonly userCashExchangeUsecase: UserCashExchangeUsecase,
+    @Inject(UserDeleteUsecase)
+    private readonly userDeleteUsecase: UserDeleteUsecase,
     @Inject(REQUEST)
     private readonly request: IUserReqeust,
   ) {}
@@ -93,5 +97,12 @@ export class UserController {
   @HttpCode(HttpStatus.CREATED)
   cashExchange(@Body() cashExchangeDto: UserCashExchangeDto) {
     return this.userCashExchangeUsecase.execute(cashExchangeDto, this.request.user.sub);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('/:userId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  deleteUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.userDeleteUsecase.execute(userId, this.request.user.sub);
   }
 }
