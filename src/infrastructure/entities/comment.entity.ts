@@ -5,9 +5,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ReportTypeOrmEntity } from './report.entity';
 import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -38,4 +40,7 @@ export class CommentTypeOrmEntity {
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.comments)
   @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmEntity;
+
+  @OneToMany(() => ReportTypeOrmEntity, (report) => report.user)
+  reports: ReportTypeOrmEntity[];
 }

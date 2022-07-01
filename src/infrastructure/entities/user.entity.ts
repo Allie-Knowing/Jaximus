@@ -8,6 +8,7 @@ import { FollowTypeOrmEntity } from './follow.entity';
 import { IqPaymentHistoryTypeOrmEntity } from './iq-payment-history.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
+import { ReportTypeOrmEntity } from './report.entity';
 import { TierTypeOrmEntity } from './tier.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -79,6 +80,9 @@ export class UserTypeOrmEntity {
   @OneToMany(() => CashExchangeTypeOrmEntity, (cashExchange) => cashExchange.user)
   cashExchange: CashExchangeTypeOrmEntity[];
 
+  @OneToMany(() => ReportTypeOrmEntity, (report) => report.user)
+  reports: ReportTypeOrmEntity[];
+
   public static of(user: User): UserTypeOrmEntity {
     return {
       ...user,
@@ -94,6 +98,7 @@ export class UserTypeOrmEntity {
       follower: [],
       following: [],
       cashExchange: [],
+      reports: [],
     };
   }
 }
