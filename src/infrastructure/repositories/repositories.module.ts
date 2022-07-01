@@ -25,6 +25,7 @@ import { DatabaseIqPaymentHistoryRepository } from './iq-payment-history.reposit
 import { DatabaseVideoRepository } from './video.repository';
 import { CashExchangeTypeOrmEntity } from '../entities/cash_exchange.entity';
 import { DatabaseCashExchangeRepository } from './cash_exchange.repository';
+import { DatabaseIqPaymentCategoryRepository } from './iq-payment-category.repository';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { DatabaseCashExchangeRepository } from './cash_exchange.repository';
       ActionPointCategoryTypeOrmEntity,
       IqPaymentCategoryTypeOrmEntity,
       IqPaymentHistoryTypeOrmEntity,
+      IqPaymentCategoryTypeOrmEntity,
       CashExchangeTypeOrmEntity,
     ]),
   ],
@@ -56,6 +58,7 @@ import { DatabaseCashExchangeRepository } from './cash_exchange.repository';
     DatabaseBlockRepository,
     DatabaseActionPointRepository,
     DatabaseIqPaymentHistoryRepository,
+    DatabaseIqPaymentCategoryRepository,
     DatabaseCashExchangeRepository,
   ],
   exports: [
@@ -69,6 +72,7 @@ import { DatabaseCashExchangeRepository } from './cash_exchange.repository';
     DatabaseBlockRepository,
     DatabaseActionPointRepository,
     DatabaseIqPaymentHistoryRepository,
+    DatabaseIqPaymentCategoryRepository,
     DatabaseCashExchangeRepository,
   ],
 })
