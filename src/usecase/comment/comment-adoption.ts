@@ -31,7 +31,7 @@ export class CommentAdoptionUsecase {
 
     if (checkAdoption !== 0) this.exceptionsService.questionIsAlreadyAdoptedException();
 
-    this.commentRepository.commentAdoption(commentId, comment.userId);
+    this.commentRepository.commentAdoption(commentId, videoId, comment.userId);
 
     // action point
     if (comment.userId == userId) return;

@@ -14,7 +14,7 @@ export interface VideoRepository {
   findVideoOwner(videoId: number): Promise<{ userId: number }>;
   findAnswerCount(videoId: number): Promise<GetAnswerCountPresenter>;
   createVideoAnswer(request: CreateVideoAnswerDto, userId: number, question: number): Promise<void>;
-  videoAdoption(videoId: number, userId: number): Promise<void>;
+  videoAdoption(videoId: number, questionVideoId: number, userId: number): Promise<void>;
   userQuestionList(userId: number, page: number, size: number): Promise<Video[]>;
   userAnswerList(userId: number, page: number, size: number): Promise<Video[]>;
   deleteVideo(videoId: number): Promise<void>;

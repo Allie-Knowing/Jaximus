@@ -261,12 +261,13 @@ export class DatabaseVideoRepository implements VideoRepository {
     });
   }
 
-  async videoAdoption(videoId: number, userId: number): Promise<void> {
+  async videoAdoption(videoId: number, questionVideoId: number, userId: number): Promise<void> {
     await this.videoEntityRepository
       .createQueryBuilder()
       .update(VideoTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
+      .orWhere('id = :questionVideoId', { questionVideoId })
       .execute();
 
     await this.userEntityRepository
