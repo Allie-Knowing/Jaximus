@@ -61,6 +61,9 @@ export class Video {
   @Expose({ name: 'is_like' })
   isLike: boolean;
 
+  @Expose({ name: 'answer_count' })
+  answerCount: number;
+
   constructor(obj) {
     return Object.assign(this, obj);
   }

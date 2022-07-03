@@ -156,6 +156,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       videos.map(async (video) => {
         video.isMine = video.userId == userId ? true : false;
         video.isLike = !!(await this.findLike(userId, video.id));
+        video.answerCount = (await this.findAnswerCount(video.id)).videoAnswerCnt;
         return new Video(video);
       }),
     );
