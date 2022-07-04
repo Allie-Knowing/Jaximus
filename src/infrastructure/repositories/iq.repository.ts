@@ -15,7 +15,7 @@ export class DatabaseIqRepository implements IqRepository {
     this.iqEntityRepository
       .createQueryBuilder()
       .update(IqTypeOrmEntity)
-      .set({ curCnt: () => `cur_cnt + 3000` })
+      .set({ curCnt: () => `cur_cnt + 3000`, totCnt: () => `tot_cnt + 3000` })
       .where('user_id = :user_id', { user_id: userId })
       .execute();
   }
@@ -24,7 +24,7 @@ export class DatabaseIqRepository implements IqRepository {
     this.iqEntityRepository
       .createQueryBuilder()
       .update(IqTypeOrmEntity)
-      .set({ curCnt: () => `cur_cnt + 1000` })
+      .set({ curCnt: () => `cur_cnt + 1000`, totCnt: () => `tot_cnt + 1000` })
       .where('user_id = :user_id', { user_id: userId })
       .execute();
   }

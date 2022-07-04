@@ -57,10 +57,10 @@ export class CreateQuestionUsecase {
     const user = await this.userRepository.findOne(userId);
     const eventPaymentHistoryRecord = await this.iqPaymentHistoryRepository.findByUserIdAndPaymentCategory(userId, 3);
     const countQuestionVideo = await this.videoRepository.countUserQuestion(userId);
-    if (countQuestionVideo.videoCnt === 0 && !eventPaymentHistoryRecord) {
-      this.iqRepository.questionVideoEvent(user);
+    if (countQuestionVideo.videoCnt == 1 && !eventPaymentHistoryRecord) {
+      this.iqRepository.questionVideoEvent(userId);
       const iqPaymentCategory = await this.iqPaymentCategoryRepository.getEntityById(2);
-      await this.iqPaymentHistoryRepository.questionVideoEvent(user, iqPaymentCategory);
+      this.iqPaymentHistoryRepository.questionVideoEvent(user, iqPaymentCategory);
     }
 
     // action point

@@ -34,7 +34,7 @@ export class CreateVideoAnswerUsecase {
 
     const countAnswerVideo = await this.videoRepository.countAnswerVideo(userId);
     const eventPaymentHistoryRecord = await this.iqPaymentHistoryRepository.findByUserIdAndPaymentCategory(userId, 3);
-    if (countAnswerVideo.videoCnt === 0 && !eventPaymentHistoryRecord) {
+    if (countAnswerVideo.videoCnt == 0 && !eventPaymentHistoryRecord) {
       this.iqRepository.answerVideoEvent(user);
       const iqPaymentCategory = await this.iqPaymentCategoryRepository.getEntityById(3);
       await this.iqPaymentHistoryRepository.answerVideoEvent(user, iqPaymentCategory);
