@@ -17,7 +17,7 @@ import {
 import { Video } from 'src/domain/model/video';
 import { CreateVideoAnswerUsecase } from 'src/usecase/answer/create-video-answer';
 import { GetVideoAnswerListUsecase } from 'src/usecase/answer/get-video-answer-list';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { DeleteTextAnswerUsecase } from 'src/usecase/answer/delte-text-answer';
@@ -51,7 +51,7 @@ export class AnswerController {
     @Inject(GetVideoAnswerDetailUsecase)
     private readonly getVideoAnswerDetailUsecase: GetVideoAnswerDetailUsecase,
     @Inject(REQUEST)
-    private readonly request: IUserReqeust,
+    private readonly request: IUserRequest,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))

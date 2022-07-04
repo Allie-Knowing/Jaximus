@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
 import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
@@ -46,7 +46,7 @@ export class UserController {
     @Inject(UserDeleteUsecase)
     private readonly userDeleteUsecase: UserDeleteUsecase,
     @Inject(REQUEST)
-    private readonly request: IUserReqeust,
+    private readonly request: IUserRequest,
   ) {}
 
   @Get('/info/:userId')

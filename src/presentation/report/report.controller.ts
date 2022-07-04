@@ -1,9 +1,22 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, Post, Scope, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Param,
+  Post,
+  Scope,
+  UseGuards,
+} from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report';
 import { QueryReportListUsecase } from 'src/usecase/report/query-report-list';
 import { CreateVideoReportDto } from './report.dto';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller({ path: '/admin/report', scope: Scope.REQUEST })
@@ -14,7 +27,7 @@ export class ReportController {
     @Inject(CreateVideoReportUsecase)
     private readonly createVideoReportUsecase: CreateVideoReportUsecase,
     @Inject(REQUEST)
-    private readonly request: IUserReqeust,
+    private readonly request: IUserRequest,
   ) {}
 
   @Get()
