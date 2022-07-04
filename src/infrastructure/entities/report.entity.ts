@@ -23,9 +23,9 @@ export class ReportTypeOrmEntity {
   createdAt: Date;
 
   @ManyToOne(() => CommentTypeOrmEntity, (comment) => comment.reports)
-  @JoinColumn({name:'comment_id'})
+  @JoinColumn({ name: 'comment_id' })
   comment: CommentTypeOrmEntity;
 
-  @Column({ default: false})
+  @Column({ default: false })
   passed: boolean;
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { now } from 'moment';
 import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
 import { Repository } from 'typeorm';
@@ -23,7 +22,7 @@ export class DatabaseUserRepository implements UserRepository {
     this.userEntityRepository.update(userId, { expoToken });
   }
 
-  findOne(userId: number) {
+  async findOne(userId: number) {
     return this.userEntityRepository.findOne(userId);
   }
 
