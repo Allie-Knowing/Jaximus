@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Comment } from 'src/domain/model/comment';
 import { Report } from 'src/domain/model/report';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
 import { ReportRepository } from 'src/domain/repositories/report.repository';
-import { CreateVideoReportDto } from 'src/presentation/report/report.dto';
+import { CreateCommentReportDto, CreateVideoReportDto } from 'src/presentation/report/report.dto';
 import { Repository } from 'typeorm';
 import { ReportTypeOrmEntity } from '../entities/report.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -17,8 +18,17 @@ export class DatabaseReportRepository implements ReportRepository {
     private readonly reportEntityRepository: Repository<ReportTypeOrmEntity>,
   ) {}
 
-  async save(dto: CreateVideoReportDto, user: User, video: Video): Promise<void> {
+  async saveVideoReport(dto: CreateVideoReportDto, user: User, video: Video): Promise<void> {
     await this.reportEntityRepository.save({
+      user: UserTypeOrmEntity.of(user),
+      video: VideoTypeOrmEntity.of(video),
+      description: dto.description,
+    });
+  }
+
+  async saveCommentReport(dto: CreateCommentReportDto, user: User, video: Video, comment: Comment): Promise<void> {
+    await this.reportEntityRepository.save({
+      comment: { id: comment.id },
       user: UserTypeOrmEntity.of(user),
       video: VideoTypeOrmEntity.of(video),
       description: dto.description,

@@ -1,3 +1,4 @@
+import { Comment } from 'src/domain/model/comment';
 import {
   Column,
   CreateDateColumn,
@@ -43,4 +44,8 @@ export class CommentTypeOrmEntity {
 
   @OneToMany(() => ReportTypeOrmEntity, (report) => report.user)
   reports: ReportTypeOrmEntity[];
+
+  public static of(comment: Comment): CommentTypeOrmEntity {
+    return { ...comment, reports: [], user: null, video: null };
+  }
 }

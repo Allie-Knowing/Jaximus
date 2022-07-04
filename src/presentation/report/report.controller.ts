@@ -15,9 +15,10 @@ import {
 import { REQUEST } from '@nestjs/core';
 import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report';
 import { QueryReportListUsecase } from 'src/usecase/report/query-report-list';
-import { CreateVideoReportDto } from './report.dto';
+import { CreateCommentReportDto, CreateVideoReportDto } from './report.dto';
 import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateCommentReportUsecase } from 'src/usecase/report/create-comment-report';
 
 @Controller({ path: '/admin/report', scope: Scope.REQUEST })
 export class ReportController {
@@ -26,6 +27,8 @@ export class ReportController {
     private readonly queryReportListUsecase: QueryReportListUsecase,
     @Inject(CreateVideoReportUsecase)
     private readonly createVideoReportUsecase: CreateVideoReportUsecase,
+    @Inject(CreateCommentReportUsecase)
+    private readonly createCommentReportUsecase: CreateCommentReportUsecase,
     @Inject(REQUEST)
     private readonly request: IUserRequest,
   ) {}
@@ -42,9 +45,10 @@ export class ReportController {
     return this.createVideoReportUsecase.execute(dto, this.request.user.sub);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/comment')
-  reportComment(@Body() dto) {
-    throw new BadRequestException('method not implemented!');
+  reportComment(@Body() dto: CreateCommentReportDto) {
+    return this.createCommentReportUsecase.execute(dto, this.request.user.sub);
   }
 
   @Delete('/:reportId')

@@ -9,3 +9,9 @@ export class CreateVideoReportDto {
   @IsString()
   description: string;
 }
+
+export class CreateCommentReportDto extends CreateVideoReportDto{
+  @IsNumber()
+  @Expose({ name: 'comment_id' })
+  commentId: number;
+}

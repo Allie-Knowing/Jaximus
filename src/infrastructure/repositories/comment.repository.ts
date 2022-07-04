@@ -57,7 +57,7 @@ export class DatabaseCommentRepository implements CommentRepository {
   async findOne(commentId: number): Promise<Comment> {
     const comment: any = await this.commentEntityRepository
       .createQueryBuilder('comment')
-      .select('comment.id', 'commentId')
+      .select('comment.id', 'id')
       .addSelect('comment.is_adoption', 'isAdoption')
       .addSelect('user.id', 'userId')
       .where('comment.id = :id', { id: commentId })

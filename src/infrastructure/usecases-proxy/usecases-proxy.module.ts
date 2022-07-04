@@ -56,6 +56,7 @@ import { UserDeleteUsecase } from 'src/usecase/user/user-delete';
 import { DatabaseReportRepository } from '../repositories/report.repository';
 import { QueryReportListUsecase } from 'src/usecase/report/query-report-list';
 import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report';
+import { CreateCommentReportUsecase } from 'src/usecase/report/create-comment-report';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -386,6 +387,24 @@ export class UsecasesProxyDynamicModule {
             exceptionsService: ExceptionsService,
           ) => new CreateVideoReportUsecase(databaseReportRepository, databaseUserRepository, databaseVideoRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseReportRepository, DatabaseUserRepository, DatabaseVideoRepository, DatabaseCommentRepository, ExceptionsService],
+          provide: CreateCommentReportUsecase,
+          useFactory: (
+            databaseReportRepository: DatabaseReportRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseCommentRepository: DatabaseCommentRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new CreateCommentReportUsecase(
+              databaseReportRepository,
+              databaseUserRepository,
+              databaseVideoRepository,
+              databaseCommentRepository,
+              exceptionsService,
+            ),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -421,6 +440,7 @@ export class UsecasesProxyDynamicModule {
         UserDeleteUsecase,
         QueryReportListUsecase,
         CreateVideoReportUsecase,
+        CreateCommentReportUsecase,
       ],
     };
   }

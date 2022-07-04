@@ -23,6 +23,6 @@ export class CreateVideoReportUsecase {
       this.exceptinoService.videoNotFoundException();
     }
 
-    this.reportRepository.save(dto, user, video);
+    this.reportRepository.saveVideoReport(dto, user, video);
   }
 }
