@@ -20,6 +20,9 @@ export class User {
   @Expose({ name: 'updated_at' })
   updatedAt: Date;
 
+  @Expose({ name: 'deleted_at' })
+  deletedAt: Date;
+
   @Transform(({ value }) => {
     if (value) return parseInt(value);
   })
