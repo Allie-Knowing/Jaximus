@@ -11,23 +11,23 @@ export class CreateCommentReportUsecase {
       private readonly userRepository: UserRepository,
       private readonly videoRepository: VideoRepository,
       private readonly commentRepositroy: CommentRepository,
-      private readonly exceptinoService: ExceptionsService,
+      private readonly exceptionsService: ExceptionsService,
     ) {}
   
     async execute(dto: CreateCommentReportDto, userId: number) {
       const user = await this.userRepository.findOne(userId);
       if (!user || user.deletedAt) {
-        this.exceptinoService.userNotFoundException();
+        this.exceptionsService.userNotFoundException();
       }
   
       const video = await this.videoRepository.findOne(dto.videoId);
       if (!video) {
-        this.exceptinoService.videoNotFoundException();
+        this.exceptionsService.videoNotFoundException();
       }
       
       const comment = await this.commentRepositroy.findOne(dto.commentId);
       if (!comment) {
-        this.exceptinoService.commentNotFoundException();
+        this.exceptionsService.commentNotFoundException();
       }
   
       await this.reportRepository.saveCommentReport(dto, user, video, comment);

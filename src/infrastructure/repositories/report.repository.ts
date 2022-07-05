@@ -7,6 +7,7 @@ import { Video } from 'src/domain/model/video';
 import { ReportRepository } from 'src/domain/repositories/report.repository';
 import { CreateCommentReportDto, CreateVideoReportDto } from 'src/presentation/report/report.dto';
 import { Repository } from 'typeorm';
+import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { ReportTypeOrmEntity } from '../entities/report.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
 import { VideoTypeOrmEntity } from '../entities/video.entity';
@@ -18,6 +19,10 @@ export class DatabaseReportRepository implements ReportRepository {
     private readonly reportEntityRepository: Repository<ReportTypeOrmEntity>,
   ) {}
 
+  async findOne(reportId: number): Promise<ReportTypeOrmEntity> {
+      return await this.reportEntityRepository.findOne(reportId);
+  }
+
   async saveVideoReport(dto: CreateVideoReportDto, user: User, video: Video): Promise<void> {
     await this.reportEntityRepository.save({
       user: UserTypeOrmEntity.of(user),
@@ -28,7 +33,7 @@ export class DatabaseReportRepository implements ReportRepository {
 
   async saveCommentReport(dto: CreateCommentReportDto, user: User, video: Video, comment: Comment): Promise<void> {
     await this.reportEntityRepository.save({
-      comment: { id: comment.id },
+      comment: CommentTypeOrmEntity.of(comment),
       user: UserTypeOrmEntity.of(user),
       video: VideoTypeOrmEntity.of(video),
       description: dto.description,
@@ -40,5 +45,9 @@ export class DatabaseReportRepository implements ReportRepository {
     return reportList.map((report: ReportTypeOrmEntity) => {
       return new Report(report);
     });
+  }
+
+  async deleteReport(reportId: number): Promise<void> {
+      await this.reportEntityRepository.softDelete(reportId);
   }
 }
