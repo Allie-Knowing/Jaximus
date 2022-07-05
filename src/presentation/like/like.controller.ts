@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Inject, Post, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { DeleteLikeUsecase } from 'src/usecase/like/delete-like';
 
@@ -11,7 +11,7 @@ export class LikeController {
     @Inject(CreateLikeUsecase) private readonly createLikeUsecase: CreateLikeUsecase,
     @Inject(DeleteLikeUsecase) private readonly deleteLikeUsecase: DeleteLikeUsecase,
     @Inject(REQUEST)
-    private readonly request: IUserReqeust,
+    private readonly request: IUserRequest,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))

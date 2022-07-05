@@ -1,3 +1,4 @@
+import { Comment } from 'src/domain/model/comment';
 import {
   Column,
   CreateDateColumn,
@@ -5,9 +6,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ReportTypeOrmEntity } from './report.entity';
 import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
 
@@ -38,4 +41,11 @@ export class CommentTypeOrmEntity {
   @ManyToOne(() => UserTypeOrmEntity, (user) => user.comments)
   @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmEntity;
+
+  @OneToMany(() => ReportTypeOrmEntity, (report) => report.user)
+  reports: ReportTypeOrmEntity[];
+
+  public static of(comment: Comment): CommentTypeOrmEntity {
+    return { ...comment, reports: [], user: null, video: null };
+  }
 }

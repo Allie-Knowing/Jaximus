@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { Video } from 'src/domain/model/video';
 import { CreateQuestionUsecase } from 'src/usecase/question/create-question';
 import { DeleteQuestionUsecase } from 'src/usecase/question/delete-question';
@@ -46,7 +46,7 @@ export class QuestionController {
     @Inject(GetAnswerCountUsecase)
     private readonly getAnswerCountUsecase: GetAnswerCountUsecase,
     @Inject(REQUEST)
-    private readonly request: IUserReqeust,
+    private readonly request: IUserRequest,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))

@@ -53,6 +53,11 @@ import { VideoViewsUsecase } from 'src/usecase/video/video-views';
 import { DatabaseCashExchangeRepository } from '../repositories/cash_exchange.repository';
 import { UserCashExchangeUsecase } from 'src/usecase/user/user-cash-exchange';
 import { UserDeleteUsecase } from 'src/usecase/user/user-delete';
+import { DatabaseReportRepository } from '../repositories/report.repository';
+import { QueryReportListUsecase } from 'src/usecase/report/query-report-list';
+import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report';
+import { CreateCommentReportUsecase } from 'src/usecase/report/create-comment-report';
+import { DeleteReportUsecase } from 'src/usecase/report/delete-report';
 import { DatabaseIqPaymentCategoryRepository } from '../repositories/iq-payment-category.repository';
 
 @Module({
@@ -383,6 +388,45 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseUserRepository: DatabaseUserRepository, exceptionsService: ExceptionsService) =>
             new UserDeleteUsecase(databaseUserRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseReportRepository],
+          provide: QueryReportListUsecase,
+          useFactory: (databasReportRepository: DatabaseReportRepository) => new QueryReportListUsecase(databasReportRepository),
+        },
+        {
+          inject: [DatabaseReportRepository, DatabaseUserRepository, DatabaseVideoRepository, ExceptionsService],
+          provide: CreateVideoReportUsecase,
+          useFactory: (
+            databaseReportRepository: DatabaseReportRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            databaseVideoRepository: DatabaseVideoRepository,
+            exceptionsService: ExceptionsService,
+          ) => new CreateVideoReportUsecase(databaseReportRepository, databaseUserRepository, databaseVideoRepository, exceptionsService),
+        },
+        {
+          inject: [DatabaseReportRepository, DatabaseUserRepository, DatabaseVideoRepository, DatabaseCommentRepository, ExceptionsService],
+          provide: CreateCommentReportUsecase,
+          useFactory: (
+            databaseReportRepository: DatabaseReportRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseCommentRepository: DatabaseCommentRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new CreateCommentReportUsecase(
+              databaseReportRepository,
+              databaseUserRepository,
+              databaseVideoRepository,
+              databaseCommentRepository,
+              exceptionsService,
+            ),
+        },
+        {
+          inject: [DatabaseReportRepository, ExceptionsService],
+          provide: DeleteReportUsecase,
+          useFactory: (databaseReportRepository: DatabaseReportRepository, exceptionsService: ExceptionsService) =>
+            new DeleteReportUsecase(databaseReportRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -416,6 +460,10 @@ export class UsecasesProxyDynamicModule {
         VideoViewsUsecase,
         UserCashExchangeUsecase,
         UserDeleteUsecase,
+        QueryReportListUsecase,
+        CreateVideoReportUsecase,
+        CreateCommentReportUsecase,
+        DeleteReportUsecase,
       ],
     };
   }

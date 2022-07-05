@@ -3,6 +3,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToO
 import { CommentTypeOrmEntity } from './comment.entity';
 import { HashTagTypeOrmEntity } from './hash-tag.entity';
 import { LikeTypeOrmEntity } from './like.entity';
+import { ReportTypeOrmEntity } from './report.entity';
 import { UserTypeOrmEntity } from './user.entity';
 
 @Entity('video')
@@ -57,7 +58,10 @@ export class VideoTypeOrmEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmEntity;
 
+  @OneToMany(() => ReportTypeOrmEntity, (report) => report.user)
+  reports: ReportTypeOrmEntity[];
+
   public static of(video: Video): VideoTypeOrmEntity {
-    return { ...video, likes: [], answers: [], hashTags: [], comments: [], question: null, user: null };
+    return { ...video, likes: [], answers: [], hashTags: [], comments: [], question: null, user: null, reports: [] };
   }
 }

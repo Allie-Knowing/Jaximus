@@ -1,5 +1,5 @@
 import { IJwtPayload } from './payload.interface';
 
-export interface IUserReqeust extends Request {
+export interface IUserRequest extends Request {
   user: IJwtPayload;
 }

@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, ParseIntPipe, Query, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { IUserReqeust } from 'src/domain/interfaces/request.interface';
+import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { Tier } from 'src/domain/model/tier';
 import { GetActionPointUsecase } from 'src/usecase/wallet/action-point';
 import { GetPaymentHistoryUsecase } from 'src/usecase/wallet/payment-history';
@@ -19,7 +19,7 @@ export class WalletController {
     @Inject(GetPaymentHistoryUsecase)
     private readonly paymentHistoryUsecase: GetPaymentHistoryUsecase,
     @Inject(REQUEST)
-    private readonly request: IUserReqeust,
+    private readonly request: IUserRequest,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))
