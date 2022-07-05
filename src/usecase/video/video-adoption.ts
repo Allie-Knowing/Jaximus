@@ -28,7 +28,7 @@ export class VideoAdoptionUsecase {
 
     if (checkAdoption !== 0) this.exceptionsService.questionIsAlreadyAdoptedException();
 
-    this.videoRepository.videoAdoption(videoId, videoAnswer.userId);
+    this.videoRepository.videoAdoption(videoId, videoAnswer.questionId, videoAnswer.userId);
 
     // action point
     if (videoAnswer.userId == userId) return;

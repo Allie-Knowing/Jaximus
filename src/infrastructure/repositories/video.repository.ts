@@ -4,6 +4,7 @@ import { Video } from 'src/domain/model/video';
 import { VideoRepository } from 'src/domain/repositories/video.repository';
 import { CreateVideoAnswerDto } from 'src/presentation/answer/answer.dto';
 import { GetAnswerCountPresenter } from 'src/presentation/question/get-answer-count.presenter';
+import { GetCountUserQuestionPresenter } from 'src/presentation/question/get-count-user-question.presenter';
 import { CreateQuestionDto } from 'src/presentation/question/question.dto';
 import { Repository } from 'typeorm';
 import { BlockTypeOrmEntity } from '../entities/block.entity';
@@ -34,6 +35,25 @@ export class DatabaseVideoRepository implements VideoRepository {
     @InjectRepository(BlockTypeOrmEntity)
     private readonly blockEntityRepository: Repository<BlockTypeOrmEntity>,
   ) {}
+  async countAnswerVideo(userId: number): Promise<GetCountUserQuestionPresenter> {
+    const count: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('COUNT(1)', 'videoCnt')
+      .where('video.user_id = :userId', { userId })
+      .andWhere('video.question_id IS NOT NULL')
+      .getRawOne();
+
+    return new GetCountUserQuestionPresenter(count);
+  }
+  async countUserQuestion(userId: number): Promise<GetCountUserQuestionPresenter> {
+    const count: any = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('COUNT(1)', 'videoCnt')
+      .where('video.user_id = :userId', { userId })
+      .getRawOne();
+
+    return new GetCountUserQuestionPresenter(count);
+  }
   async findAnswerCount(videoId: number): Promise<GetAnswerCountPresenter> {
     const count: any = await this.videoEntityRepository
       .createQueryBuilder('video')
@@ -136,6 +156,7 @@ export class DatabaseVideoRepository implements VideoRepository {
       videos.map(async (video) => {
         video.isMine = video.userId == userId ? true : false;
         video.isLike = !!(await this.findLike(userId, video.id));
+        video.answerCnt = (await this.findAnswerCount(video.id)).videoAnswerCnt;
         return new Video(video);
       }),
     );
@@ -241,12 +262,13 @@ export class DatabaseVideoRepository implements VideoRepository {
     });
   }
 
-  async videoAdoption(videoId: number, userId: number): Promise<void> {
+  async videoAdoption(videoId: number, questionVideoId: number, userId: number): Promise<void> {
     await this.videoEntityRepository
       .createQueryBuilder()
       .update(VideoTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: videoId })
+      .orWhere('id = :questionVideoId', { questionVideoId })
       .execute();
 
     await this.userEntityRepository

@@ -67,12 +67,13 @@ export class DatabaseCommentRepository implements CommentRepository {
     return comment ? new Comment(comment) : null;
   }
 
-  async commentAdoption(commentId: number, userId: number): Promise<void> {
+  async commentAdoption(commentId: number, videoId: number, userId: number): Promise<void> {
     await this.commentEntityRepository
       .createQueryBuilder()
       .update(CommentTypeOrmEntity)
       .set({ isAdoption: true })
       .where('id = :id', { id: commentId })
+      .orWhere('id = :videoId', { videoId })
       .execute();
 
     await this.userEntityRepository

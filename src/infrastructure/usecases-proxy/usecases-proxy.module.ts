@@ -58,6 +58,7 @@ import { QueryReportListUsecase } from 'src/usecase/report/query-report-list';
 import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report';
 import { CreateCommentReportUsecase } from 'src/usecase/report/create-comment-report';
 import { DeleteReportUsecase } from 'src/usecase/report/delete-report';
+import { DatabaseIqPaymentCategoryRepository } from '../repositories/iq-payment-category.repository';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -72,6 +73,8 @@ export class UsecasesProxyDynamicModule {
             RedisCacheService,
             DatabaseVideoRepository,
             DatabaseIqRepository,
+            DatabaseIqPaymentHistoryRepository,
+            DatabaseIqPaymentCategoryRepository,
             ElasticsearchService,
             DatabaseActionPointRepository,
             DatabaseUserRepository,
@@ -82,6 +85,8 @@ export class UsecasesProxyDynamicModule {
             cacheService: RedisCacheService,
             databaseVideoRepository: DatabaseVideoRepository,
             databaseIqRepository: DatabaseIqRepository,
+            databaseIqPaymentHistoryRepository: DatabaseIqPaymentHistoryRepository,
+            databaseIqPaymentCategoryRepository: DatabaseIqPaymentCategoryRepository,
             elasticsearchService: ElasticsearchService,
             actionPointRepository: ActionPointRepository,
             userRepository: UserRepository,
@@ -91,6 +96,8 @@ export class UsecasesProxyDynamicModule {
               cacheService,
               databaseVideoRepository,
               databaseIqRepository,
+              databaseIqPaymentHistoryRepository,
+              databaseIqPaymentCategoryRepository,
               elasticsearchService,
               actionPointRepository,
               userRepository,
@@ -103,6 +110,8 @@ export class UsecasesProxyDynamicModule {
             RedisCacheService,
             DatabaseVideoRepository,
             DatabaseUserRepository,
+            DatabaseIqPaymentHistoryRepository,
+            DatabaseIqPaymentCategoryRepository,
             DatabaseActionPointRepository,
             ExceptionsService,
           ],
@@ -112,6 +121,9 @@ export class UsecasesProxyDynamicModule {
             cacheService: RedisCacheService,
             databaseVideoRepository: DatabaseVideoRepository,
             databaseUserRepository: DatabaseUserRepository,
+            databaseIqRepository: DatabaseIqRepository,
+            databaseIqPaymentHistoryRepository: DatabaseIqPaymentHistoryRepository,
+            databaseIqPaymentCategoryRepository: DatabaseIqPaymentCategoryRepository,
             databaseActionPointRepository: DatabaseActionPointRepository,
             exceptionsService: ExceptionsService,
           ) =>
@@ -121,6 +133,9 @@ export class UsecasesProxyDynamicModule {
               databaseVideoRepository,
               databaseUserRepository,
               databaseActionPointRepository,
+              databaseIqRepository,
+              databaseIqPaymentCategoryRepository,
+              databaseIqPaymentHistoryRepository,
               exceptionsService,
             ),
         },
