@@ -10,7 +10,7 @@ export class CreateVideoReportDto {
   description: string;
 }
 
-export class CreateCommentReportDto extends CreateVideoReportDto{
+export class CreateCommentReportDto extends CreateVideoReportDto {
   @IsNumber()
   @Expose({ name: 'comment_id' })
   commentId: number;

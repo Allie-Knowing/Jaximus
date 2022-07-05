@@ -6,7 +6,7 @@ export class DeleteReportUsecase {
 
   async execute(reportId: number) {
     const report = await this.reportRepository.findOne(reportId);
-    
+
     if (!report) this.exceptionService.reportNotFoundException();
 
     await this.reportRepository.deleteReport(reportId);

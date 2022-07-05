@@ -20,7 +20,7 @@ export class DatabaseReportRepository implements ReportRepository {
   ) {}
 
   async findOne(reportId: number): Promise<ReportTypeOrmEntity> {
-      return await this.reportEntityRepository.findOne(reportId);
+    return await this.reportEntityRepository.findOne(reportId);
   }
 
   async saveVideoReport(dto: CreateVideoReportDto, user: User, video: Video): Promise<void> {
@@ -48,6 +48,6 @@ export class DatabaseReportRepository implements ReportRepository {
   }
 
   async deleteReport(reportId: number): Promise<void> {
-      await this.reportEntityRepository.softDelete(reportId);
+    await this.reportEntityRepository.softDelete(reportId);
   }
 }

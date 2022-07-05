@@ -24,6 +24,7 @@ export class ReportController {
   ) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   reportList() {
     return this.queryReportListUsecase.execute();
   }
