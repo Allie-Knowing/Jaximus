@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { UserTypeOrmEntity } from './user.entity';
 import { VideoTypeOrmEntity } from './video.entity';
@@ -26,6 +26,6 @@ export class ReportTypeOrmEntity {
   @JoinColumn({ name: 'comment_id' })
   comment: CommentTypeOrmEntity;
 
-  @Column({ default: false })
-  passed: boolean;
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 }

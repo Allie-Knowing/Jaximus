@@ -18,7 +18,8 @@ export class Report {
   @Expose({ name: 'comment_id' })
   commentId: number;
 
-  passed: boolean;
+  @Expose({ name: 'deleted_at' })
+  deletedAt: Date;
 
   constructor(obj: ReportTypeOrmEntity) {
     this.id = obj.id;
@@ -27,6 +28,6 @@ export class Report {
     this.videoId = obj.video.id;
     this.createdAt = obj.createdAt;
     this.commentId = !obj.comment ? null : obj.comment.id;
-    this.passed = obj.passed;
+    this.deletedAt = obj.deletedAt;
   }
 }
