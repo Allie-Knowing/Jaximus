@@ -52,6 +52,9 @@ export class ExceptionsService implements IException {
   reportNotFoundException(): void {
     throw new NotFoundException('Report not found excpetion');
   }
+  inquiryCategoryNotFoundException(): void {
+    throw new NotFoundException('Inquiry category not found excpetion');
+  }
   userIdNotMatchedException(): void {
     throw new BadRequestException('User id not matched exception');
   }
