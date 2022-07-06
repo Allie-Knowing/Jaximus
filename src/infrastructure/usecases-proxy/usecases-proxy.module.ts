@@ -59,6 +59,10 @@ import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report
 import { CreateCommentReportUsecase } from 'src/usecase/report/create-comment-report';
 import { DeleteReportUsecase } from 'src/usecase/report/delete-report';
 import { DatabaseIqPaymentCategoryRepository } from '../repositories/iq-payment-category.repository';
+import { DatabaseInquiryRepository } from '../repositories/inquiry.repository';
+import { CreateInquiryUsecase } from 'src/usecase/inquiry/create-inquiry';
+import { DeleteInquiryUsecase } from 'src/usecase/inquiry/delete-inquiry';
+import { QueryInquiryListUsecase } from 'src/usecase/inquiry/query-inquiry-list';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -427,6 +431,27 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseReportRepository: DatabaseReportRepository, exceptionsService: ExceptionsService) =>
             new DeleteReportUsecase(databaseReportRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseInquiryRepository, DatabaseUserRepository, ExceptionsService],
+          provide: CreateInquiryUsecase,
+          useFactory: (
+            databaseInquiryRepository: DatabaseInquiryRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            exceptionsService: ExceptionsService,
+          ) => new CreateInquiryUsecase(databaseInquiryRepository, databaseUserRepository, exceptionsService),
+        },
+        {
+          inject: [DatabaseInquiryRepository, ExceptionsService],
+          provide: QueryInquiryListUsecase,
+          useFactory: (databaseInquiryRepository: DatabaseInquiryRepository, exceptionsService: ExceptionsService) =>
+            new QueryInquiryListUsecase(databaseInquiryRepository, exceptionsService),
+        },
+        {
+          inject: [DatabaseInquiryRepository, ExceptionsService],
+          provide: DeleteInquiryUsecase,
+          useFactory: (databaseInquiryRepository: DatabaseInquiryRepository, exceptionsService: ExceptionsService) =>
+            new DeleteInquiryUsecase(databaseInquiryRepository, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -464,6 +489,9 @@ export class UsecasesProxyDynamicModule {
         CreateVideoReportUsecase,
         CreateCommentReportUsecase,
         DeleteReportUsecase,
+        CreateInquiryUsecase,
+        QueryInquiryListUsecase,
+        DeleteInquiryUsecase,
       ],
     };
   }
