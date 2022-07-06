@@ -5,6 +5,7 @@ import { BlockTypeOrmEntity } from './block.entity';
 import { CashExchangeTypeOrmEntity } from './cash_exchange.entity';
 import { CommentTypeOrmEntity } from './comment.entity';
 import { FollowTypeOrmEntity } from './follow.entity';
+import { InquiryTypeOrmEntity } from './inquiry.entity';
 import { IqPaymentHistoryTypeOrmEntity } from './iq-payment-history.entity';
 import { IqTypeOrmEntity } from './iq.entity';
 import { LikeTypeOrmEntity } from './like.entity';
@@ -83,6 +84,9 @@ export class UserTypeOrmEntity {
   @OneToMany(() => ReportTypeOrmEntity, (report) => report.user)
   reports: ReportTypeOrmEntity[];
 
+  @OneToMany(() => InquiryTypeOrmEntity, (inquiry) => inquiry.user)
+  inquiries: InquiryTypeOrmEntity[];
+
   public static of(user: User): UserTypeOrmEntity {
     return {
       ...user,
@@ -99,6 +103,7 @@ export class UserTypeOrmEntity {
       following: [],
       cashExchange: [],
       reports: [],
+      inquiries: [],
     };
   }
 }
