@@ -1,5 +1,4 @@
 import { Expose } from 'class-transformer';
-import { InquiryTypeOrmEntity } from 'src/infrastructure/entities/inquiry.entity';
 
 export class Inquiry {
   id: number;
@@ -17,12 +16,7 @@ export class Inquiry {
   @Expose({ name: 'inquiry_category_id' })
   inquiryCategoryId: number;
 
-  constructor(obj: InquiryTypeOrmEntity) {
-    this.id = obj.id;
-    this.title = obj.title;
-    this.description = obj.description;
-    this.userId = obj.user.id;
-    this.createdAt = obj.createdAt;
-    this.inquiryCategoryId = obj.inquiryCategory.id;
+  constructor(obj) {
+    return Object.assign(this, obj);
   }
 }

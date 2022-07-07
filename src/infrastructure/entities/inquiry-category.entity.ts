@@ -1,3 +1,4 @@
+import { InquiryCategory } from 'src/domain/model/inquiry-category';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { InquiryTypeOrmEntity } from './inquiry.entity';
 
@@ -11,4 +12,11 @@ export class InquiryCategoryTypeOrmEntity {
 
   @OneToMany(() => InquiryTypeOrmEntity, (inquiry) => inquiry.inquiryCategory)
   inquiries: InquiryTypeOrmEntity[];
+
+  public static of(inquiryCategory: InquiryCategory): InquiryCategoryTypeOrmEntity {
+    return {
+      ...inquiryCategory,
+      inquiries: []
+    }
+  }
 }
