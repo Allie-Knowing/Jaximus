@@ -21,6 +21,6 @@ export class InquiryTypeOrmEntity {
   createdAt: Date;
 
   @ManyToOne(() => InquiryCategoryTypeOrmEntity, (inquiryCategory) => inquiryCategory.inquiries)
-  @JoinColumn({ name: 'inquirt_categpry_id' })
+  @JoinColumn({ name: 'inquiry_category_id' })
   inquiryCategory: InquiryCategoryTypeOrmEntity;
 }
