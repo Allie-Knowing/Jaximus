@@ -63,6 +63,7 @@ import { DatabaseInquiryRepository } from '../repositories/inquiry.repository';
 import { CreateInquiryUsecase } from 'src/usecase/inquiry/create-inquiry';
 import { DeleteInquiryUsecase } from 'src/usecase/inquiry/delete-inquiry';
 import { QueryInquiryListUsecase } from 'src/usecase/inquiry/query-inquiry-list';
+import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-category.repository';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -432,13 +433,20 @@ export class UsecasesProxyDynamicModule {
             new DeleteReportUsecase(databaseReportRepository, exceptionsService),
         },
         {
-          inject: [DatabaseInquiryRepository, DatabaseUserRepository, ExceptionsService],
+          inject: [DatabaseInquiryRepository, DatabaseUserRepository, DatabaseInquiryCategoryRepository, ExceptionsService],
           provide: CreateInquiryUsecase,
           useFactory: (
             databaseInquiryRepository: DatabaseInquiryRepository,
             databaseUserRepository: DatabaseUserRepository,
+            databaseInquiryCategoryRepository: DatabaseInquiryCategoryRepository,
             exceptionsService: ExceptionsService,
-          ) => new CreateInquiryUsecase(databaseInquiryRepository, databaseUserRepository, exceptionsService),
+          ) =>
+            new CreateInquiryUsecase(
+              databaseInquiryRepository,
+              databaseInquiryCategoryRepository,
+              databaseUserRepository,
+              exceptionsService,
+            ),
         },
         {
           inject: [DatabaseInquiryRepository, ExceptionsService],
