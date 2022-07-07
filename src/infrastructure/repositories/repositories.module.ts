@@ -28,6 +28,10 @@ import { DatabaseCashExchangeRepository } from './cash_exchange.repository';
 import { ReportTypeOrmEntity } from '../entities/report.entity';
 import { DatabaseReportRepository } from './report.repository';
 import { DatabaseIqPaymentCategoryRepository } from './iq-payment-category.repository';
+import { InquiryTypeOrmEntity } from '../entities/inquiry.entity';
+import { DatabaseInquiryRepository } from './inquiry.repository';
+import { InquiryCategoryTypeOrmEntity } from '../entities/inquiry-category.entity';
+import { DatabaseInquiryCategoryRepository } from './inquiry-category.repository';
 
 @Module({
   imports: [
@@ -48,6 +52,8 @@ import { DatabaseIqPaymentCategoryRepository } from './iq-payment-category.repos
       IqPaymentCategoryTypeOrmEntity,
       CashExchangeTypeOrmEntity,
       ReportTypeOrmEntity,
+      InquiryTypeOrmEntity,
+      InquiryCategoryTypeOrmEntity,
     ]),
   ],
   providers: [
@@ -64,6 +70,8 @@ import { DatabaseIqPaymentCategoryRepository } from './iq-payment-category.repos
     DatabaseIqPaymentCategoryRepository,
     DatabaseCashExchangeRepository,
     DatabaseReportRepository,
+    DatabaseInquiryRepository,
+    DatabaseInquiryCategoryRepository,
   ],
   exports: [
     DatabaseUserRepository,
@@ -79,6 +87,8 @@ import { DatabaseIqPaymentCategoryRepository } from './iq-payment-category.repos
     DatabaseIqPaymentCategoryRepository,
     DatabaseCashExchangeRepository,
     DatabaseReportRepository,
+    DatabaseInquiryRepository,
+    DatabaseInquiryCategoryRepository,
   ],
 })
 export class RepositoriesModule {}

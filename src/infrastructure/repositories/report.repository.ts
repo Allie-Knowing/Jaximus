@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from 'src/domain/model/comment';
-import { Report } from 'src/domain/model/report';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
 import { ReportRepository } from 'src/domain/repositories/report.repository';
-import { CreateCommentReportDto, CreateVideoReportDto } from 'src/presentation/report/report.dto';
+import { CreateCommentReportDto, CreateVideoReportDto, ReportResponseDto } from 'src/presentation/report/report.dto';
 import { Repository } from 'typeorm';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { ReportTypeOrmEntity } from '../entities/report.entity';
@@ -40,10 +39,23 @@ export class DatabaseReportRepository implements ReportRepository {
     });
   }
 
-  async findAll(): Promise<Report[]> {
-    const reportList = await this.reportEntityRepository.find({ relations: ['user', 'video', 'comment'] });
+  async findAll(): Promise<ReportResponseDto[]> {
+    const reportList = await this.reportEntityRepository
+      .createQueryBuilder('report')
+      .select('video.id', 'videoId')
+      .addSelect('report.id', 'reportId')
+      .addSelect('user.id', 'userId')
+      .addSelect('report.description', 'description')
+      .addSelect('comment.id', 'commentId')
+      .addSelect('video.videoUrl', 'videoUrl')
+      .addSelect('report.createdAt', 'createdAt')
+      .leftJoin('report.user', 'user')
+      .leftJoin('report.video', 'video')
+      .leftJoin('report.comment', 'comment')
+      .getRawMany();
+    
     return reportList.map((report: ReportTypeOrmEntity) => {
-      return new Report(report);
+      return new ReportResponseDto(report);
     });
   }
 
