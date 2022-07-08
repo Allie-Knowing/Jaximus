@@ -64,6 +64,8 @@ import { CreateInquiryUsecase } from 'src/usecase/inquiry/create-inquiry';
 import { DeleteInquiryUsecase } from 'src/usecase/inquiry/delete-inquiry';
 import { QueryInquiryListUsecase } from 'src/usecase/inquiry/query-inquiry-list';
 import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-category.repository';
+import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
+import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -460,6 +462,54 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseInquiryRepository: DatabaseInquiryRepository, exceptionsService: ExceptionsService) =>
             new DeleteInquiryUsecase(databaseInquiryRepository, exceptionsService),
         },
+        {
+          inject: [
+            DatabaseVideoRepository,
+            DatabaseReportRepository,
+            DatabaseActionPointRepository,
+            DatabaseUserRepository,
+            ExceptionsService,
+          ],
+          provide: AdminDeleteVideoUsecase,
+          useFactory: (
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseReportRepository: DatabaseReportRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new AdminDeleteVideoUsecase(
+              databaseVideoRepository,
+              databaseReportRepository,
+              databaseActionPointRepository,
+              databaseUserRepository,
+              exceptionsService,
+            ),
+        },
+        {
+          inject: [
+            DatabaseCommentRepository,
+            DatabaseReportRepository,
+            DatabaseActionPointRepository,
+            DatabaseUserRepository,
+            ExceptionsService,
+          ],
+          provide: AdminDeleteCommentUsecase,
+          useFactory: (
+            databaseCommentRepository: DatabaseCommentRepository,
+            databaseReportRepository: DatabaseReportRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new AdminDeleteCommentUsecase(
+              databaseCommentRepository,
+              databaseReportRepository,
+              databaseActionPointRepository,
+              databaseUserRepository,
+              exceptionsService,
+            ),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -500,6 +550,8 @@ export class UsecasesProxyDynamicModule {
         CreateInquiryUsecase,
         QueryInquiryListUsecase,
         DeleteInquiryUsecase,
+        AdminDeleteCommentUsecase,
+        AdminDeleteVideoUsecase,
       ],
     };
   }
