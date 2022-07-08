@@ -1,8 +1,8 @@
-import { Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Query, Scope } from '@nestjs/common';
 import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
 import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
 
-@Controller({ path: '/admin' })
+@Controller({ path: '/admin', scope: Scope.REQUEST })
 export class AdminController {
   constructor(
     private readonly adminDeleteVideoUsecase: AdminDeleteVideoUsecase,
