@@ -513,4 +513,15 @@ export class DatabaseVideoRepository implements VideoRepository {
       .where('id = :id', { id: videoId })
       .execute();
   }
+
+  async userQuestionCount(userId: number): Promise<number> {
+    const userQuestionCnt: number = await this.videoEntityRepository
+      .createQueryBuilder('video')
+      .select('video.id', 'videoId')
+      .where('video.user_id = :user_id', { user_id: userId })
+      .andWhere('video.question IS NULL')
+      .getCount();
+
+    return userQuestionCnt;
+  }
 }
