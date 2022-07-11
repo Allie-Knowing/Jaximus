@@ -1,4 +1,3 @@
-import { UserTypeOrmEntity } from 'src/infrastructure/entities/user.entity';
 import { User } from '../model/user';
 
 export interface UserRepository {
@@ -6,4 +5,6 @@ export interface UserRepository {
   userInfo(userId: number): Promise<User>;
   updateExpoToken(userId: number, expoToken: string): void;
   deleteUser(userId: number): Promise<void>;
+  findByEmail(email: string): Promise<User>;
+  save(dto: any, provider: string): Promise<User>;
 }

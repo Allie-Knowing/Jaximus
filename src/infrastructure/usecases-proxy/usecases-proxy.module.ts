@@ -1,4 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
+import { HttpService, HttpModule } from '@nestjs/axios';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { DeleteLikeUsecase } from 'src/usecase/like/delete-like';
@@ -66,9 +67,10 @@ import { QueryInquiryListUsecase } from 'src/usecase/inquiry/query-inquiry-list'
 import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-category.repository';
 import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
 import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
+import { GoogleLoginUsecase } from 'src/usecase/auth/google-login';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule, HttpModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -510,6 +512,16 @@ export class UsecasesProxyDynamicModule {
               exceptionsService,
             ),
         },
+        {
+          inject: [DatabaseUserRepository, RedisCacheService, HttpService, ExceptionsService],
+          provide: GoogleLoginUsecase,
+          useFactory: (
+            databaseUserRepository: DatabaseUserRepository,
+            cacheService: RedisCacheService,
+            httpService: HttpService,
+            exceptionsService: ExceptionsService,
+          ) => new GoogleLoginUsecase(databaseUserRepository, cacheService, httpService, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -552,6 +564,7 @@ export class UsecasesProxyDynamicModule {
         DeleteInquiryUsecase,
         AdminDeleteCommentUsecase,
         AdminDeleteVideoUsecase,
+        GoogleLoginUsecase,
       ],
     };
   }

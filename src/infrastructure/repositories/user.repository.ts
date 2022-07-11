@@ -86,4 +86,24 @@ export class DatabaseUserRepository implements UserRepository {
 
     await this.userEntityRepository.softDelete({ id: userId });
   }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userEntityRepository
+      .createQueryBuilder()
+      .select()
+      .where('email = :email', { email: email })
+      .from(UserTypeOrmEntity, 'user')
+      .withDeleted()
+      .getRawOne();
+      
+    return user ? new User(user) : null;
+  }
+
+  async save(dto: any, provider: string): Promise<User> {
+    const user = this.userEntityRepository.save({
+      ...dto,
+      provider,
+    });
+    return new User(user);
+  }
 }
