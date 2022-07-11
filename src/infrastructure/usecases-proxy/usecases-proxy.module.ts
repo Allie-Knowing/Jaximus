@@ -64,6 +64,8 @@ import { CreateInquiryUsecase } from 'src/usecase/inquiry/create-inquiry';
 import { DeleteInquiryUsecase } from 'src/usecase/inquiry/delete-inquiry';
 import { QueryInquiryListUsecase } from 'src/usecase/inquiry/query-inquiry-list';
 import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-category.repository';
+import { GetCountUserQuestionPresenter } from 'src/presentation/question/get-count-user-question.presenter';
+import { UserQuestionCountUsecase } from 'src/usecase/user/user-question-count';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -460,6 +462,11 @@ export class UsecasesProxyDynamicModule {
           useFactory: (databaseInquiryRepository: DatabaseInquiryRepository, exceptionsService: ExceptionsService) =>
             new DeleteInquiryUsecase(databaseInquiryRepository, exceptionsService),
         },
+        {
+          inject: [DatabaseVideoRepository],
+          provide: UserQuestionCountUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new UserQuestionCountUsecase(databaseVideoRepository),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -500,6 +507,7 @@ export class UsecasesProxyDynamicModule {
         CreateInquiryUsecase,
         QueryInquiryListUsecase,
         DeleteInquiryUsecase,
+        UserQuestionCountUsecase,
       ],
     };
   }
