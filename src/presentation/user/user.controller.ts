@@ -20,6 +20,7 @@ import { IUserRequest } from 'src/domain/interfaces/request.interface';
 import { User } from 'src/domain/model/user';
 import { Video } from 'src/domain/model/video';
 import { UpdateExpoTokenUsecase } from 'src/usecase/user/upsert-expo-token';
+import { UserAnswerCountUsecase } from 'src/usecase/user/user-answer-count';
 import { UserAnswerListUsecase } from 'src/usecase/user/user-answer-video';
 import { UserBlockUsecase } from 'src/usecase/user/user-block';
 import { UserCashExchangeUsecase } from 'src/usecase/user/user-cash-exchange';
@@ -48,6 +49,9 @@ export class UserController {
     private readonly userDeleteUsecase: UserDeleteUsecase,
     @Inject(UserQuestionCountUsecase)
     private readonly userQuestionCountUsecase: UserQuestionCountUsecase,
+    @Inject(UserAnswerCountUsecase)
+    private readonly userAnswerCountUsecase: UserAnswerCountUsecase,
+
     @Inject(REQUEST)
     private readonly request: IUserRequest,
   ) {}
@@ -112,5 +116,10 @@ export class UserController {
   @Get('/question/count/:userId')
   userQuestionCnt(@Param('userId', ParseIntPipe) userId: number): Promise<number> {
     return this.userQuestionCountUsecase.execute(userId);
+  }
+
+  @Get('/answer/count/:userId')
+  userAnswerCnt(@Param('userId', ParseIntPipe) userId: number): Promise<number> {
+    return this.userAnswerCountUsecase.execute(userId);
   }
 }
