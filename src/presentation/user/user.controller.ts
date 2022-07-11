@@ -25,6 +25,7 @@ import { UserBlockUsecase } from 'src/usecase/user/user-block';
 import { UserCashExchangeUsecase } from 'src/usecase/user/user-cash-exchange';
 import { UserDeleteUsecase } from 'src/usecase/user/user-delete';
 import { UserInfoUsecase } from 'src/usecase/user/user-info';
+import { UserQuestionCountUsecase } from 'src/usecase/user/user-question-count';
 import { UserQuestionListUsecase } from 'src/usecase/user/user-question-video';
 import { UserCashExchangeDto } from './user.dto';
 
@@ -45,6 +46,8 @@ export class UserController {
     private readonly userCashExchangeUsecase: UserCashExchangeUsecase,
     @Inject(UserDeleteUsecase)
     private readonly userDeleteUsecase: UserDeleteUsecase,
+    @Inject(UserQuestionCountUsecase)
+    private readonly userQuestionCountUsecase: UserQuestionCountUsecase,
     @Inject(REQUEST)
     private readonly request: IUserRequest,
   ) {}
@@ -103,6 +106,11 @@ export class UserController {
   @Delete('/')
   @HttpCode(HttpStatus.NO_CONTENT)
   deleteUser() {
-    return this.userDeleteUsecase.execute(3);
+    return this.userDeleteUsecase.execute(this.request.user.sub);
+  }
+
+  @Get('/question/count/:userId')
+  userQuestionCnt(@Param('userId', ParseIntPipe) userId: number): Promise<number> {
+    return this.userQuestionCountUsecase.execute(userId);
   }
 }
