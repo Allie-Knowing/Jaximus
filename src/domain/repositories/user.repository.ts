@@ -1,4 +1,3 @@
-import { UserTypeOrmEntity } from 'src/infrastructure/entities/user.entity';
 import { User } from '../model/user';
 
 export interface UserRepository {
