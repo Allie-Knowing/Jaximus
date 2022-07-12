@@ -1,14 +1,15 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Scope } from '@nestjs/common';
 import { GoogleLoginUsecase } from 'src/usecase/auth/google-login';
-import { GoogleLoginDto } from './auth.dto';
+import { NaverLoginUsecase } from 'src/usecase/auth/naver-login';
+import { CodeDto } from './auth.dto';
 
 @Controller({ path: '/auth', scope: Scope.REQUEST })
 export class AuthController {
-  constructor(private readonly googleLoginUsecase: GoogleLoginUsecase) {}
+  constructor(private readonly googleLoginUsecase: GoogleLoginUsecase, private readonly naverLoginUsecase: NaverLoginUsecase) {}
 
   @Post('/google')
   @HttpCode(HttpStatus.CREATED)
-  googleLogin(@Body() dto: GoogleLoginDto) {
+  googleLogin(@Body() dto: CodeDto) {
     return this.googleLoginUsecase.execute(dto);
   }
 
@@ -18,9 +19,9 @@ export class AuthController {
     return null;
   }
 
-  @Post()
+  @Post('/naver')
   @HttpCode(HttpStatus.CREATED)
-  naverLogin(@Body() dto) {
-    return null;
+  naverLogin(@Body() dto: CodeDto) {
+    return this.naverLoginUsecase.execute(dto);
   }
 }

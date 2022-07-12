@@ -1,6 +1,6 @@
 import { ExceptionsService } from 'src/infrastructure/exceptions/exceptions.service';
 import { DatabaseUserRepository } from 'src/infrastructure/repositories/user.repository';
-import { GoogleLoginDto } from 'src/presentation/auth/auth.dto';
+import { CodeDto } from 'src/presentation/auth/auth.dto';
 import { HttpService } from '@nestjs/axios';
 import { oauthEnv, provider } from 'src/infrastructure/common/constants/oauth.constant';
 import { User } from 'src/domain/model/user';
@@ -14,7 +14,7 @@ export class GoogleLoginUsecase {
     private readonly exceptionsService: ExceptionsService,
   ) {}
 
-  async execute(dto: GoogleLoginDto) {
+  async execute(dto: CodeDto) {
     const code = dto.code;
     const params = new URLSearchParams();
     params.append('client_id', oauthEnv.google.client_id);
@@ -39,7 +39,7 @@ export class GoogleLoginUsecase {
         if (!data.email) {
           throw new this.exceptionsService.badRequestException(data);
         }
-        
+
         user = await this.userRepository.findByEmail(data.email);
 
         if (!user) {

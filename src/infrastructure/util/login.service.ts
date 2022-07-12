@@ -6,7 +6,6 @@ import { CacheTemplate, generateCacheTemplate } from 'src/domain/enums/cache.enu
 import { User } from 'src/domain/model/user';
 import { JWT_SECRET_KEY } from '../common/constants/jwt.constant';
 import { TokenResponse } from 'src/presentation/auth/auth.dto';
-import { ActionPointRepository } from 'src/domain/repositories/action-point.repository';
 import { DatabaseActionPointRepository } from '../repositories/action-point.repository';
 
 @Injectable()

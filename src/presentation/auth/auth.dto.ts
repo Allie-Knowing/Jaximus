@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { IsString } from 'class-validator';
 
-export class GoogleLoginDto {
+export class CodeDto {
   @IsString()
   code: string;
 }
