@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
+import { AdminController } from 'src/presentation/admin/admin.controller';
 import { AnswerController } from 'src/presentation/answer/answer.controller';
 import { InquiryController } from 'src/presentation/inquiry/inquiry.controller';
 import { LikeController } from 'src/presentation/like/like.controller';
@@ -25,6 +26,6 @@ import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.mod
       inject: [EnvironmentConfigService],
     }),
   ],
-  controllers: [VideoController, LikeController, UserController, AnswerController, QuestionController, SearchController, WalletController, ReportController, InquiryController],
+  controllers: [VideoController, LikeController, UserController, AnswerController, QuestionController, SearchController, WalletController, ReportController, InquiryController, AdminController],
 })
 export class ControllersModule {}

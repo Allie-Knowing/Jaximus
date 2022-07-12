@@ -67,6 +67,8 @@ import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-categ
 import { GetCountUserQuestionPresenter } from 'src/presentation/question/get-count-user-question.presenter';
 import { UserQuestionCountUsecase } from 'src/usecase/user/user-question-count';
 import { UserAnswerCountUsecase } from 'src/usecase/user/user-answer-count';
+import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
+import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
@@ -472,6 +474,54 @@ export class UsecasesProxyDynamicModule {
           inject: [DatabaseVideoRepository],
           provide: UserAnswerCountUsecase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new UserAnswerCountUsecase(databaseVideoRepository),
+         },
+         {
+          inject: [
+            DatabaseVideoRepository,
+            DatabaseReportRepository,
+            DatabaseActionPointRepository,
+            DatabaseUserRepository,
+            ExceptionsService,
+          ],
+          provide: AdminDeleteVideoUsecase,
+          useFactory: (
+            databaseVideoRepository: DatabaseVideoRepository,
+            databaseReportRepository: DatabaseReportRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new AdminDeleteVideoUsecase(
+              databaseVideoRepository,
+              databaseReportRepository,
+              databaseActionPointRepository,
+              databaseUserRepository,
+              exceptionsService,
+            ),
+        },
+        {
+          inject: [
+            DatabaseCommentRepository,
+            DatabaseReportRepository,
+            DatabaseActionPointRepository,
+            DatabaseUserRepository,
+            ExceptionsService,
+          ],
+          provide: AdminDeleteCommentUsecase,
+          useFactory: (
+            databaseCommentRepository: DatabaseCommentRepository,
+            databaseReportRepository: DatabaseReportRepository,
+            databaseActionPointRepository: DatabaseActionPointRepository,
+            databaseUserRepository: DatabaseUserRepository,
+            exceptionsService: ExceptionsService,
+          ) =>
+            new AdminDeleteCommentUsecase(
+              databaseCommentRepository,
+              databaseReportRepository,
+              databaseActionPointRepository,
+              databaseUserRepository,
+              exceptionsService,
+            ),
         },
       ],
       exports: [
@@ -515,6 +565,8 @@ export class UsecasesProxyDynamicModule {
         DeleteInquiryUsecase,
         UserQuestionCountUsecase,
         UserAnswerCountUsecase,
+        AdminDeleteCommentUsecase,
+        AdminDeleteVideoUsecase,
       ],
     };
   }
