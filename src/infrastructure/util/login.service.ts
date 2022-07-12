@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ExceptionsService } from '../exceptions/exceptions.service';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { RedisCacheService } from '../config/redis/redis-cache.service';
 import { CacheTemplate, generateCacheTemplate } from 'src/domain/enums/cache.enum';
 import { User } from 'src/domain/model/user';
@@ -34,6 +34,15 @@ export class LoginService {
       refreshToken,
       isFirstLogin,
     };
+  }
+
+  public async saveActionPoint(user: User) {
+    const loginTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_LOGIN, user.id);
+    const actionLogin = await this.cacheService.get(loginTemplateKey);
+    if(!actionLogin) {
+        await this.cacheService.setTtl(loginTemplateKey, 'x', 57600);
+        await this.actionPointRepository.saveActionPoint(user, 1);
+    }
   }
 
   private generateJwt(sub: string, type: string): string {

@@ -1,4 +1,5 @@
 export enum CacheTemplate {
+  ACTION_LOGIN = 'action.login',
   ACTION_LIKE = 'action.like.user.',
   ACTION_LIKE_CHECK = 'action.like.check.user.',
   ACTION_CREATE_QUESTION = 'action.create.question.user.',
