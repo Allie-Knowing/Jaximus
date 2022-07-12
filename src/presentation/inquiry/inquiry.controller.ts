@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, Post, Scope, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Post, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IUserRequest } from 'src/domain/interfaces/request.interface';
@@ -35,7 +35,7 @@ export class InquiryController {
 
   @Delete('/:inquiryId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteInquiry(@Param('inquiryId') inquiryId: number) {
+  deleteInquiry(@Param('inquiryId', ParseIntPipe) inquiryId: number) {
     return this.deleteInquiryUsecase.execute(inquiryId);
   }
 }

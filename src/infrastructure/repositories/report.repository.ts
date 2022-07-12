@@ -19,7 +19,7 @@ export class DatabaseReportRepository implements ReportRepository {
   ) {}
 
   async findOne(reportId: number): Promise<ReportTypeOrmEntity> {
-    return await this.reportEntityRepository.findOne(reportId);
+    return await this.reportEntityRepository.findOne(reportId, { relations: ['user'] });
   }
 
   async saveVideoReport(dto: CreateVideoReportDto, user: User, video: Video): Promise<void> {
@@ -53,7 +53,7 @@ export class DatabaseReportRepository implements ReportRepository {
       .leftJoin('report.video', 'video')
       .leftJoin('report.comment', 'comment')
       .getRawMany();
-    
+
     return reportList.map((report: ReportTypeOrmEntity) => {
       return new ReportResponseDto(report);
     });

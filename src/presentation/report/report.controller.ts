@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, Post, Scope, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Inject, Param, ParseIntPipe, Post, Scope, UseGuards } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { CreateVideoReportUsecase } from 'src/usecase/report/create-video-report';
 import { QueryReportListUsecase } from 'src/usecase/report/query-report-list';
@@ -45,7 +45,7 @@ export class ReportController {
 
   @Delete('/:reportId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  reportPass(@Param('reportId') reportId: number) {
+  reportPass(@Param('reportId', ParseIntPipe) reportId: number) {
     return this.deleteReportUsecase.execute(reportId);
   }
 }
