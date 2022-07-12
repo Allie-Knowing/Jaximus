@@ -64,6 +64,9 @@ import { CreateInquiryUsecase } from 'src/usecase/inquiry/create-inquiry';
 import { DeleteInquiryUsecase } from 'src/usecase/inquiry/delete-inquiry';
 import { QueryInquiryListUsecase } from 'src/usecase/inquiry/query-inquiry-list';
 import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-category.repository';
+import { GetCountUserQuestionPresenter } from 'src/presentation/question/get-count-user-question.presenter';
+import { UserQuestionCountUsecase } from 'src/usecase/user/user-question-count';
+import { UserAnswerCountUsecase } from 'src/usecase/user/user-answer-count';
 import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
 import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
 
@@ -463,6 +466,16 @@ export class UsecasesProxyDynamicModule {
             new DeleteInquiryUsecase(databaseInquiryRepository, exceptionsService),
         },
         {
+          inject: [DatabaseVideoRepository],
+          provide: UserQuestionCountUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new UserQuestionCountUsecase(databaseVideoRepository),
+        },
+        {
+          inject: [DatabaseVideoRepository],
+          provide: UserAnswerCountUsecase,
+          useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new UserAnswerCountUsecase(databaseVideoRepository),
+         },
+         {
           inject: [
             DatabaseVideoRepository,
             DatabaseReportRepository,
@@ -550,6 +563,8 @@ export class UsecasesProxyDynamicModule {
         CreateInquiryUsecase,
         QueryInquiryListUsecase,
         DeleteInquiryUsecase,
+        UserQuestionCountUsecase,
+        UserAnswerCountUsecase,
         AdminDeleteCommentUsecase,
         AdminDeleteVideoUsecase,
       ],
