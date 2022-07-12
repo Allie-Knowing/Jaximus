@@ -12,4 +12,15 @@ export class TokenResponse {
 
   @Expose({ name: 'refresh_token' })
   refreshToken: string;
+
+  @Expose({ name: 'is_first_login' })
+  isFirstLogin: boolean;
+}
+
+export class Userinfo {
+  email: string;
+
+  name: string;
+  
+  profile: string;
 }

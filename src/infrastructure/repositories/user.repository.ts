@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
+import { Userinfo } from 'src/presentation/auth/auth.dto';
 import { Repository } from 'typeorm';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -95,13 +96,15 @@ export class DatabaseUserRepository implements UserRepository {
       .from(UserTypeOrmEntity, 'user')
       .withDeleted()
       .getRawOne();
-      
+
     return user ? new User(user) : null;
   }
 
-  async save(dto: any, provider: string): Promise<User> {
+  async save(userinfo: Userinfo, provider: string): Promise<User> {
     const user = this.userEntityRepository.save({
-      ...dto,
+      email: userinfo.email,
+      name: userinfo.name,
+      profile: userinfo.profile,
       provider,
     });
     return new User(user);

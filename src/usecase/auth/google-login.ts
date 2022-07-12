@@ -19,31 +19,32 @@ export class GoogleLoginUsecase {
 
   async execute(dto: GoogleLoginDto) {
     const code = dto.code;
-    const aParams = new URLSearchParams();
-    aParams.append('client_id', oauthEnv.google.client_id);
-    aParams.append('client_secret', oauthEnv.google.cleint_secret);
-    aParams.append('code', code);
-    aParams.append('code_verifier', oauthEnv.google.code_verifier);
-    aParams.append('grant_type', 'authorization_code');
-    aParams.append('redirect_uri', oauthEnv.google.redirect_uri);
+    const params = new URLSearchParams();
+    params.append('client_id', oauthEnv.google.client_id);
+    params.append('client_secret', oauthEnv.google.cleint_secret);
+    params.append('code', code);
+    params.append('grant_type', 'authorization_code');
 
-    const idtokenResponse = this.httpService.post('https://oauth2.googleapis.com/token', aParams);
+    const idtokenResponse = this.httpService.post('https://oauth2.googleapis.com/token', params);
 
-    console.log(idtokenResponse);
     let user: User;
+    let isFirstLogin = false;
 
     idtokenResponse.subscribe((res) => {
-      const id_token = res.data;
-      const tokeninfoResponse = this.httpService.get('https://oauth2.googleapis.com/tokeninfo', { params: { id_token: id_token } });
+      const id_token = res.data.id_token;
+      const tokeninfoResponse = this.httpService.get('https://oauth2.googleapis.com/tokeninfo', {
+        params: { id_token },
+      });
 
       tokeninfoResponse.subscribe(async (res) => {
         const data = res.data;
-        console.log(data);
 
         user = await this.userRepository.findByEmail(data.email);
 
         if (!user) {
-          user = await this.userRepository.save(data, provider.google);
+          const userinfo = { email: data.email, name: data.name, profile: data.picture };
+          user = await this.userRepository.save(userinfo, provider.google);
+          isFirstLogin = true;
         } else if (!user.deletedAt) {
           throw new this.exceptionsService.userAlreadyDeletedException();
         }
@@ -54,8 +55,7 @@ export class GoogleLoginUsecase {
 
     // TODO: action-point
 
-
-    return await this.getTokenResponse(user.id);
+    return await this.getTokenResponse(user.id, isFirstLogin);
   }
 
   private checkProvider(provider: string, user: User) {
@@ -64,7 +64,7 @@ export class GoogleLoginUsecase {
     }
   }
 
-  private async getTokenResponse(userId: number): Promise<TokenResponse> {
+  private async getTokenResponse(userId: number, isFirstLogin: boolean): Promise<TokenResponse> {
     const accessToken = this.generateJwt(userId.toString(), 'access');
     const refreshToken = this.generateJwt(userId.toString(), 'refresh');
 
@@ -74,6 +74,7 @@ export class GoogleLoginUsecase {
     return {
       accessToken,
       refreshToken,
+      isFirstLogin,
     };
   }
 
