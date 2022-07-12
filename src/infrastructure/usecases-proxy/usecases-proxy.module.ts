@@ -68,9 +68,11 @@ import { DatabaseInquiryCategoryRepository } from '../repositories/inquiry-categ
 import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
 import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
 import { GoogleLoginUsecase } from 'src/usecase/auth/google-login';
+import { UtilsModule } from '../util/utils.module';
+import { LoginService } from '../util/login.service';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule, HttpModule],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule, HttpModule, UtilsModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -513,14 +515,14 @@ export class UsecasesProxyDynamicModule {
             ),
         },
         {
-          inject: [DatabaseUserRepository, RedisCacheService, HttpService, ExceptionsService],
+          inject: [DatabaseUserRepository, LoginService, HttpService, ExceptionsService],
           provide: GoogleLoginUsecase,
           useFactory: (
             databaseUserRepository: DatabaseUserRepository,
-            cacheService: RedisCacheService,
+            loginService: LoginService,
             httpService: HttpService,
             exceptionsService: ExceptionsService,
-          ) => new GoogleLoginUsecase(databaseUserRepository, cacheService, httpService, exceptionsService),
+          ) => new GoogleLoginUsecase(databaseUserRepository, loginService, httpService, exceptionsService),
         },
       ],
       exports: [

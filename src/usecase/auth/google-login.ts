@@ -1,18 +1,15 @@
-import { RedisCacheService } from 'src/infrastructure/config/redis/redis-cache.service';
 import { ExceptionsService } from 'src/infrastructure/exceptions/exceptions.service';
 import { DatabaseUserRepository } from 'src/infrastructure/repositories/user.repository';
-import { GoogleLoginDto, TokenResponse } from 'src/presentation/auth/auth.dto';
+import { GoogleLoginDto } from 'src/presentation/auth/auth.dto';
 import { HttpService } from '@nestjs/axios';
 import { oauthEnv, provider } from 'src/infrastructure/common/constants/oauth.constant';
 import { User } from 'src/domain/model/user';
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from 'src/infrastructure/common/constants/jwt.constant';
-import { CacheTemplate, generateCacheTemplate } from 'src/domain/enums/cache.enum';
+import { LoginService } from 'src/infrastructure/util/login.service';
 
 export class GoogleLoginUsecase {
   constructor(
     private readonly userRepository: DatabaseUserRepository,
-    private readonly cacheService: RedisCacheService,
+    private readonly loginService: LoginService,
     private readonly httpService: HttpService,
     private readonly exceptionsService: ExceptionsService,
   ) {}
@@ -39,6 +36,10 @@ export class GoogleLoginUsecase {
       tokeninfoResponse.subscribe(async (res) => {
         const data = res.data;
 
+        if (!data.email) {
+          throw new this.exceptionsService.badRequestException(data);
+        }
+        
         user = await this.userRepository.findByEmail(data.email);
 
         if (!user) {
@@ -49,46 +50,12 @@ export class GoogleLoginUsecase {
           throw new this.exceptionsService.userAlreadyDeletedException();
         }
 
-        this.checkProvider(provider.google, user);
+        this.loginService.checkProvider(provider.google, user);
       });
     });
 
     // TODO: action-point
 
-    return await this.getTokenResponse(user.id, isFirstLogin);
-  }
-
-  private checkProvider(provider: string, user: User) {
-    if (user.provider !== provider) {
-      throw new this.exceptionsService.providerNotMatchedException(user.provider);
-    }
-  }
-
-  private async getTokenResponse(userId: number, isFirstLogin: boolean): Promise<TokenResponse> {
-    const accessToken = this.generateJwt(userId.toString(), 'access');
-    const refreshToken = this.generateJwt(userId.toString(), 'refresh');
-
-    const key = generateCacheTemplate(CacheTemplate.REFRESH_TOKEN, userId);
-    await this.cacheService.setTtl(key, refreshToken, 60 * 60 * 24 * 14);
-
-    return {
-      accessToken,
-      refreshToken,
-      isFirstLogin,
-    };
-  }
-
-  private generateJwt(sub: string, type: string): string {
-    return jwt.sign(
-      {
-        sub: sub,
-        type: type,
-      },
-      JWT_SECRET_KEY,
-      {
-        algorithm: 'HS256',
-        expiresIn: type === 'access' ? '2h' : '14d',
-      },
-    );
+    return await this.loginService.getTokenResponse(user.id, isFirstLogin);
   }
 }
