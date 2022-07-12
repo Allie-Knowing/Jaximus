@@ -90,23 +90,25 @@ export class DatabaseUserRepository implements UserRepository {
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.userEntityRepository
-      .createQueryBuilder()
-      .select()
+      .createQueryBuilder('user')
+      .select('user.id', 'id')
+      .addSelect('user.deleted_at', 'deletedAt')
+      .addSelect('user.provider', 'provider')
       .where('email = :email', { email: email })
-      .from(UserTypeOrmEntity, 'user')
       .withDeleted()
       .getRawOne();
 
-    return user ? new User(user) : null;
+    return user ? user : null;
   }
 
   async save(userinfo: Userinfo, provider: string): Promise<User> {
-    const user = this.userEntityRepository.save({
+    const user = await this.userEntityRepository.save({
       email: userinfo.email,
       name: userinfo.name,
       profile: userinfo.profile,
       provider,
     });
-    return new User(user);
+
+    return new User({ ...user, id: user.id, deletedAt: user.deletedAt });
   }
 }

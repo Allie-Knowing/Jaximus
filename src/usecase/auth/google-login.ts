@@ -21,40 +21,38 @@ export class GoogleLoginUsecase {
     params.append('client_secret', oauthEnv.google.cleint_secret);
     params.append('code', code);
     params.append('grant_type', 'authorization_code');
+    params.append('redirect_uri', 'http://localhost:5000');
 
-    const idtokenResponse = this.httpService.post('https://oauth2.googleapis.com/token', params);
+    const idtokenResponse = await this.httpService.axiosRef.post('https://oauth2.googleapis.com/token', params);
+
+    const id_token = idtokenResponse.data.id_token;
+
+    const tokeninfoResponse = await this.httpService.axiosRef.get('https://oauth2.googleapis.com/tokeninfo', {
+      params: { id_token },
+    });
+
+    const data = tokeninfoResponse.data;
+
+    if (!data.email) {
+      this.exceptionsService.unauthorizedException();
+    }
 
     let user: User;
     let isFirstLogin = false;
 
-    idtokenResponse.subscribe((res) => {
-      const id_token = res.data.id_token;
-      const tokeninfoResponse = this.httpService.get('https://oauth2.googleapis.com/tokeninfo', {
-        params: { id_token },
-      });
+    user = await this.userRepository.findByEmail(data.email);
 
-      tokeninfoResponse.subscribe(async (res) => {
-        const data = res.data;
+    if (!user) {
+      const userinfo = { email: data.email, name: data.name, profile: data.picture };
+      user = await this.userRepository.save(userinfo, provider.google);
+      isFirstLogin = true;
+    } else if (user.deletedAt) {
+      this.exceptionsService.userAlreadyDeletedException();
+    }
 
-        if (!data.email) {
-          throw new this.exceptionsService.badRequestException(data);
-        }
+    this.loginService.checkProvider(provider.google, user);
 
-        user = await this.userRepository.findByEmail(data.email);
-
-        if (!user) {
-          const userinfo = { email: data.email, name: data.name, profile: data.picture };
-          user = await this.userRepository.save(userinfo, provider.google);
-          isFirstLogin = true;
-        } else if (!user.deletedAt) {
-          throw new this.exceptionsService.userAlreadyDeletedException();
-        }
-
-        this.loginService.checkProvider(provider.google, user);
-      });
-    });
-
-    // TODO: action-point
+    this.loginService.saveActionPoint(user);
 
     return await this.loginService.getTokenResponse(user.id, isFirstLogin);
   }
