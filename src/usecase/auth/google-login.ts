@@ -21,7 +21,6 @@ export class GoogleLoginUsecase {
     params.append('client_secret', oauthEnv.google.cleint_secret);
     params.append('code', code);
     params.append('grant_type', 'authorization_code');
-    params.append('redirect_uri', 'http://localhost:5000');
 
     const idtokenResponse = await this.httpService.axiosRef.post('https://oauth2.googleapis.com/token', params);
 
