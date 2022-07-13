@@ -2,8 +2,11 @@ export const oauthEnv = {
   google: {
     client_id: process.env.GOOGLE_CLIENT_ID,
     cleint_secret: process.env.GOOGLE_CLIENT_SECRET,
-    code_verifier: process.env.GOOGLE_CODE_VERIFIER,
-    redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+  },
+  naver: {
+    client_id: process.env.NAVER_CLIENT_ID,
+    client_secret: process.env.NAVER_CLIENT_SECRET,
+    state: process.env.NAVER_STATE,
   },
 };
 

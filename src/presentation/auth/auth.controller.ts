@@ -5,7 +5,7 @@ import { CodeDto } from './auth.dto';
 
 @Controller({ path: '/auth', scope: Scope.REQUEST })
 export class AuthController {
-  constructor(private readonly googleLoginUsecase: GoogleLoginUsecase) {}
+  constructor(private readonly googleLoginUsecase: GoogleLoginUsecase, private readonly naverLoginUsecase: NaverLoginUsecase) {}
 
   @Post('/google')
   @HttpCode(HttpStatus.CREATED)
@@ -22,6 +22,6 @@ export class AuthController {
   @Post('/naver')
   @HttpCode(HttpStatus.CREATED)
   naverLogin(@Body() dto: CodeDto) {
-    return null;
+    return this.naverLoginUsecase.execute(dto);
   }
 }
