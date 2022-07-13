@@ -18,7 +18,7 @@ export class LoginService {
 
   public checkProvider(provider: string, user: User) {
     if (user.provider !== provider) {
-      throw new this.exceptionsService.providerNotMatchedException(user.provider);
+      this.exceptionsService.providerNotMatchedException(user.provider);
     }
   }
 
