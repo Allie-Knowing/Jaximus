@@ -20,8 +20,6 @@ export class AdminDeleteCommentUsecase {
     const report = await this.reportRepositroy.findOne(reportId);
     if (!report) this.exceptionsService.reportNotFoundException();
 
-    console.log(report);
-
     const reportedUser = await this.userRepository.findOne(comment.userId);
     const reportApprovedUser = await this.userRepository.findOne(report.user.id);
 

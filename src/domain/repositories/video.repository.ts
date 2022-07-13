@@ -28,4 +28,6 @@ export interface VideoRepository {
   countUserQuestion(userId: number): Promise<GetCountUserQuestionPresenter>;
   countAnswerVideo(userId: number): Promise<GetCountUserQuestionPresenter>;
   videoViews(videoId: number): Promise<void>;
+  userQuestionCount(userId: number): Promise<number>;
+  userAnswerCount(userId: number): Promise<number>;
 }
