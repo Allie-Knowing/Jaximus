@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/domain/model/user';
 import { UserRepository } from 'src/domain/repositories/user.repository';
+import { Userinfo } from 'src/presentation/auth/auth.dto';
 import { Repository } from 'typeorm';
 import { CommentTypeOrmEntity } from '../entities/comment.entity';
 import { UserTypeOrmEntity } from '../entities/user.entity';
@@ -85,5 +86,27 @@ export class DatabaseUserRepository implements UserRepository {
       .execute();
 
     await this.userEntityRepository.softDelete({ id: userId });
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userEntityRepository
+      .createQueryBuilder('user')
+      .select('user.id', 'id')
+      .addSelect('user.deleted_at', 'deletedAt')
+      .addSelect('user.provider', 'provider')
+      .where('email = :email', { email: email })
+      .withDeleted()
+      .getRawOne();
+
+    return user ? user : null;
+  }
+
+  async save(userinfo: Userinfo, provider: string): Promise<User> {
+    const user = await this.userEntityRepository.save({
+      ...userinfo,
+      provider,
+    });
+
+    return new User({ ...user, id: user.id, deletedAt: user.deletedAt });
   }
 }

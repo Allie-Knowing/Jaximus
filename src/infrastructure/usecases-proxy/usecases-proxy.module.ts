@@ -1,4 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
+import { HttpService, HttpModule } from '@nestjs/axios';
 import { CommentAdoptionUsecase } from 'src/usecase/comment/comment-adoption';
 import { CreateLikeUsecase } from 'src/usecase/like/create-like';
 import { DeleteLikeUsecase } from 'src/usecase/like/delete-like';
@@ -69,9 +70,12 @@ import { UserQuestionCountUsecase } from 'src/usecase/user/user-question-count';
 import { UserAnswerCountUsecase } from 'src/usecase/user/user-answer-count';
 import { AdminDeleteCommentUsecase } from 'src/usecase/admin/admin-delete-comment';
 import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
+import { GoogleLoginUsecase } from 'src/usecase/auth/google-login';
+import { UtilsModule } from '../util/utils.module';
+import { LoginService } from '../util/login.service';
 
 @Module({
-  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule],
+  imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule, HttpModule, UtilsModule],
 })
 export class UsecasesProxyDynamicModule {
   static register(): DynamicModule {
@@ -523,6 +527,16 @@ export class UsecasesProxyDynamicModule {
               exceptionsService,
             ),
         },
+        {
+          inject: [DatabaseUserRepository, LoginService, HttpService, ExceptionsService],
+          provide: GoogleLoginUsecase,
+          useFactory: (
+            databaseUserRepository: DatabaseUserRepository,
+            loginService: LoginService,
+            httpService: HttpService,
+            exceptionsService: ExceptionsService,
+          ) => new GoogleLoginUsecase(databaseUserRepository, loginService, httpService, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -567,6 +581,7 @@ export class UsecasesProxyDynamicModule {
         UserAnswerCountUsecase,
         AdminDeleteCommentUsecase,
         AdminDeleteVideoUsecase,
+        GoogleLoginUsecase,
       ],
     };
   }

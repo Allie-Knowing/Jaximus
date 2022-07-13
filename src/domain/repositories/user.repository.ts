@@ -1,3 +1,4 @@
+import { Userinfo } from 'src/presentation/auth/auth.dto';
 import { User } from '../model/user';
 
 export interface UserRepository {
@@ -5,4 +6,6 @@ export interface UserRepository {
   userInfo(userId: number): Promise<User>;
   updateExpoToken(userId: number, expoToken: string): void;
   deleteUser(userId: number): Promise<void>;
+  findByEmail(email: string): Promise<User>;
+  save(dto: Userinfo, provider: string): Promise<User>;
 }

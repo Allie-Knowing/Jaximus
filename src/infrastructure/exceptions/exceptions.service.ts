@@ -79,6 +79,12 @@ export class ExceptionsService implements IException {
   badRequestException(data: IFormatExceptionMessage): void {
     throw new BadRequestException(data);
   }
+  providerNotMatchedException(provider: string): void {
+    throw new BadRequestException(`Already registered with ${provider} !`);
+  }
+  userAlreadyDeletedException(): void {
+    throw new BadRequestException('User already deleted');
+  }
   internalServerErrorException(data?: IFormatExceptionMessage): void {
     throw new InternalServerErrorException(data);
   }

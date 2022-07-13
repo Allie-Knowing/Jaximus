@@ -5,6 +5,7 @@ import { AdminController } from 'src/presentation/admin/admin.controller';
 import { AnswerController } from 'src/presentation/answer/answer.controller';
 import { InquiryController } from 'src/presentation/inquiry/inquiry.controller';
 import { LikeController } from 'src/presentation/like/like.controller';
+import { AuthController } from 'src/presentation/auth/auth.controller';
 import { QuestionController } from 'src/presentation/question/question.controller';
 import { ReportController } from 'src/presentation/report/report.controller';
 import { SearchController } from 'src/presentation/search/search.controller';
@@ -26,6 +27,6 @@ import { UsecasesProxyDynamicModule } from '../usecases-proxy/usecases-proxy.mod
       inject: [EnvironmentConfigService],
     }),
   ],
-  controllers: [VideoController, LikeController, UserController, AnswerController, QuestionController, SearchController, WalletController, ReportController, InquiryController, AdminController],
+  controllers: [VideoController, LikeController, UserController, AnswerController, QuestionController, SearchController, WalletController, ReportController, InquiryController, AdminController, AuthController],
 })
 export class ControllersModule {}
