@@ -15,12 +15,16 @@ export class TokenResponse {
 
   @Expose({ name: 'is_first_login' })
   isFirstLogin: boolean;
+
+  constructor(obj) {
+    return Object.assign(this, obj);
+  }
 }
 
 export class Userinfo {
   email: string;
 
   name: string;
-  
+
   profile: string;
 }

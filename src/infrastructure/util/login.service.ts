@@ -29,19 +29,19 @@ export class LoginService {
     const key = generateCacheTemplate(CacheTemplate.REFRESH_TOKEN, userId);
     await this.cacheService.setTtl(key, refreshToken, 60 * 60 * 24 * 14);
 
-    return {
+    return new TokenResponse({
       accessToken,
       refreshToken,
       isFirstLogin,
-    };
+    });
   }
 
   public async saveActionPoint(user: User) {
     const loginTemplateKey = generateCacheTemplate(CacheTemplate.ACTION_LOGIN, user.id);
     const actionLogin = await this.cacheService.get(loginTemplateKey);
-    if(!actionLogin) {
-        await this.cacheService.setTtl(loginTemplateKey, 'x', 57600);
-        await this.actionPointRepository.saveActionPoint(user, 1);
+    if (!actionLogin) {
+      await this.cacheService.setTtl(loginTemplateKey, 'x', 57600);
+      await this.actionPointRepository.saveActionPoint(user, 1);
     }
   }
 
