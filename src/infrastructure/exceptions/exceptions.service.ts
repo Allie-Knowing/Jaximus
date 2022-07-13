@@ -80,7 +80,7 @@ export class ExceptionsService implements IException {
     throw new BadRequestException(data);
   }
   providerNotMatchedException(provider: string): void {
-    throw new BadRequestException('Already registered with ' + provider + ' !');
+    throw new BadRequestException(`Already registered with ${provider} !`);
   }
   userAlreadyDeletedException(): void {
     throw new BadRequestException('User already deleted');

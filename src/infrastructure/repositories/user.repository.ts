@@ -103,9 +103,7 @@ export class DatabaseUserRepository implements UserRepository {
 
   async save(userinfo: Userinfo, provider: string): Promise<User> {
     const user = await this.userEntityRepository.save({
-      email: userinfo.email,
-      name: userinfo.name,
-      profile: userinfo.profile,
+      ...userinfo,
       provider,
     });
 
