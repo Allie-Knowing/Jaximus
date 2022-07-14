@@ -73,6 +73,7 @@ import { AdminDeleteVideoUsecase } from 'src/usecase/admin/admin-delete-video';
 import { GoogleLoginUsecase } from 'src/usecase/auth/google-login';
 import { UtilsModule } from '../util/utils.module';
 import { LoginService } from '../util/login.service';
+import { NaverLoginUsecase } from 'src/usecase/auth/naver-login';
 
 @Module({
   imports: [LoggerModule, RepositoriesModule, ExceptionsModule, ElasticsearchModule, RedisCacheModule, ExpoModule, HttpModule, UtilsModule],
@@ -478,8 +479,8 @@ export class UsecasesProxyDynamicModule {
           inject: [DatabaseVideoRepository],
           provide: UserAnswerCountUsecase,
           useFactory: (databaseVideoRepository: DatabaseVideoRepository) => new UserAnswerCountUsecase(databaseVideoRepository),
-         },
-         {
+        },
+        {
           inject: [
             DatabaseVideoRepository,
             DatabaseReportRepository,
@@ -537,6 +538,16 @@ export class UsecasesProxyDynamicModule {
             exceptionsService: ExceptionsService,
           ) => new GoogleLoginUsecase(databaseUserRepository, loginService, httpService, exceptionsService),
         },
+        {
+          inject: [DatabaseUserRepository, LoginService, HttpService, ExceptionsService],
+          provide: NaverLoginUsecase,
+          useFactory: (
+            databaseUserRepository: DatabaseUserRepository,
+            loginService: LoginService,
+            httpService: HttpService,
+            exceptionsService: ExceptionsService,
+          ) => new NaverLoginUsecase(databaseUserRepository, loginService, httpService, exceptionsService),
+        },
       ],
       exports: [
         CreateQuestionUsecase,
@@ -582,6 +593,7 @@ export class UsecasesProxyDynamicModule {
         AdminDeleteCommentUsecase,
         AdminDeleteVideoUsecase,
         GoogleLoginUsecase,
+        NaverLoginUsecase,
       ],
     };
   }
